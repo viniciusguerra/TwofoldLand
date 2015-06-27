@@ -208,7 +208,7 @@ public class Terminal : SingletonMonoBehaviour<Terminal>, ISubmitHandler, ISelec
                 string remainder = Ricci.Instance.FindRemainderOfMethodStartingWith(Ricci.Instance.FindInterface(commandSplit[0]), commandSplit[1]);
 
                 if(!string.IsNullOrEmpty(remainder))
-                    remainder += '(';
+                    remainder += "()";
 
                 completedCode += remainder;
             }

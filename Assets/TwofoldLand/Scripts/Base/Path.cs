@@ -8,8 +8,8 @@ public class Path : MonoBehaviour, IPointerClickHandler, IDragHandler
     {
         if (data.pointerId == -1)
         {
-            Ricci.Instance.MoveToPosition(data.worldPosition);
-            TargetMarker.Instance.SetPosition(data.worldPosition);
+            Ricci.Instance.MoveToPosition(data.pointerCurrentRaycast.worldPosition);
+            TargetMarker.Instance.SetPosition(data.pointerCurrentRaycast.worldPosition);
         }
     }
 
@@ -17,8 +17,8 @@ public class Path : MonoBehaviour, IPointerClickHandler, IDragHandler
     {
         if (data.pointerId == -1)
         {
-            Ricci.Instance.MoveToPosition(data.worldPosition);
-            TargetMarker.Instance.SetPosition(data.worldPosition);
+            Ricci.Instance.MoveToPosition(data.pointerCurrentRaycast.worldPosition);
+            TargetMarker.Instance.SetPosition(data.pointerCurrentRaycast.worldPosition);
         }
     }
 }
