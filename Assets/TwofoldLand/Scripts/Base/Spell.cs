@@ -1,22 +1,25 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Spell : MonoBehaviour
+[System.Serializable]
+public class Spell
 {
-    public string spellName;
-    public Command[] commands;    
-
-    void Start()
+    public string SpellName
     {
-
+        get
+        {
+            return SpellName;
+        }
+        set
+        {
+            SpellName = value + GlobalDefinitions.SpellSuffix;
+        }
     }
 
-    //Called when a particle emitted by the Spell hits an Actor
-    void OnParticleCollision(GameObject hitObject)
-    {
-        //ActorIA actor = hitObject.GetComponent<ActorIA>();
+    public Command[] commands;
 
-        //if (actor != null)
-        //    actor.SubmitSpell(this);
+    public Spell(Command[] commands)
+    {
+        this.commands = commands;
     }
 }

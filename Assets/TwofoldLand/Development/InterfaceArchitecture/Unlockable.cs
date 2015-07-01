@@ -17,7 +17,7 @@ public class Unlockable : Actor, IUnlockable
 
     private void DisplayLockedFeedback()
     {
-        Terminal.Instance.ShowMessage("Chest locked", TerminalMessageMode.Error);
+        FeedbackUI.Instance.Log("Chest Locked");
         lidAnimator.SetTrigger("toggle");
     }
 
@@ -37,7 +37,7 @@ public class Unlockable : Actor, IUnlockable
                 lidAnimator.SetTrigger("toggle");
                 open = true;
 
-                Terminal.Instance.ShowMessage("Chest unlocked", TerminalMessageMode.Success);
+                FeedbackUI.Instance.Log("Chest unlocked");
             }
             else
             {

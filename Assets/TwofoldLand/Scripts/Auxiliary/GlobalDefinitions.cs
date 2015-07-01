@@ -7,6 +7,8 @@ public static class GlobalDefinitions
     public const string ActorTag = "Actor";   
     public static readonly char[] CommandSplitCharacters = {'.','(',',',')'};
     public const string SelectedMaterialPath = "Materials/SelectedMaterial";
+    public const string SpellSuffix = ".spl";
+    public const string FeedbackUIFontPath = "Fonts/consola";
     
     //Error Messages
     public const string WrongSyntaxErrorMessage = "Wrong Syntax";

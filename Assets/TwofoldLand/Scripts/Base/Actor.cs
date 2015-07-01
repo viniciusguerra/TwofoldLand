@@ -101,14 +101,38 @@ public class Actor : MonoBehaviour, IPointerClickHandler
             throw new NotImplementedException();
     }
 
-    //public void SubmitSpell(Spell spell)
-    //{
-    //    //TODO SpellIA
-    //    foreach (Command c in spell.commands)
-    //    {
-    //        SubmitCommand(c);
-    //    }
-    //}
+    public void SubmitSpell(Spell spell)
+    {
+        foreach (Command c in spell.commands)
+        {
+            try
+            {
+                SubmitCommand(c);
+            }
+#pragma warning disable 0168
+            catch (MethodAccessException mae)
+            {
+                FeedbackUI.Instance.Log(GlobalDefinitions.InvalidMethodErrorMessage);
+                break;
+            }
+            catch (NotImplementedException nie)
+            {
+                FeedbackUI.Instance.Log(GlobalDefinitions.InvalidMethodErrorMessage);
+                break;
+            }
+            catch (MissingMethodException mme)
+            {
+                FeedbackUI.Instance.Log(GlobalDefinitions.InvalidMethodErrorMessage);
+                break;   
+            }
+            catch (TargetParameterCountException tpce)
+#pragma warning restore 0168
+            {
+                FeedbackUI.Instance.Log(GlobalDefinitions.InvalidParametersErrorMessage);
+                break;
+            }
+        }
+    }
 
     public void OnPointerClick(PointerEventData data)
     {
