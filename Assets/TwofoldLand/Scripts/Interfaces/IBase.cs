@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public interface IAbstraction
+public interface IBase
 {
     
 }

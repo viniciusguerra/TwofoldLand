@@ -7,22 +7,21 @@ using System.Reflection;
 
 public class Ricci : SingletonMonoBehaviour<Ricci>
 {
-    [Header("Abstractions")]    
-    public List<InterfaceContainer> knownInterfaces;
+    public List<Skill> skills;
 
     //[Header("Spells")]
     //public List<Spell> spellList;
 
     private NavMeshAgent agent;
 
-    public void AddInterface(InterfaceContainer interfaceContainer)
+    public void AddInterface(Skill interfaceContainer)
     {
-        knownInterfaces.Add(interfaceContainer);
+        skills.Add(interfaceContainer);
     }
 
     public bool KnowsInterface(Type interfaceType)
     {
-        foreach(InterfaceContainer i in knownInterfaces)
+        foreach(Skill i in skills)
         {
             if (i.InterfaceType == interfaceType)
                 return true;
@@ -34,7 +33,7 @@ public class Ricci : SingletonMonoBehaviour<Ricci>
     ///<exception cref="MissingMemberException">Thrown when there is no existent interface with the given name</exception>
     public Type FindInterface(string interfaceName)
     {
-        foreach (InterfaceContainer i in knownInterfaces)
+        foreach (Skill i in skills)
         {
             if (i.InterfaceType.Name.Equals(interfaceName))
                 return i.InterfaceType;
@@ -46,7 +45,7 @@ public class Ricci : SingletonMonoBehaviour<Ricci>
     ///<exception cref="MissingMemberException">Thrown when there is no existent interface with the given name</exception>
     public Type FindInterfaceStartingWith(string text)
     {
-        foreach(InterfaceContainer i in knownInterfaces)
+        foreach(Skill i in skills)
         {
             if (i.InterfaceType.Name.StartsWith(text))
                 return i.InterfaceType;
@@ -61,7 +60,7 @@ public class Ricci : SingletonMonoBehaviour<Ricci>
         {            
             string remainder = string.Empty;
 
-            foreach(InterfaceContainer i in knownInterfaces)
+            foreach(Skill i in skills)
             {
                 if (i.InterfaceType == interfaceType)
                 {

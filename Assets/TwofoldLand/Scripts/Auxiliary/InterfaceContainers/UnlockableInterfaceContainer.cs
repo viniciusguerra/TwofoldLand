@@ -2,7 +2,7 @@
 using System.Collections;
 
 [CreateAssetMenu()]
-public class UnlockableInterfaceContainer : InterfaceContainer
+public class UnlockableInterfaceContainer : Skill
 {
     public override System.Type InterfaceType
     {

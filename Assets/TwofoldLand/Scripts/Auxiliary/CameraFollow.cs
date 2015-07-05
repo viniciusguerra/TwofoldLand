@@ -78,7 +78,7 @@ public class CameraFollow : SingletonMonoBehaviour<CameraFollow>
         SetFollow(true);           
     }
 
-    void Update()
+    void LateUpdate()
     {
         WatchTarget();
     }    

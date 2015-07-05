@@ -4,101 +4,103 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent(typeof(Text))]
 public class FeedbackUI : SingletonMonoBehaviour<FeedbackUI>
 {
-	#region Properties
-    public int messageCount = 4;
-    public float messageTime = 1.3f;
-    public float messageHeight = 15;
-    public float messageWidth = 450;
-    public Color messageColor = Color.black;
-    public bool bold = false;
-    public bool italic = true;
+    #region Properties
+    public int messageLimit = 5;
+    public float messageTime = 2.6f;
+    public float messageHeight = 20;
+    public float clearTime = 1;
 
-    private bool waitingToClear;
-    private List<Text> messageStack;    
-	#endregion
+    private Text textStyle;
+    private List<Text> messageList;
+    #endregion
 
-	#region Methods
+    #region Methods
     public void Log(string message)
-    {        
-        if(messageStack.Count < messageCount)
-            messageStack.Add(CreateMessage(message));
-
-        if(messageStack.Count == messageCount)
+    {
+        if (messageList.Count >= messageLimit)
         {
-            Destroy(messageStack[0].gameObject);
-            messageStack.RemoveAt(0);
-            messageStack.Add(CreateMessage(message));
+            iTween.StopByName(messageList[0].gameObject.GetInstanceID().ToString());
+            Destroy(messageList[0].gameObject);
+            messageList.RemoveAt(0);            
         }
 
-        UpdateMessagePositions();
+        messageList.Add(CreateMessage(message));
 
-        if (!waitingToClear)
-            StartCoroutine(WaitToClear());
+        UpdateMessagePositions();
     }
 
     private Text CreateMessage(string text)
     {
         GameObject feedbackMessage = new GameObject("FeedbackMessage");
         feedbackMessage.transform.parent = transform;
-        feedbackMessage.AddComponent<Text>();        
+        feedbackMessage.AddComponent<Text>();
+        feedbackMessage.AddComponent<TextAlphaClearer>();
 
         Text messageText = feedbackMessage.GetComponent<Text>();
 
-        if(italic)
-            messageText.text = "<i>" + text + "</i>";
-        if (bold)
-            messageText.text = "<b>" + text + "</b>";
+        messageText.rectTransform.sizeDelta = new Vector2(0, messageHeight);
+        messageText.alignment = textStyle.alignment;
+        messageText.font = textStyle.font;
+        messageText.fontSize = textStyle.fontSize;
+        messageText.fontStyle = textStyle.fontStyle;
+        messageText.color = textStyle.color;
+        messageText.horizontalOverflow = textStyle.horizontalOverflow;
+        messageText.verticalOverflow = textStyle.verticalOverflow;
 
-        messageText.rectTransform.sizeDelta = new Vector2(messageWidth, messageHeight);
-        messageText.alignment = TextAnchor.LowerLeft;
-        messageText.font = Resources.Load<Font>(GlobalDefinitions.FeedbackUIFontPath);
-        messageText.fontSize = 13;
-        messageText.color = messageColor;
         messageText.rectTransform.pivot = new Vector2(0, 0.5f);
         messageText.rectTransform.anchorMax = new Vector2(0, 0.5f);
         messageText.rectTransform.anchorMin = new Vector2(0, 0.5f);
+
+        messageText.text = text;
+
+        iTween.ValueTo(gameObject, iTween.Hash("name",feedbackMessage.GetInstanceID().ToString(),
+                                               "onupdatetarget", feedbackMessage,
+                                               "onupdate", "ClearAlpha",
+                                               "from", textStyle.color.a,
+                                               "to", 0,
+                                               "delay", messageTime,
+                                               "time", clearTime,
+                                               "oncomplete", "ClearMessage",
+                                               "oncompleteparams", messageText));
 
         return messageText;
     }
 
     private void UpdateMessagePositions()
     {
-        Text[] messageArray = messageStack.ToArray();
+        Text[] messageArray = messageList.ToArray();
 
-        for(int i = 0; i < messageStack.Count; i++)
+        for (int i = 0; i < messageList.Count; i++)
         {
             messageArray[i].rectTransform.anchoredPosition = new Vector2(0, -messageHeight * i);
         }
     }
 
-    private IEnumerator WaitToClear()
+    private void ClearMessage(Text message)
     {
-        waitingToClear = true;
+        messageList.Remove(message);
 
-        yield return new WaitForSeconds(messageTime);
+        Destroy(message.gameObject);
 
-        messageStack.Clear();
-
-        foreach (Transform children in transform)
-            Destroy(children.gameObject);
-
-        waitingToClear = false;
+        UpdateMessagePositions();
     }
-	#endregion
+    #endregion
 
-	#region MonoBehaviour
-	void Start()
-	{
-        messageStack = new List<Text>(messageCount);
+    #region MonoBehaviour
+    void Start()
+    {
+        messageList = new List<Text>(messageLimit);
+        textStyle = GetComponent<Text>();
 
-        GetComponent<RectTransform>().sizeDelta = new Vector2(messageWidth, messageHeight * messageCount);
-	}
+        GetComponent<RectTransform>().sizeDelta = new Vector2(0, messageHeight * messageLimit);
+    }
 
-	void Update()
-	{
+    void Update()
+    {
 
-	}
-	#endregion
+    }
+    #endregion
 }

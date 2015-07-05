@@ -63,11 +63,11 @@ public class Command
     ///<exception cref="MissingMemberException">Thrown when there is no existent interface with the given name</exception>
     public static Type FindInterface(string interfaceName)
     {
-        Type[] assemblyTypes = typeof(IAbstraction).Assembly.GetTypes();
+        Type[] assemblyTypes = typeof(IBase).Assembly.GetTypes();
         
         foreach (Type t in assemblyTypes)
         {
-            if (t.IsAssignableFrom(typeof(IAbstraction)))
+            if (t.IsAssignableFrom(typeof(IBase)))
             {
                 if (t.Name.Equals(interfaceName))
                 {
@@ -122,12 +122,12 @@ public class Command
         {            
             List<string> commandSplit = new List<string>(commandString.Split(GlobalDefinitions.CommandSplitCharacters, System.StringSplitOptions.RemoveEmptyEntries));
 
-            Type[] assemblyTypes = typeof(IAbstraction).Assembly.GetTypes();
+            Type[] assemblyTypes = typeof(IBase).Assembly.GetTypes();
 
             //goes through every interface implementing IAbstraction and finds the matching type
             foreach(Type t in assemblyTypes)
             {
-                if (typeof(IAbstraction).IsAssignableFrom(t))
+                if (typeof(IBase).IsAssignableFrom(t))
                 {
                     if (t.Name.Equals(commandSplit[0]))
                     {

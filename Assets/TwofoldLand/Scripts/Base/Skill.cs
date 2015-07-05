@@ -2,7 +2,8 @@
 using System.Collections;
 using System;
 
-public class InterfaceContainer : ScriptableObject
+public class Skill : ScriptableObject
 {
+    public int level;
     public virtual Type InterfaceType { get { return null; } }
 }

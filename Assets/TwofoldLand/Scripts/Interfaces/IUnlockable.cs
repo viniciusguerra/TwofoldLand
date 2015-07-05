@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public interface IUnlockable : IAbstraction
+public interface IUnlockable : IBase
 {
     void Unlock();
-    void Unlock(object decimalKey);
+    void Unlock(object key);
     void Toggle();
 }
