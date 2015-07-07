@@ -21,9 +21,9 @@ public class Ricci : SingletonMonoBehaviour<Ricci>
 
     public bool KnowsInterface(Type interfaceType)
     {
-        foreach(Skill i in skills)
+        foreach(Skill s in skills)
         {
-            if (i.InterfaceType == interfaceType)
+            if (s.interfaceContainer.InterfaceType == interfaceType)
                 return true;
         }
 
@@ -33,10 +33,10 @@ public class Ricci : SingletonMonoBehaviour<Ricci>
     ///<exception cref="MissingMemberException">Thrown when there is no existent interface with the given name</exception>
     public Type FindInterface(string interfaceName)
     {
-        foreach (Skill i in skills)
+        foreach (Skill s in skills)
         {
-            if (i.InterfaceType.Name.Equals(interfaceName))
-                return i.InterfaceType;
+            if (s.interfaceContainer.InterfaceType.Name.Equals(interfaceName))
+                return s.interfaceContainer.InterfaceType;
         }
 
         throw new MissingMemberException();
@@ -45,10 +45,10 @@ public class Ricci : SingletonMonoBehaviour<Ricci>
     ///<exception cref="MissingMemberException">Thrown when there is no existent interface with the given name</exception>
     public Type FindInterfaceStartingWith(string text)
     {
-        foreach(Skill i in skills)
+        foreach(Skill s in skills)
         {
-            if (i.InterfaceType.Name.StartsWith(text))
-                return i.InterfaceType;
+            if (s.interfaceContainer.InterfaceType.Name.StartsWith(text))
+                return s.interfaceContainer.InterfaceType;
         }
 
         throw new MissingMemberException();
@@ -60,11 +60,11 @@ public class Ricci : SingletonMonoBehaviour<Ricci>
         {            
             string remainder = string.Empty;
 
-            foreach(Skill i in skills)
+            foreach(Skill s in skills)
             {
-                if (i.InterfaceType == interfaceType)
+                if (s.interfaceContainer.InterfaceType == interfaceType)
                 {
-                    foreach (MethodInfo m in i.InterfaceType.GetMethods())
+                    foreach (MethodInfo m in s.interfaceContainer.InterfaceType.GetMethods())
                     {
                         if (m.Name.StartsWith(text))
                             remainder = m.Name.Replace(text, String.Empty);
@@ -96,7 +96,7 @@ public class Ricci : SingletonMonoBehaviour<Ricci>
 
     private void HandleInputs()
     {        
-        if (!Terminal.Instance.HasSelectedActor() && Input.GetMouseButtonUp(1))
+        if (!HUD.Terminal.HasSelectedActor() && Input.GetMouseButtonUp(1))
         {
             Ricci.Instance.StopMoving();
             TargetMarker.Instance.Hide();

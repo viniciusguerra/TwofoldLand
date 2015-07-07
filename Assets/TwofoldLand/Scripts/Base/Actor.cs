@@ -11,32 +11,31 @@ public class Actor : MonoBehaviour, IPointerClickHandler
     private MeshRenderer meshRenderer;
     private Material originalMaterial;
 
-    private Text interfaceText;
     private Type[] implementedInterfaces;
+    private List<string> interfaceList;
 
-    public void DisplayAbstractions()
+    public void DisplayInterfaces()
     {
-        interfaceText.enabled = true;
-
-        interfaceText.text = string.Empty;
+        bool showHealthBar = false;
+        interfaceList.Clear();
 
         for (int i = 0; i < implementedInterfaces.Length; i++)
         {
             if (Ricci.Instance.KnowsInterface(implementedInterfaces[i]))
             {
-                interfaceText.text += implementedInterfaces[i].Name;
+                interfaceList.Add(implementedInterfaces[i].Name);
 
-                if (i < implementedInterfaces.Length - 1)
-                    interfaceText.text += "\n";
+                if (implementedInterfaces[i] == typeof(IDamageable))
+                    showHealthBar = true;
             }
         }
+
+        HUD.InfoPanel.Show(showHealthBar, name, interfaceList.ToArray());
     }
 
-    public void HideAbstractions()
+    public void HideInterfaces()
     {
-        interfaceText.enabled = false;
-
-        interfaceText.text = string.Empty;
+        HUD.InfoPanel.Hide();
     }
 
     public void SetSelected()
@@ -44,9 +43,9 @@ public class Actor : MonoBehaviour, IPointerClickHandler
         originalMaterial = meshRenderer.material;
         meshRenderer.material = Resources.Load<Material>(GlobalDefinitions.SelectedMaterialPath);
 
-        DisplayAbstractions();
+        DisplayInterfaces();
 
-        Terminal.Instance.OnActorDeselection += Deselect;
+        HUD.Terminal.OnActorDeselection += Deselect;
     }
 
     private void Deselect()
@@ -54,9 +53,9 @@ public class Actor : MonoBehaviour, IPointerClickHandler
         meshRenderer.material = originalMaterial;
         originalMaterial = null;
 
-        HideAbstractions();
+        HideInterfaces();
 
-        Terminal.Instance.OnActorDeselection -= Deselect;
+        HUD.Terminal.OnActorDeselection -= Deselect;
     }
 
     ///<exception cref="MethodAccessException">Thrown when the method being called is not accessible</exception>
@@ -112,23 +111,23 @@ public class Actor : MonoBehaviour, IPointerClickHandler
 #pragma warning disable 0168
             catch (MethodAccessException mae)
             {
-                FeedbackUI.Instance.Log(GlobalDefinitions.InvalidMethodErrorMessage);
+                HUD.Log.Push(GlobalDefinitions.InvalidMethodErrorMessage);
                 break;
             }
             catch (NotImplementedException nie)
             {
-                FeedbackUI.Instance.Log(GlobalDefinitions.InvalidMethodErrorMessage);
+                HUD.Log.Push(GlobalDefinitions.InvalidMethodErrorMessage);
                 break;
             }
             catch (MissingMethodException mme)
             {
-                FeedbackUI.Instance.Log(GlobalDefinitions.InvalidMethodErrorMessage);
+                HUD.Log.Push(GlobalDefinitions.InvalidMethodErrorMessage);
                 break;   
             }
             catch (TargetParameterCountException tpce)
 #pragma warning restore 0168
             {
-                FeedbackUI.Instance.Log(GlobalDefinitions.InvalidParametersErrorMessage);
+                HUD.Log.Push(GlobalDefinitions.InvalidParametersErrorMessage);
                 break;
             }
         }
@@ -138,7 +137,7 @@ public class Actor : MonoBehaviour, IPointerClickHandler
     {
         if (data.pointerId == -1)
         {
-            Terminal.Instance.SetSelectedActor(this);
+            HUD.Terminal.SetSelectedActor(this);
             SetSelected();
         }
     }
@@ -147,7 +146,7 @@ public class Actor : MonoBehaviour, IPointerClickHandler
     {
         meshRenderer = GetComponent<MeshRenderer>();
 
-        interfaceText = GetComponentInChildren<Text>();
+        interfaceList = new List<string>();
 
         implementedInterfaces = GetType().GetInterfaces();
     }

@@ -17,7 +17,7 @@ public class Unlockable : Actor, IUnlockable
 
     private void DisplayLockedFeedback()
     {
-        FeedbackUI.Instance.Log("Chest Locked");
+        HUD.Log.Push("Chest Locked");
         lidAnimator.SetTrigger("toggle");
     }
 
@@ -37,7 +37,7 @@ public class Unlockable : Actor, IUnlockable
                 lidAnimator.SetTrigger("toggle");
                 open = true;
 
-                FeedbackUI.Instance.Log("Chest unlocked");
+                HUD.Log.Push("Chest unlocked");
             }
             else
             {

@@ -14,7 +14,7 @@ public enum TerminalMessageMode
     Success
 }
 
-public class Terminal : SingletonMonoBehaviour<Terminal>, ISubmitHandler, ISelectHandler
+public class Terminal : MonoBehaviour, ISubmitHandler, ISelectHandler
 {
     [Header("Actor Selection")]
     public Actor selectedActor;

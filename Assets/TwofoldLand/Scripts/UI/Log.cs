@@ -4,8 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-[RequireComponent(typeof(Text))]
-public class FeedbackUI : SingletonMonoBehaviour<FeedbackUI>
+public class Log : MonoBehaviour
 {
     #region Properties
     public int messageLimit = 5;
@@ -18,7 +17,7 @@ public class FeedbackUI : SingletonMonoBehaviour<FeedbackUI>
     #endregion
 
     #region Methods
-    public void Log(string message)
+    public void Push(string message)
     {
         if (messageList.Count >= messageLimit)
         {

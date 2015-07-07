@@ -2,8 +2,9 @@
 using System.Collections;
 using System;
 
-public class Skill : ScriptableObject
+[Serializable]
+public class Skill
 {
     public int level;
-    public virtual Type InterfaceType { get { return null; } }
+    public InterfaceContainer interfaceContainer;
 }

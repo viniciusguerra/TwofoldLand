@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[CreateAssetMenu()]
-public class UnlockableInterfaceContainer : Skill
+public class UnlockableInterfaceContainer : InterfaceContainer
 {
     public override System.Type InterfaceType
     {
