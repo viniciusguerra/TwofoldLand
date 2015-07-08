@@ -10,7 +10,7 @@ public abstract class UIWindow : MonoBehaviour
 	#endregion
 
 	#region Methods
-    public void Toggle(bool show)
+    public virtual void Toggle(bool show)
     {
         gameObject.SetActive(show);
     }
