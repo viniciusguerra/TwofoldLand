@@ -9,37 +9,70 @@ public class InfoPanel : UIWindow
 	#region Properties
     public Text actorNameText;
     public Slider healthBar;
-    public Text interfaceListText;
+    public InterfaceList interfaceList;
 	#endregion
 
 	#region Methods
-    public void Show(bool showHealthBar, string actorName, string[] interfaces)
+    public void Show(string actorName, string[] interfaces)
     {
-        healthBar.gameObject.SetActive(showHealthBar);
-
-        interfaceListText.text = string.Empty;
-
-        //TODO Add height to cover health bar space if it is not present
-
-        foreach(string s in interfaces)
-        {
-            interfaceListText.text += s + "\n";
-        }
-
         Toggle(true);
+
+        actorNameText.text = actorName;
+
+        ToggleHealthBar(false);        
+
+        interfaceList.DisplayInterfaces(interfaces);
+    }
+
+    public void Show(string actorName, string[] interfaces, IDamageable damageable)
+    {
+        Toggle(true);
+
+        actorNameText.text = actorName;
+
+        ToggleHealthBar(true);
+
+        StartCoroutine(UpdateHealthBar(damageable));
+
+        interfaceList.DisplayInterfaces(interfaces);
     }
 
     public void Hide()
     {
         Toggle(false);
+
+        StopCoroutine("UpdateHealthBar");
+    }
+
+    private void ToggleHealthBar(bool toggle)
+    {
+        //Calculate interface panel height
+
+        if (toggle)
+        {            
+            
+        }
+        else
+        {
+            
+        }
+
+        healthBar.gameObject.SetActive(toggle);
+    }
+
+    private IEnumerator UpdateHealthBar(IDamageable damageable)
+    {
+        while(true)
+        {
+            healthBar.value = damageable.Health;
+        }
     }
 	#endregion
 
 	#region MonoBehaviour
-	void Start()
+	void Awake()
 	{
-        //healthBar = GetComponentInChildren<Slider>();
-        //interfaceListText = transform.FindChild("InterfaceList").GetComponent<Text>();
+        
 	}
 
 	void Update()

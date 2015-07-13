@@ -17,6 +17,7 @@ public class Actor : MonoBehaviour, IPointerClickHandler
     public void DisplayInterfaces()
     {
         bool showHealthBar = false;
+
         interfaceList.Clear();
 
         for (int i = 0; i < implementedInterfaces.Length; i++)
@@ -26,11 +27,16 @@ public class Actor : MonoBehaviour, IPointerClickHandler
                 interfaceList.Add(implementedInterfaces[i].Name);
 
                 if (implementedInterfaces[i] == typeof(IDamageable))
+                {
                     showHealthBar = true;
+                }
             }
         }
 
-        HUD.InfoPanel.Show(showHealthBar, name, interfaceList.ToArray());
+        if (showHealthBar)
+            HUD.InfoPanel.Show(name, interfaceList.ToArray(), (IDamageable)this);
+        else
+            HUD.InfoPanel.Show(name, interfaceList.ToArray());
     }
 
     public void HideInterfaces()
