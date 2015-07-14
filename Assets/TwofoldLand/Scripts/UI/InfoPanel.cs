@@ -9,7 +9,7 @@ public class InfoPanel : UIWindow
 	#region Properties
     public Text actorNameText;
     public Slider healthBar;
-    public InterfaceList interfaceList;
+    public InterfaceButtonList interfaceList;
 	#endregion
 
 	#region Methods
@@ -70,14 +70,6 @@ public class InfoPanel : UIWindow
 	#endregion
 
 	#region MonoBehaviour
-	void Awake()
-	{
-        
-	}
 
-	void Update()
-	{
-
-	}
 	#endregion
 }

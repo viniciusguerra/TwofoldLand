@@ -4,86 +4,54 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class InterfaceList : MonoBehaviour
+public abstract class InterfaceList : MonoBehaviour
 {
-	#region Properties    
-    private GameObject listPanel;
+    #region Properties
+    public GameObject interfaceButtonPrefab;
 
-    private float panelHeight;
-    private static float buttonHeight = -1;
-
-    private List<Button> interfaceButtonList;
-    private static GameObject interfaceButtonPrefab;    
-	#endregion
-
-	#region Methods
-    public void DisplayInterfaces(string[] interfaceArray)
+    protected abstract GameObject[] InterfaceButtonArray
     {
-        ClearInterfaces();
-
-        foreach(string interfaceName in interfaceArray)
-        {
-            GameObject interfaceButton = GameObject.Instantiate(interfaceButtonPrefab);
-            interfaceButtonList.Add(interfaceButton.GetComponent<Button>());
-
-            interfaceButton.GetComponentInChildren<Text>().text = interfaceName;
-            interfaceButton.transform.SetParent(listPanel.transform);
-        }
-
-        UpdatePanelHeight();
-
-        UpdateButtonPositions();
+        get;
     }
 
-    private void ClearInterfaces()
-    {
-        foreach(Button b in interfaceButtonList)
-        {
-            Destroy(b.gameObject);
-        }
+    protected GameObject listPanel;
 
-        interfaceButtonList.Clear();
-    }
+    protected float panelHeight;
+    protected static float buttonHeight = -1;
+    #endregion
 
-    private void UpdateButtonPositions()
-    {
-        Button[] interfaceButtonArray = interfaceButtonList.ToArray();
+    #region Methods
+    public abstract void DisplayInterfaces(string[] interfaceArray);
 
-        for (int i = 0; i < interfaceButtonList.Count; i++)
-        {
-            interfaceButtonArray[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -buttonHeight * i);
-        }
-    }
+    protected abstract void ClearInterfaces();
 
-    private void UpdatePanelHeight()
+    protected void UpdatePanelHeight()
     {
         RectTransform listPanelRectTransform = listPanel.GetComponent<RectTransform>();
 
         Rect listPanelRect = listPanelRectTransform.rect;
 
-        listPanelRectTransform.rect.Set(listPanelRect.xMin, listPanelRect.yMin, listPanelRect.width, Mathf.Max(panelHeight, buttonHeight * interfaceButtonList.Count));
+        listPanelRectTransform.rect.Set(listPanelRect.xMin, listPanelRect.yMin, listPanelRect.width, Mathf.Max(panelHeight, buttonHeight * InterfaceButtonArray.Length));
     }
-	#endregion
 
-	#region MonoBehaviour
-	void Awake()
-	{
+    protected void UpdatePositions()
+    {
+        for (int i = 0; i < InterfaceButtonArray.Length; i++)
+        {
+            InterfaceButtonArray[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -buttonHeight * i);
+        }
+    }
+    #endregion
+
+    #region MonoBehaviour
+    public virtual void Awake()
+    {
         listPanel = transform.FindChild("InterfaceListPanel").gameObject;
 
         panelHeight = listPanel.GetComponent<RectTransform>().rect.height;
 
-        if (interfaceButtonPrefab == null)
-            interfaceButtonPrefab = Resources.Load<GameObject>("Prefabs/InterfaceButton");
-
-        if(buttonHeight == -1)
-            buttonHeight = interfaceButtonPrefab.GetComponent<RectTransform>().sizeDelta.y;
-
-        interfaceButtonList = new List<Button>();
-	}
-
-	void Update()
-	{
-	
-	}
-	#endregion
+        if (buttonHeight == -1)
+            buttonHeight = interfaceButtonPrefab.GetComponent<RectTransform>().sizeDelta.y;        
+    }
+    #endregion
 }

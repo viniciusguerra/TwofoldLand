@@ -14,6 +14,14 @@ public class Ricci : SingletonMonoBehaviour<Ricci>
 
     private NavMeshAgent agent;
 
+    public static List<Skill> Skills
+    {
+        get
+        {
+            return Instance.skills;
+        }
+    }
+
     public void AddInterface(Skill interfaceContainer)
     {
         skills.Add(interfaceContainer);

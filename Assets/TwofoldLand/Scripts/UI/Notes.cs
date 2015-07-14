@@ -14,14 +14,6 @@ public class Notes : UIWindow
 	#endregion
 
 	#region MonoBehaviour
-	void Start()
-	{
 
-	}
-
-	void Update()
-	{
-
-	}
 	#endregion
 }

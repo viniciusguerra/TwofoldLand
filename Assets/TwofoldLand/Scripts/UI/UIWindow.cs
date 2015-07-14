@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public abstract class UIWindow : MonoBehaviour
 {
 	#region Properties
-
+    public bool startsActive;
 	#endregion
 
 	#region Methods
@@ -18,13 +18,8 @@ public abstract class UIWindow : MonoBehaviour
 
 	#region MonoBehaviour
 	void Start()
-	{
-
-	}
-
-	void Update()
-	{
-
-	}
+    {
+        gameObject.SetActive(startsActive);
+    }
 	#endregion
 }

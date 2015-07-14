@@ -5,8 +5,16 @@ using System;
 public class Unlockable : Actor, IUnlockable
 {
     public string binaryKey;
-    public bool unlocked;
     private bool open;
+    private bool unlocked;
+
+    public bool Unlocked
+    {
+        get
+        {
+            return unlocked;
+        }
+    }
 
     private Animator lidAnimator;
 

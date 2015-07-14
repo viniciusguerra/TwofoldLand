@@ -3,77 +3,232 @@ using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 
 public class Codex : UIWindow
 {
-	#region Properties
-    public float interfaceButtonHeight = 25;
+    #region Properties
+    public InterfaceToggleList interfaceList;
 
-    public GameObject interfaceListPanel;
-    public Scrollbar interfaceListScrollbar;
+    public Text interfaceNameText;
+    public Text interfaceLevelText;
+    public RectTransform propertyPanel;
+    public RectTransform propertyListPanel;
+    public RectTransform methodPanel;
+    public RectTransform methodListPanel;
 
-    public List<Button> interfaceButtons;
-	#endregion
+    public GameObject propertyPrefab;
+    public GameObject methodPrefab;
 
-	#region Methods
+    public List<RectTransform> propertyList;
+    public List<RectTransform> methodList;
+
+    public Vector2 panelPadding;
+
+    private Type currentInterfaceType;
+
+    private float propertyHeight;
+    private float methodHeight;
+    private float propertyPanelHeight;
+    private float methodPanelHeight;
+    #endregion
+
+    #region Methods
     public override void Toggle(bool show)
     {
         base.Toggle(show);
 
-        //if (interfaceButtons.Count != Ricci.Instance.skills.Count)
-        //    UpdateInterfaceListPanel();
-    }
-
-    private void UpdateInterfaceListPanel()
-    {
-        interfaceButtons.Clear();
-
-        for (int i = 0; i < Ricci.Instance.skills.Count; i++)
+        if (show)
         {
-            GameObject buttonGameObject = new GameObject();            
-            buttonGameObject.name = Ricci.Instance.skills[i].interfaceContainer.InterfaceType.ToString() + "Button";
-            buttonGameObject.transform.SetParent(interfaceListPanel.transform);
-            buttonGameObject.AddComponent<Button>();
-            buttonGameObject.AddComponent<Image>();
-
-            GameObject bText = new GameObject();
-            bText.AddComponent<RectTransform>();
-            bText.AddComponent<Text>();
-            bText.transform.SetParent(buttonGameObject.transform);
-            
-            //Button
-            Button b = buttonGameObject.GetComponent<Button>();
-            b.targetGraphic = buttonGameObject.GetComponent<Image>();           
-
-            //RectTransform
-            RectTransform r = buttonGameObject.GetComponent<RectTransform>();
-            r.anchorMin = new Vector2(0, 1);
-            r.anchorMax = new Vector2(0.87f, 1);
-            r.anchoredPosition = new Vector2(0.5f, 1);
-            //TODO find width
-            r.sizeDelta = new Vector2(10, interfaceButtonHeight);
-
-            //Text
-            Text t = buttonGameObject.GetComponentInChildren<Text>();
-            t.text = Ricci.Instance.skills[i].interfaceContainer.InterfaceType.ToString();
-
-            //Image
-            buttonGameObject.GetComponent<Image>().enabled = false;
+            PopulateInterfaceList();
         }
     }
-	#endregion
 
-	#region MonoBehaviour
-	void Start()
-	{
-        interfaceButtons = new List<Button>();
+    private void PopulateInterfaceList()
+    {
+        string[] interfaceNameArray = new string[Ricci.Skills.Count];
 
-        UpdateInterfaceListPanel();
-	}
+        for (int i = 0; i < Ricci.Skills.Count; i++)
+        {
+            interfaceNameArray[i] = Ricci.Skills[i].interfaceContainer.InterfaceType.Name;
+        }
 
-	void Update()
-	{
+        interfaceList.DisplayInterfaces(interfaceNameArray);
+    }
 
-	}
-	#endregion
+    public void DisplayInterface(string name)
+    {
+        gameObject.SetActive(true);
+
+        ClearDisplay();
+
+        PopulateInterfaceList();
+
+        currentInterfaceType = Type.GetType(name);
+
+        interfaceNameText.text = currentInterfaceType.Name;
+
+        interfaceLevelText.text = String.Format("Lvl.{0}", Ricci.Skills.Find(x => x.interfaceContainer.InterfaceType == currentInterfaceType).level);
+
+        DisplayProperties();
+
+        DisplayMethods();
+    }
+
+    public void DisplayInterface(bool toggle, string name)
+    {
+        if (toggle)
+        {
+            gameObject.SetActive(true);
+
+            ClearDisplay();
+
+            PopulateInterfaceList();
+
+            currentInterfaceType = Type.GetType(name);
+
+            interfaceNameText.text = currentInterfaceType.Name;
+
+            interfaceLevelText.text = String.Format("Lvl.{0}", Ricci.Skills.Find(x => x.interfaceContainer.InterfaceType == currentInterfaceType).level);
+
+            DisplayProperties();
+
+            DisplayMethods();
+        }
+    }
+
+    private void ClearDisplay()
+    {
+        interfaceNameText.text = "Interface";
+
+        interfaceLevelText.text = "Lvl.";
+
+        ClearRectTransformList(propertyList);
+
+        ClearRectTransformList(methodList);        
+    }
+
+    private void DisplayProperties()
+    {
+        PropertyInfo[] properties = currentInterfaceType.GetProperties();
+
+        foreach (PropertyInfo propertyInfo in properties)
+        {
+            propertyList.Add(CreatePropertyUI(propertyInfo));
+        }
+
+        UpdatePanelHeight(propertyListPanel, propertyPanelHeight, propertyHeight, propertyList.Count);
+
+        OrderRectTransformList(propertyList.ToArray(), propertyHeight);
+    }
+
+    private void DisplayMethods()
+    {
+        MethodInfo[] methods = currentInterfaceType.GetMethods();
+
+        foreach (MethodInfo methodInfo in methods)
+        {
+            //avoid getting Property Methods when displaying Methods
+            if(!methodInfo.Name.StartsWith("get_") && !methodInfo.Name.StartsWith("set_"))
+                methodList.Add(CreateMethodUI(methodInfo));
+        }
+
+        UpdatePanelHeight(methodListPanel, methodPanelHeight, methodHeight, methodList.Count);
+
+        OrderRectTransformList(methodList.ToArray(), methodHeight);
+    }
+
+    private RectTransform CreatePropertyUI(PropertyInfo propertyInfo)
+    {
+        GameObject property = Instantiate<GameObject>(propertyPrefab);
+
+        RectTransform rt = property.GetComponent<RectTransform>();
+
+        List<Transform> childList = new List<Transform>(property.transform.GetComponentsInChildren<Transform>());
+
+        childList.Find(x => x.name == "Access").GetComponent<Text>().text = propertyInfo.GetGetMethod().IsPublic ? "public" : "private";
+        childList.Find(x => x.name == "Return").GetComponent<Text>().text = propertyInfo.PropertyType.Name;
+        childList.Find(x => x.name == "Name").GetComponent<Text>().text = propertyInfo.Name;
+
+        CodexDescriptionAttribute descriptionAttribute = (CodexDescriptionAttribute)Attribute.GetCustomAttribute(propertyInfo, typeof(CodexDescriptionAttribute));
+        childList.Find(x => x.name == "Description").GetComponent<Text>().text = descriptionAttribute != null ? descriptionAttribute.Description : string.Empty;
+
+        property.transform.SetParent(propertyListPanel);
+
+        return rt;
+    }
+
+    private RectTransform CreateMethodUI(MethodInfo methodInfo)
+    {
+        GameObject method = Instantiate<GameObject>(methodPrefab);
+
+        RectTransform rt = method.GetComponent<RectTransform>();
+
+        List<Transform> childList = new List<Transform>(method.transform.GetComponentsInChildren<Transform>());
+
+        childList.Find(x => x.name == "Access").GetComponent<Text>().text = methodInfo.IsPublic ? "public" : "private";
+        childList.Find(x => x.name == "Return").GetComponent<Text>().text = methodInfo.ReturnType.Name;
+        childList.Find(x => x.name == "Name").GetComponent<Text>().text = methodInfo.Name;
+
+        CodexDescriptionAttribute descriptionAttribute = (CodexDescriptionAttribute)Attribute.GetCustomAttribute(methodInfo, typeof(CodexDescriptionAttribute));
+        childList.Find(x => x.name == "Description").GetComponent<Text>().text = descriptionAttribute != null ? descriptionAttribute.Description : string.Empty;
+
+        string parametersString = "(";
+        ParameterInfo[] parameters = methodInfo.GetParameters();
+
+        if (parameters.Length > 0)
+        {
+            for (int i = 0; i < parameters.Length - 1; i++)
+            {
+                parametersString += parametersString.GetType().Name + ", ";
+            }
+
+            parametersString += parameters[parameters.Length - 1].Name;
+        }
+
+        parametersString += ")";
+
+        childList.Find(x => x.name == "Parameters").GetComponent<Text>().text = parametersString;
+
+        method.transform.SetParent(methodListPanel);
+
+        return rt;
+    }
+
+    protected void UpdatePanelHeight(RectTransform panel, float panelHeight, float elementHeight, int elementCount)
+    {
+        Rect panelRect = panel.rect;
+
+        panel.sizeDelta = new Vector2(0, Mathf.Max(panelHeight, elementHeight * elementCount));
+    }
+
+    private void OrderRectTransformList(RectTransform[] array, float elementHeight)
+    {
+        for (int i = 0; i < array.Length; i++)
+        {
+            array[i].anchoredPosition = new Vector2(panelPadding.x, -elementHeight * i);
+        }
+    }
+
+    private void ClearRectTransformList(List<RectTransform> list)
+    {
+        foreach (RectTransform rt in list)
+            Destroy(rt.gameObject);
+
+        list.Clear();
+    }
+    #endregion
+
+    #region MonoBehaviour
+    void Awake()
+    {
+        propertyPanelHeight = propertyPanel.rect.height;
+        methodPanelHeight = methodPanel.rect.height;
+        propertyHeight = propertyPrefab.GetComponent<RectTransform>().rect.height;
+        methodHeight = methodPrefab.GetComponent<RectTransform>().rect.height;
+
+        methodList = new List<RectTransform>();
+        propertyList = new List<RectTransform>();
+    }
+    #endregion
 }
