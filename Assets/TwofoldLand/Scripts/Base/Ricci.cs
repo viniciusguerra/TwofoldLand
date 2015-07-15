@@ -107,7 +107,7 @@ public class Ricci : SingletonMonoBehaviour<Ricci>
         if (!HUD.Terminal.HasSelectedActor() && Input.GetMouseButtonUp(1))
         {
             Ricci.Instance.StopMoving();
-            TargetMarker.Instance.Hide();
+            TargetMarker.Instance.HideInstantly();
         }        
     }
 

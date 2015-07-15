@@ -44,7 +44,7 @@ public class Terminal : MonoBehaviour, ISubmitHandler, ISelectHandler
 
         Ricci.Instance.LookAt(selectedActor.transform.position);
         Ricci.Instance.StopMoving();
-        TargetMarker.Instance.Hide();
+        TargetMarker.Instance.HideInstantly();
 
         inputField.Select();
     }

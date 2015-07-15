@@ -49,10 +49,6 @@ public class InterfaceToggleList : InterfaceList
 
             interfaceToggleList.Add(toggle);
         }
-
-        UpdatePanelHeight();
-
-        UpdatePositions();
     }
 
     protected override void ClearInterfaces()

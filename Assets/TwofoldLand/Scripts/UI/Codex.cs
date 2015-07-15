@@ -27,10 +27,9 @@ public class Codex : UIWindow
 
     private Type currentInterfaceType;
 
-    private float propertyHeight;
-    private float methodHeight;
-    private float propertyPanelHeight;
-    private float methodPanelHeight;
+    public Canvas canvas;
+    public float propertyHeight;
+    public float methodHeight;
     #endregion
 
     #region Methods
@@ -116,10 +115,6 @@ public class Codex : UIWindow
         {
             propertyList.Add(CreatePropertyUI(propertyInfo));
         }
-
-        UpdatePanelHeight(propertyListPanel, propertyPanelHeight, propertyHeight, propertyList.Count);
-
-        OrderRectTransformList(propertyList.ToArray(), propertyHeight);
     }
 
     private void DisplayMethods()
@@ -132,17 +127,16 @@ public class Codex : UIWindow
             if(!methodInfo.Name.StartsWith("get_") && !methodInfo.Name.StartsWith("set_"))
                 methodList.Add(CreateMethodUI(methodInfo));
         }
-
-        UpdatePanelHeight(methodListPanel, methodPanelHeight, methodHeight, methodList.Count);
-
-        OrderRectTransformList(methodList.ToArray(), methodHeight);
     }
 
     private RectTransform CreatePropertyUI(PropertyInfo propertyInfo)
     {
         GameObject property = Instantiate<GameObject>(propertyPrefab);
+        property.transform.SetParent(propertyListPanel, false);
 
         RectTransform rt = property.GetComponent<RectTransform>();
+        Rect prefabRect = propertyPrefab.GetComponent<RectTransform>().rect;
+        rt.rect.Set(prefabRect.x, prefabRect.y, prefabRect.width, prefabRect.height);
 
         List<Transform> childList = new List<Transform>(property.transform.GetComponentsInChildren<Transform>());
 
@@ -151,9 +145,7 @@ public class Codex : UIWindow
         childList.Find(x => x.name == "Name").GetComponent<Text>().text = propertyInfo.Name;
 
         CodexDescriptionAttribute descriptionAttribute = (CodexDescriptionAttribute)Attribute.GetCustomAttribute(propertyInfo, typeof(CodexDescriptionAttribute));
-        childList.Find(x => x.name == "Description").GetComponent<Text>().text = descriptionAttribute != null ? descriptionAttribute.Description : string.Empty;
-
-        property.transform.SetParent(propertyListPanel);
+        childList.Find(x => x.name == "Description").GetComponent<Text>().text = descriptionAttribute != null ? descriptionAttribute.Description : string.Empty;        
 
         return rt;
     }
@@ -161,8 +153,11 @@ public class Codex : UIWindow
     private RectTransform CreateMethodUI(MethodInfo methodInfo)
     {
         GameObject method = Instantiate<GameObject>(methodPrefab);
+        method.transform.SetParent(methodListPanel, false);
 
         RectTransform rt = method.GetComponent<RectTransform>();
+        Rect prefabRect = methodPrefab.GetComponent<RectTransform>().rect;
+        rt.rect.Set(prefabRect.x, prefabRect.y, prefabRect.width, prefabRect.height);
 
         List<Transform> childList = new List<Transform>(method.transform.GetComponentsInChildren<Transform>());
 
@@ -188,26 +183,16 @@ public class Codex : UIWindow
 
         parametersString += ")";
 
-        childList.Find(x => x.name == "Parameters").GetComponent<Text>().text = parametersString;
-
-        method.transform.SetParent(methodListPanel);
+        childList.Find(x => x.name == "Parameters").GetComponent<Text>().text = parametersString;        
 
         return rt;
     }
 
-    protected void UpdatePanelHeight(RectTransform panel, float panelHeight, float elementHeight, int elementCount)
+    protected void UpdatePanelHeight(RectTransform panel, float elementHeight, int elementCount)
     {
-        Rect panelRect = panel.rect;
+        //panel.offsetMin = new Vector2(0, Mathf.Min(panelHeight, (elementHeight * elementCount)));
 
-        panel.sizeDelta = new Vector2(0, Mathf.Max(panelHeight, elementHeight * elementCount));
-    }
-
-    private void OrderRectTransformList(RectTransform[] array, float elementHeight)
-    {
-        for (int i = 0; i < array.Length; i++)
-        {
-            array[i].anchoredPosition = new Vector2(panelPadding.x, -elementHeight * i);
-        }
+        print("panel.sizeDelta: " + panel.sizeDelta);
     }
 
     private void ClearRectTransformList(List<RectTransform> list)
@@ -222,8 +207,6 @@ public class Codex : UIWindow
     #region MonoBehaviour
     void Awake()
     {
-        propertyPanelHeight = propertyPanel.rect.height;
-        methodPanelHeight = methodPanel.rect.height;
         propertyHeight = propertyPrefab.GetComponent<RectTransform>().rect.height;
         methodHeight = methodPrefab.GetComponent<RectTransform>().rect.height;
 

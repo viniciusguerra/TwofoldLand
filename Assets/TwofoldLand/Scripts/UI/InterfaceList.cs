@@ -24,23 +24,6 @@ public abstract class InterfaceList : MonoBehaviour
     public abstract void DisplayInterfaces(string[] interfaceArray);
 
     protected abstract void ClearInterfaces();
-
-    protected void UpdatePanelHeight()
-    {
-        RectTransform listPanelRectTransform = listPanel.GetComponent<RectTransform>();
-
-        Rect listPanelRect = listPanelRectTransform.rect;
-
-        listPanelRectTransform.rect.Set(listPanelRect.xMin, listPanelRect.yMin, listPanelRect.width, Mathf.Max(panelHeight, buttonHeight * InterfaceButtonArray.Length));
-    }
-
-    protected void UpdatePositions()
-    {
-        for (int i = 0; i < InterfaceButtonArray.Length; i++)
-        {
-            InterfaceButtonArray[i].GetComponent<RectTransform>().anchoredPosition = new Vector2(0, -buttonHeight * i);
-        }
-    }
     #endregion
 
     #region MonoBehaviour

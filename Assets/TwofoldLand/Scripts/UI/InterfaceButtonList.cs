@@ -46,10 +46,6 @@ public class InterfaceButtonList : InterfaceList
 
             interfaceButtonList.Add(button);
         }
-
-        UpdatePanelHeight();
-
-        UpdatePositions();
     }
 
     protected override void ClearInterfaces()

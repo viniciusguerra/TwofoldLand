@@ -3,8 +3,12 @@ using System.Collections;
 
 public static class GlobalDefinitions
 {
-    //Misc Strings
-    public const string ActorTag = "Actor";   
+    //Tags
+    public const string PlayerTag = "Player";
+    public const string ActorTag = "Actor";
+    public const string PathTag = "Path";  
+
+    //Misc Strings     
     public static readonly char[] CommandSplitCharacters = {'.','(',',',')'};
     public const string SelectedMaterialPath = "Materials/SelectedMaterial";
     public const string SpellSuffix = ".spl";
