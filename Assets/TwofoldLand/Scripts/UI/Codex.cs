@@ -39,7 +39,7 @@ public class Codex : UIWindow
 
         if (show)
         {
-            PopulateInterfaceList();
+            PopulateInterfaceList();            
         }
     }
 
@@ -57,8 +57,6 @@ public class Codex : UIWindow
 
     public void DisplayInterface(string name)
     {
-        gameObject.SetActive(true);
-
         ClearDisplay();
 
         PopulateInterfaceList();
@@ -76,10 +74,10 @@ public class Codex : UIWindow
 
     public void DisplayInterface(bool toggle, string name)
     {
+        Toggle(toggle);
+
         if (toggle)
         {
-            gameObject.SetActive(true);
-
             ClearDisplay();
 
             PopulateInterfaceList();
@@ -98,9 +96,9 @@ public class Codex : UIWindow
 
     private void ClearDisplay()
     {
-        interfaceNameText.text = "Interface";
+        interfaceNameText.text = "Select an Interface";
 
-        interfaceLevelText.text = "Lvl.";
+        interfaceLevelText.text = string.Empty;
 
         ClearRectTransformList(propertyList);
 

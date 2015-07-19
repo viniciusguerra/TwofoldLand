@@ -42,7 +42,7 @@ public class InterfaceToggleList : InterfaceList
             toggle.group = toggleGroup;
 
             interfaceButton.GetComponentInChildren<Text>().text = interfaceName;
-            interfaceButton.transform.SetParent(listPanel.transform);
+            interfaceButton.transform.SetParent(listPanel.transform, false);
 
             //Adds click listener to Interface Toggle. Calls DisplayInterface sending its own name
             toggle.onValueChanged.AddListener((bool value) => HUD.Codex.DisplayInterface(value, interfaceName));

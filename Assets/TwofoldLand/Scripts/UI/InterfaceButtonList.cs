@@ -39,7 +39,7 @@ public class InterfaceButtonList : InterfaceList
             Button button = interfaceButton.GetComponent<Button>();
 
             interfaceButton.GetComponentInChildren<Text>().text = interfaceName;
-            interfaceButton.transform.SetParent(listPanel.transform);
+            interfaceButton.transform.SetParent(listPanel.transform, false);
 
             //Adds click listener to Interface Button. Calls DisplayInterface sending its own name
             button.onClick.AddListener(() => HUD.Codex.DisplayInterface(interfaceName));
