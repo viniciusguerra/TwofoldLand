@@ -34,14 +34,14 @@ public class Actor : MonoBehaviour, IPointerClickHandler
         }
 
         if (showHealthBar)
-            HUD.InfoPanel.Show(name, interfaceList.ToArray(), (IDamageable)this);
+            HUD.Instance.infoPanel.Show(name, interfaceList.ToArray(), (IDamageable)this);
         else
-            HUD.InfoPanel.Show(name, interfaceList.ToArray());
+            HUD.Instance.infoPanel.Show(name, interfaceList.ToArray());
     }
 
     public void HideInterfaces()
     {
-        HUD.InfoPanel.Hide();
+        HUD.Instance.infoPanel.Hide();
     }
 
     public void SetSelected()
@@ -49,9 +49,10 @@ public class Actor : MonoBehaviour, IPointerClickHandler
         originalMaterial = meshRenderer.material;
         meshRenderer.material = Resources.Load<Material>(GlobalDefinitions.SelectedMaterialPath);
 
-        DisplayInterfaces();
+        HUD.Instance.terminal.SetSelectedActor(this);
+        HUD.Instance.terminal.OnActorDeselection += Deselect;
 
-        HUD.Terminal.OnActorDeselection += Deselect;
+        DisplayInterfaces();        
     }
 
     private void Deselect()
@@ -61,7 +62,7 @@ public class Actor : MonoBehaviour, IPointerClickHandler
 
         HideInterfaces();
 
-        HUD.Terminal.OnActorDeselection -= Deselect;
+        HUD.Instance.terminal.OnActorDeselection -= Deselect;
     }
 
     ///<exception cref="MethodAccessException">Thrown when the method being called is not accessible</exception>
@@ -117,23 +118,23 @@ public class Actor : MonoBehaviour, IPointerClickHandler
 #pragma warning disable 0168
             catch (MethodAccessException mae)
             {
-                HUD.Log.Push(GlobalDefinitions.InvalidMethodErrorMessage);
+                HUD.Instance.log.Push(GlobalDefinitions.InvalidMethodErrorMessage);
                 break;
             }
             catch (NotImplementedException nie)
             {
-                HUD.Log.Push(GlobalDefinitions.InvalidMethodErrorMessage);
+                HUD.Instance.log.Push(GlobalDefinitions.InvalidMethodErrorMessage);
                 break;
             }
             catch (MissingMethodException mme)
             {
-                HUD.Log.Push(GlobalDefinitions.InvalidMethodErrorMessage);
+                HUD.Instance.log.Push(GlobalDefinitions.InvalidMethodErrorMessage);
                 break;   
             }
             catch (TargetParameterCountException tpce)
 #pragma warning restore 0168
             {
-                HUD.Log.Push(GlobalDefinitions.InvalidParametersErrorMessage);
+                HUD.Instance.log.Push(GlobalDefinitions.InvalidParametersErrorMessage);
                 break;
             }
         }
@@ -141,9 +142,8 @@ public class Actor : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData data)
     {
-        if (data.pointerId == -1)
-        {
-            HUD.Terminal.SetSelectedActor(this);
+        if (data.pointerId == -1 && Ricci.Instance.IsInSelectionRange(transform.position))
+        {            
             SetSelected();
         }
     }

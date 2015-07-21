@@ -19,7 +19,7 @@ public class Path : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void ShowTargetMarker(PointerEventData data)
     {
-        if (!data.pointerCurrentRaycast.gameObject.tag.Equals(GlobalDefinitions.PathTag))
+        if (data.pointerCurrentRaycast.gameObject != null && !data.pointerCurrentRaycast.gameObject.tag.Equals(GlobalDefinitions.PathTag))
             return;
 
         Ricci.Instance.MoveToPosition(data.pointerCurrentRaycast.worldPosition);

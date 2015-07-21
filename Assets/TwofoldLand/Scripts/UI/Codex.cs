@@ -33,14 +33,28 @@ public class Codex : UIWindow
     #endregion
 
     #region Methods
-    public override void Toggle(bool show)
+    public override void Toggle()
     {
-        base.Toggle(show);
+        base.Toggle();
 
-        if (show)
+        if (isVisible)
         {
-            PopulateInterfaceList();            
+            PopulateInterfaceList();
         }
+    }
+
+    public override void Show()
+    {
+        base.Show();
+
+        PopulateInterfaceList();
+    }
+
+    public override void Hide()
+    {
+        base.Hide();
+
+        ClearShownInterface();
     }
 
     private void PopulateInterfaceList()
@@ -57,9 +71,7 @@ public class Codex : UIWindow
 
     public void DisplayInterface(string name)
     {
-        ClearDisplay();
-
-        PopulateInterfaceList();
+        Show();
 
         currentInterfaceType = Type.GetType(name);
 
@@ -74,27 +86,25 @@ public class Codex : UIWindow
 
     public void DisplayInterface(bool toggle, string name)
     {
-        Toggle(toggle);
+        //will be called whenever a toggle changes value
+        //if the value is changed to false, the Interface shouldn't be shown
+        if (toggle == false)
+            return;
 
-        if (toggle)
-        {
-            ClearDisplay();
+        Show();
 
-            PopulateInterfaceList();
+        currentInterfaceType = Type.GetType(name);
 
-            currentInterfaceType = Type.GetType(name);
+        interfaceNameText.text = currentInterfaceType.Name;
 
-            interfaceNameText.text = currentInterfaceType.Name;
+        interfaceLevelText.text = String.Format("Lvl.{0}", Ricci.Skills.Find(x => x.interfaceContainer.InterfaceType == currentInterfaceType).level);
 
-            interfaceLevelText.text = String.Format("Lvl.{0}", Ricci.Skills.Find(x => x.interfaceContainer.InterfaceType == currentInterfaceType).level);
+        DisplayProperties();
 
-            DisplayProperties();
-
-            DisplayMethods();
-        }
+        DisplayMethods();
     }
 
-    private void ClearDisplay()
+    private void ClearShownInterface()
     {
         interfaceNameText.text = "Select an Interface";
 
@@ -184,13 +194,6 @@ public class Codex : UIWindow
         childList.Find(x => x.name == "Parameters").GetComponent<Text>().text = parametersString;        
 
         return rt;
-    }
-
-    protected void UpdatePanelHeight(RectTransform panel, float elementHeight, int elementCount)
-    {
-        //panel.offsetMin = new Vector2(0, Mathf.Min(panelHeight, (elementHeight * elementCount)));
-
-        print("panel.sizeDelta: " + panel.sizeDelta);
     }
 
     private void ClearRectTransformList(List<RectTransform> list)

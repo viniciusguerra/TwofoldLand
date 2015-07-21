@@ -1,0 +1,551 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<modelStoreModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm4="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner"
+  dslVersion="1.0.0.0"
+  Id="564a920d-efc9-4be0-a006-cffd83d1d3e9"
+  name="TwofoldLandModelingProject" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <profileInstances>
+    <packageHasProfileInstances
+      Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b">
+      <profileInstance
+        Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791"
+        name="StandardProfileL2" />
+    </packageHasProfileInstances>
+    <packageHasProfileInstances
+      Id="29349502-908c-4fda-9054-c48619c59ed0">
+      <profileInstance
+        Id="532ea607-fb19-44b8-8502-3351b05452be"
+        name="StandardProfileL3" />
+    </packageHasProfileInstances>
+  </profileInstances>
+  <packagedElements>
+    <packageHasNamedElement>
+      <activity
+        Id="d2c51be7-2042-47e3-949a-8019d9e8938a"
+        name="PrototypeLevel"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false"
+        isReentrant="false"
+        isReadOnly="false"
+        isSingleExecution="false">
+        <nodes>
+          <initialNode
+            Id="32e51eb3-807f-4300-b3b8-8df4985fd9c8"
+            name="Initial1"
+            isLeaf="false">
+            <objectFlowTargets>
+              <objectFlow
+                Id="cf4bb47d-c0ce-4b5c-859b-8ea51c7c91b4"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <objectNodeMoniker
+                  Id="b25c42bb-ca2a-4393-ad7d-7959cf5913a0"
+                  LastKnownName="Graveyard"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </objectFlow>
+            </objectFlowTargets>
+          </initialNode>
+          <opaqueAction
+            Id="791e6b22-2e16-4f56-bbad-fca31ac5ee65"
+            name="Terminal Tutorial"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="55fbb767-b5b9-452c-aa0f-487b7293407b"
+                isLeaf="false">
+                <sendSignalActionMoniker
+                  Id="1bbdf16b-fb6d-48af-9ce6-a73bc375789d"
+                  LastKnownName="Collect Damageable Interface"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="a029d1dc-d032-440d-8f49-d59328e7cfcb"
+            name="Receive Relic"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="ea1b5f92-548e-4fb6-9654-bcd12dc15c4b"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="890bbcbc-f9b5-4256-b6da-cad4e698fb92"
+                  LastKnownName="Go To Church"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode
+            Id="74ede750-8abe-49ab-ac0b-38b1d86fa043"
+            name="Decision1"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="b2cb2509-5d82-44cb-981e-f45fb4cb57c6"
+                guard="Has key"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="127e64c5-e699-4bc7-8f29-1b586e899e93"
+                  LastKnownName="Unlock Chest"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="f4d1809c-5af8-435e-9f6e-20dbae3a4576"
+                guard="Doesn't have key"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="7cb6f158-ba0e-452b-a1a4-a297964258ee"
+                  LastKnownName="Binary Conversion Puzzle"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </decisionNode>
+          <opaqueAction
+            Id="127e64c5-e699-4bc7-8f29-1b586e899e93"
+            name="Unlock Chest"
+            isLeaf="false" />
+          <opaqueAction
+            Id="7cb6f158-ba0e-452b-a1a4-a297964258ee"
+            name="Binary Conversion Puzzle"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="722fa028-e6b9-4cd8-8f76-c8922378cd9b"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="e5088f3c-77b0-4788-9f57-5536289fe82b"
+                  LastKnownName="Decision2"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <decisionNode
+            Id="e5088f3c-77b0-4788-9f57-5536289fe82b"
+            name="Decision2"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="e32d2f04-3abb-4972-8028-2b030636c077"
+                guard="Puzzle is solved"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="127e64c5-e699-4bc7-8f29-1b586e899e93"
+                  LastKnownName="Unlock Chest"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+            <objectFlowTargets>
+              <objectFlow
+                Id="27ba7f76-a5af-460a-8590-edf74a80dce7"
+                guard="Puzzle isn't solved"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <objectNodeMoniker
+                  Id="da4b3c5a-d209-48e6-b0dd-7f0baf83d8fe"
+                  LastKnownName="Church"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </objectFlow>
+            </objectFlowTargets>
+          </decisionNode>
+          <sendSignalAction
+            Id="b76c2e89-b682-4a16-8163-9bdd99fb2f7b"
+            name="Collect Unlockable Interface"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="a09012ef-8c70-4aa1-ab78-0b2376176062"
+                isLeaf="false">
+                <acceptEventActionMoniker
+                  Id="104ec5bf-a8a6-48ae-9569-cdae592504df"
+                  LastKnownName="Has Unlock"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </sendSignalAction>
+          <acceptEventAction
+            Id="104ec5bf-a8a6-48ae-9569-cdae592504df"
+            name="Has Unlock"
+            isLeaf="false"
+            isUnmarshall="false" />
+          <acceptEventAction
+            Id="22af881b-ef88-4baa-a05f-e05e03f6413d"
+            name="Has Damageable"
+            isLeaf="false"
+            isUnmarshall="false" />
+          <objectNode
+            Id="da4b3c5a-d209-48e6-b0dd-7f0baf83d8fe"
+            name="Church"
+            isLeaf="false"
+            ordering="Unordered"
+            isControlType="false">
+            <objectFlowTargets>
+              <objectFlow
+                Id="8dfeb484-b2bd-42dd-98de-b5edba037b37"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <sendSignalActionMoniker
+                  Id="b76c2e89-b682-4a16-8163-9bdd99fb2f7b"
+                  LastKnownName="Collect Unlockable Interface"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </objectFlow>
+              <objectFlow
+                Id="a02d5622-f370-4a79-b9b8-57f56818104e"
+                guard="Has Unlock"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <opaqueActionMoniker
+                  Id="d4b1d2f1-0c50-4d9f-9148-9d47fa1316bd"
+                  LastKnownName="Send Unlock Command to Chest"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </objectFlow>
+              <objectFlow
+                Id="c84ad97a-1ca4-40d5-86f5-7c2ee4d7d89f"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <opaqueActionMoniker
+                  Id="f288a9b5-f5dc-4682-b690-4baa672c1091"
+                  LastKnownName="Go To Graveyard"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </objectFlow>
+            </objectFlowTargets>
+            <upperBound>
+              <literalInteger
+                Id="8ce19cbb-f299-4923-9ed0-e2873472b3e2"
+                name="2147483647"
+                value="2147483647" />
+            </upperBound>
+          </objectNode>
+          <opaqueAction
+            Id="890bbcbc-f9b5-4256-b6da-cad4e698fb92"
+            name="Go To Church"
+            isLeaf="false">
+            <objectFlowTargets>
+              <objectFlow
+                Id="e25ff5e9-fd27-4345-93e9-c9a6e4d07691"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <objectNodeMoniker
+                  Id="da4b3c5a-d209-48e6-b0dd-7f0baf83d8fe"
+                  LastKnownName="Church"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </objectFlow>
+            </objectFlowTargets>
+          </opaqueAction>
+          <objectNode
+            Id="b25c42bb-ca2a-4393-ad7d-7959cf5913a0"
+            name="Graveyard"
+            isLeaf="false"
+            ordering="Unordered"
+            isControlType="false">
+            <objectFlowTargets>
+              <objectFlow
+                Id="301c3acc-6e4d-4ed9-a72f-d1f255f61dac"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <opaqueActionMoniker
+                  Id="791e6b22-2e16-4f56-bbad-fca31ac5ee65"
+                  LastKnownName="Terminal Tutorial"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </objectFlow>
+              <objectFlow
+                Id="1527f90e-8237-4bdb-b3f7-48c5324498fb"
+                guard="Has Damageable, Has Materializable"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <opaqueActionMoniker
+                  Id="9a54720f-c98e-4801-943b-a9750f8553e6"
+                  LastKnownName="Fight Ghosts"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </objectFlow>
+              <objectFlow
+                Id="d8ccf907-d369-4df9-b52b-4b292cad6544"
+                guard="Rusty Gate Is Destroyed"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <opaqueActionMoniker
+                  Id="cf3cd056-31a5-4ec2-b494-24d1704c005b"
+                  LastKnownName="Go to Woods through East"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </objectFlow>
+              <objectFlow
+                Id="76c557f0-00d3-4469-8291-5fe7c6e20092"
+                guard="Talked To Gravekeeper"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <opaqueActionMoniker
+                  Id="890bbcbc-f9b5-4256-b6da-cad4e698fb92"
+                  LastKnownName="Go To Church"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </objectFlow>
+              <objectFlow
+                Id="d1d6be60-9b0f-4926-a9d4-fea53754448e"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <sendSignalActionMoniker
+                  Id="b1fd3321-1044-4560-a40e-87dad2eae459"
+                  LastKnownName="Talk To Gravekeeper"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </objectFlow>
+              <objectFlow
+                Id="277c292f-822b-4521-ac87-1fcad61e7ed7"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <opaqueActionMoniker
+                  Id="aa5c3381-8934-4480-81d3-51b81ce5626b"
+                  LastKnownName="Go to Woods through South"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </objectFlow>
+              <objectFlow
+                Id="7ce035f5-9699-4242-895b-f357e7975200"
+                guard="Has Damageable"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <sendSignalActionMoniker
+                  Id="26380586-df3a-4656-bef8-75a11a0ee6cd"
+                  LastKnownName="Destroy Rusty Gate"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </objectFlow>
+            </objectFlowTargets>
+            <upperBound>
+              <literalInteger
+                Id="7e1259e5-8142-4d70-a849-f54992b691ee"
+                name="2147483647"
+                value="2147483647" />
+            </upperBound>
+          </objectNode>
+          <sendSignalAction
+            Id="1bbdf16b-fb6d-48af-9ce6-a73bc375789d"
+            name="Collect Damageable Interface"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="fa3f01a9-ed6d-4a05-8a2b-9b1e131d9b75"
+                isLeaf="false">
+                <acceptEventActionMoniker
+                  Id="22af881b-ef88-4baa-a05f-e05e03f6413d"
+                  LastKnownName="Has Damageable"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </sendSignalAction>
+          <opaqueAction
+            Id="9a54720f-c98e-4801-943b-a9750f8553e6"
+            name="Fight Ghosts"
+            isLeaf="false" />
+          <opaqueAction
+            Id="d4b1d2f1-0c50-4d9f-9148-9d47fa1316bd"
+            name="Send Unlock Command to Chest"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="bec8ebe3-15fc-4dfe-824c-20edfad7e152"
+                isLeaf="false">
+                <decisionNodeMoniker
+                  Id="74ede750-8abe-49ab-ac0b-38b1d86fa043"
+                  LastKnownName="Decision1"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </opaqueAction>
+          <opaqueAction
+            Id="f288a9b5-f5dc-4682-b690-4baa672c1091"
+            name="Go To Graveyard"
+            isLeaf="false">
+            <objectFlowTargets>
+              <objectFlow
+                Id="ff584c1d-a770-4753-93cc-8114cb4bcb44"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <objectNodeMoniker
+                  Id="b25c42bb-ca2a-4393-ad7d-7959cf5913a0"
+                  LastKnownName="Graveyard"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </objectFlow>
+            </objectFlowTargets>
+          </opaqueAction>
+          <objectNode
+            Id="7ec53cec-dae6-4b0d-993e-2e3934407f93"
+            name="Hut"
+            isLeaf="false"
+            ordering="Unordered"
+            isControlType="false">
+            <upperBound>
+              <literalInteger
+                Id="d6ad00cf-64fa-4d9b-bcf5-1c7c0ed24e31"
+                name="2147483647"
+                value="2147483647" />
+            </upperBound>
+          </objectNode>
+          <opaqueAction
+            Id="2d58a9fb-05b0-4bc8-ac6f-e66d51888f29"
+            name="Go to Hut"
+            isLeaf="false">
+            <objectFlowTargets>
+              <objectFlow
+                Id="4b56e699-65a1-43cd-8a43-f7bfbac56466"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <objectNodeMoniker
+                  Id="7ec53cec-dae6-4b0d-993e-2e3934407f93"
+                  LastKnownName="Hut"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </objectFlow>
+            </objectFlowTargets>
+          </opaqueAction>
+          <objectNode
+            Id="39becd9f-6ed9-4b37-9ca2-cc67df660133"
+            name="Woods"
+            isLeaf="false"
+            ordering="Unordered"
+            isControlType="false">
+            <objectFlowTargets>
+              <objectFlow
+                Id="cfa02182-de5b-41f3-8e3a-9a14b3235e82"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <opaqueActionMoniker
+                  Id="2d58a9fb-05b0-4bc8-ac6f-e66d51888f29"
+                  LastKnownName="Go to Hut"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </objectFlow>
+              <objectFlow
+                Id="3480fdf9-c5d9-4a00-a5c2-d7102316f5d5"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <opaqueActionMoniker
+                  Id="f288a9b5-f5dc-4682-b690-4baa672c1091"
+                  LastKnownName="Go To Graveyard"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </objectFlow>
+            </objectFlowTargets>
+            <upperBound>
+              <literalInteger
+                Id="c8fdc278-5ac2-433b-b6c6-9afe4284d152"
+                name="2147483647"
+                value="2147483647" />
+            </upperBound>
+          </objectNode>
+          <sendSignalAction
+            Id="26380586-df3a-4656-bef8-75a11a0ee6cd"
+            name="Destroy Rusty Gate"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="e2c458b0-854e-46ef-98f8-350198467efe"
+                isLeaf="false">
+                <acceptEventActionMoniker
+                  Id="52b73927-f3b0-4448-b4f2-682a6059fe6a"
+                  LastKnownName="Rusty Gate Is Destroyed"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </sendSignalAction>
+          <acceptEventAction
+            Id="52b73927-f3b0-4448-b4f2-682a6059fe6a"
+            name="Rusty Gate Is Destroyed"
+            isLeaf="false"
+            isUnmarshall="false" />
+          <opaqueAction
+            Id="cf3cd056-31a5-4ec2-b494-24d1704c005b"
+            name="Go to Woods through East"
+            isLeaf="false">
+            <objectFlowTargets>
+              <objectFlow
+                Id="fc2fe07d-2760-4a83-a6b4-67bb6c4f26e4"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <objectNodeMoniker
+                  Id="39becd9f-6ed9-4b37-9ca2-cc67df660133"
+                  LastKnownName="Woods"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </objectFlow>
+            </objectFlowTargets>
+          </opaqueAction>
+          <acceptEventAction
+            Id="ec371868-b154-4f5c-b035-28318d4d9dc4"
+            name="Talked To Gravekeeper"
+            isLeaf="false"
+            isUnmarshall="false" />
+          <sendSignalAction
+            Id="b1fd3321-1044-4560-a40e-87dad2eae459"
+            name="Talk To Gravekeeper"
+            isLeaf="false">
+            <flowNodeTargets>
+              <controlFlow
+                Id="776f3a5d-2c66-4fae-baab-c2b28ed83829"
+                isLeaf="false">
+                <acceptEventActionMoniker
+                  Id="ec371868-b154-4f5c-b035-28318d4d9dc4"
+                  LastKnownName="Talked To Gravekeeper"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </controlFlow>
+              <controlFlow
+                Id="d480cde5-b63b-4c97-b4de-b101923377c8"
+                isLeaf="false">
+                <opaqueActionMoniker
+                  Id="a029d1dc-d032-440d-8f49-d59328e7cfcb"
+                  LastKnownName="Receive Relic"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </controlFlow>
+            </flowNodeTargets>
+          </sendSignalAction>
+          <opaqueAction
+            Id="aa5c3381-8934-4480-81d3-51b81ce5626b"
+            name="Go to Woods through South"
+            isLeaf="false">
+            <objectFlowTargets>
+              <objectFlow
+                Id="1ad03b5e-6d10-41fe-a643-8af4f9c963ba"
+                isLeaf="false"
+                isMulticast="false"
+                isMultireceive="false">
+                <objectNodeMoniker
+                  Id="39becd9f-6ed9-4b37-9ca2-cc67df660133"
+                  LastKnownName="Woods"
+                  LastKnownLocation="TwofoldLandModelingProject.uml" />
+              </objectFlow>
+            </objectFlowTargets>
+          </opaqueAction>
+        </nodes>
+      </activity>
+    </packageHasNamedElement>
+  </packagedElements>
+  <primitiveType
+    Id="220a3521-e091-4221-bae9-3ef9018e845c"
+    name="Integer"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="8943dc84-709e-4f62-b15a-a3273aa6f165"
+    name="Boolean"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="59259974-6d55-42c6-b7bd-763d77ac8ef9"
+    name="String"
+    isAbstract="false"
+    isLeaf="false" />
+  <primitiveType
+    Id="3ab42e7d-4969-445a-b209-471f5cb8209c"
+    name="UnlimitedNatural"
+    isAbstract="false"
+    isLeaf="false" />
+</modelStoreModel>

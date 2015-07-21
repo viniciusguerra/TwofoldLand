@@ -23,6 +23,11 @@ public static class GlobalDefinitions
     public const string NoTargetErrorMessage = "No Selected Target";
     public const string InvalidParametersErrorMessage = "Invalid Parameters";
 
+    //Buttons
+    public const string CodexButton = "Codex";
+    public const string StorageButton = "Storage";
+    public const string NotesButton = "Notes";
+
     //Regex Patterns
     //Tested at http://www.regexr.com/
     public const string TerminalCommandRegexPattern = @"^(?:\w+)(?:\.)(?:\w+)(?:\()(?:\w|\,\w){0,}(?:\))$";

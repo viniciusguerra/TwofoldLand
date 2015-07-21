@@ -3,11 +3,11 @@ using UnityEngine.UI;
 using System;
 using System.Collections;
 
-public class HUD : SingletonMonoBehaviour<HUD>
+public class HUD : Singleton<HUD>
 {
 	#region Properties
-    private Terminal terminal;
-    private Log log;
+    public Terminal terminal;
+    public Log log;
     public Notes notes;
     public Codex codex;
     public Storage storage;
@@ -15,79 +15,7 @@ public class HUD : SingletonMonoBehaviour<HUD>
 
     private Slider healthBar;
     private Slider staminaBar;
-    private Text auraText;    
-
-    public static Terminal Terminal
-    {
-        get
-        {
-            return Instance.terminal;
-        }
-    }
-
-    public static Log Log
-    {
-        get
-        {
-            return Instance.log;
-        }
-    }
-
-    public static Notes Notes
-    {
-        get
-        {
-            return Instance.notes;
-        }
-    }
-
-    public static Storage Storage
-    {
-        get
-        {
-            return Instance.storage;
-        }
-    }
-
-    public static Codex Codex
-    {
-        get
-        {
-            return Instance.codex;
-        }
-    }
-
-    public static InfoPanel InfoPanel
-    {
-        get
-        {
-            return Instance.infoPanel;
-        }
-    }
-
-    public static Slider HealthBar
-    {
-        get
-        {
-            return Instance.healthBar;
-        }
-    }
-
-    public static Slider StaminaBar
-    {
-        get
-        {
-            return Instance.staminaBar;
-        }
-    }
-
-    public static Text Aura
-    {
-        get
-        {
-            return Instance.auraText;
-        }
-    }
+    private Text auraText;
 	#endregion
 
 	#region Methods
@@ -112,7 +40,7 @@ public class HUD : SingletonMonoBehaviour<HUD>
     #endregion
 
     #region MonoBehaviour
-    void Start()
+    void Awake()
 	{
         terminal = GetComponentInChildren<Terminal>();
         log = GetComponentInChildren<Log>();

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraFollow : SingletonMonoBehaviour<CameraFollow>
+public class CameraFollow : Singleton<CameraFollow>
 {
     public Transform target;
     public bool follow = true;

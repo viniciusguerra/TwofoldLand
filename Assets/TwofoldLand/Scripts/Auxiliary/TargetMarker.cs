@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TargetMarker : SingletonMonoBehaviour<TargetMarker>
+public class TargetMarker : Singleton<TargetMarker>
 {
     public float yOffset;
     public Vector3 scaleGrowth;
@@ -14,9 +14,7 @@ public class TargetMarker : SingletonMonoBehaviour<TargetMarker>
     public void Set(Vector3 target)
     {
         iTween.StopByName(gameObject, name + "Scale");
-        iTween.StopByName(gameObject, name + "Color");
-
-        transform.localScale = Vector3.one;        
+        iTween.StopByName(gameObject, name + "Color");             
         
         Blink();
         SetPosition(target);
@@ -62,6 +60,7 @@ public class TargetMarker : SingletonMonoBehaviour<TargetMarker>
 
     private void Blink()
     {
+        transform.localScale = Vector3.one;
         iTween.PunchScale(gameObject, iTween.Hash("name", name + "Scale", "amount", scaleGrowth, "time", blinkTime));
     }
 

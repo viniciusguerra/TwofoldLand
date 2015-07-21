@@ -38,7 +38,7 @@ public class ChangeButtonTextStyle : MonoBehaviour
     #endregion
 
     #region MonoBehaviour
-    void Start()
+    void Awake()
     {
         originalFontStyle = text.fontStyle;
     }

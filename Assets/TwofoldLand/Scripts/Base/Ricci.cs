@@ -5,9 +5,12 @@ using System.Linq;
 using System;
 using System.Reflection;
 
-public class Ricci : SingletonMonoBehaviour<Ricci>
+public class Ricci : Singleton<Ricci>
 {
-    public List<Skill> skills;
+    public float actorSelectionRange = 4;
+
+    [Header("Skills")]
+    public List<Skill> skillList;
 
     //[Header("Spells")]
     //public List<Spell> spellList;
@@ -18,18 +21,18 @@ public class Ricci : SingletonMonoBehaviour<Ricci>
     {
         get
         {
-            return Instance.skills;
+            return Instance.skillList;
         }
     }
 
     public void AddInterface(Skill interfaceContainer)
     {
-        skills.Add(interfaceContainer);
+        skillList.Add(interfaceContainer);
     }
 
     public bool KnowsInterface(Type interfaceType)
     {
-        foreach(Skill s in skills)
+        foreach(Skill s in skillList)
         {
             if (s.interfaceContainer.InterfaceType == interfaceType)
                 return true;
@@ -41,7 +44,7 @@ public class Ricci : SingletonMonoBehaviour<Ricci>
     ///<exception cref="MissingMemberException">Thrown when there is no existent interface with the given name</exception>
     public Type FindInterface(string interfaceName)
     {
-        foreach (Skill s in skills)
+        foreach (Skill s in skillList)
         {
             if (s.interfaceContainer.InterfaceType.Name.Equals(interfaceName))
                 return s.interfaceContainer.InterfaceType;
@@ -53,7 +56,7 @@ public class Ricci : SingletonMonoBehaviour<Ricci>
     ///<exception cref="MissingMemberException">Thrown when there is no existent interface with the given name</exception>
     public Type FindInterfaceStartingWith(string text)
     {
-        foreach(Skill s in skills)
+        foreach(Skill s in skillList)
         {
             if (s.interfaceContainer.InterfaceType.Name.StartsWith(text))
                 return s.interfaceContainer.InterfaceType;
@@ -68,7 +71,7 @@ public class Ricci : SingletonMonoBehaviour<Ricci>
         {            
             string remainder = string.Empty;
 
-            foreach(Skill s in skills)
+            foreach(Skill s in skillList)
             {
                 if (s.interfaceContainer.InterfaceType == interfaceType)
                 {
@@ -102,22 +105,13 @@ public class Ricci : SingletonMonoBehaviour<Ricci>
         agent.Stop();
     }
 
-    private void HandleInputs()
-    {        
-        if (!HUD.Terminal.HasSelectedActor() && Input.GetMouseButtonUp(1))
-        {
-            Ricci.Instance.StopMoving();
-            TargetMarker.Instance.HideInstantly();
-        }        
+    public bool IsInSelectionRange(Vector3 target)
+    {
+        return Vector3.Distance(Ricci.Instance.gameObject.transform.position, target) < actorSelectionRange;
     }
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-    }
-
-    void Update()
-    {
-        HandleInputs();
     }
 }

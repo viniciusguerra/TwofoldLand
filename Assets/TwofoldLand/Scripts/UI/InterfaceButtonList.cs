@@ -42,7 +42,7 @@ public class InterfaceButtonList : InterfaceList
             interfaceButton.transform.SetParent(listPanel.transform, false);
 
             //Adds click listener to Interface Button. Calls DisplayInterface sending its own name
-            button.onClick.AddListener(() => HUD.Codex.DisplayInterface(interfaceName));
+            button.onClick.AddListener(() => HUD.Instance.codex.DisplayInterface(interfaceName));
 
             interfaceButtonList.Add(button);
         }

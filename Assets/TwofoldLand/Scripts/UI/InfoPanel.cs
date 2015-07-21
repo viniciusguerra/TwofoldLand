@@ -15,7 +15,7 @@ public class InfoPanel : UIWindow
 	#region Methods
     public void Show(string actorName, string[] interfaces)
     {
-        Toggle(true);
+        base.Show();
 
         actorNameText.text = actorName;
 
@@ -26,7 +26,7 @@ public class InfoPanel : UIWindow
 
     public void Show(string actorName, string[] interfaces, IDamageable damageable)
     {
-        Toggle(true);
+        base.Show();
 
         actorNameText.text = actorName;
 
@@ -37,9 +37,9 @@ public class InfoPanel : UIWindow
         interfaceList.DisplayInterfaces(interfaces);
     }
 
-    public void Hide()
+    public override void Hide()
     {
-        Toggle(false);
+        base.Hide();
 
         StopCoroutine("UpdateHealthBar");
     }

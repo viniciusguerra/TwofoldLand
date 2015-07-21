@@ -6,7 +6,7 @@ public class Unlockable : Actor, IUnlockable
 {
     public string binaryKey;
     private bool open;
-    private bool unlocked;
+    public bool unlocked;
 
     public bool Unlocked
     {
@@ -25,7 +25,7 @@ public class Unlockable : Actor, IUnlockable
 
     private void DisplayLockedFeedback()
     {
-        HUD.Log.Push("Chest Locked");
+        HUD.Instance.log.Push("Chest Locked");
         lidAnimator.SetTrigger("toggle");
     }
 
@@ -45,7 +45,7 @@ public class Unlockable : Actor, IUnlockable
                 lidAnimator.SetTrigger("toggle");
                 open = true;
 
-                HUD.Log.Push("Chest unlocked");
+                HUD.Instance.log.Push("Chest unlocked");
             }
             else
             {

@@ -16,9 +16,9 @@ public enum TerminalMessageMode
 
 public class Terminal : MonoBehaviour, ISubmitHandler, ISelectHandler
 {
+    #region Properties
     [Header("Actor Selection")]
-    public Actor selectedActor;
-    public float actorSelectionRange = 4;
+    public Actor selectedActor;    
 
     [Header("Error Message Configuration")]
     public Color normalTextColor;
@@ -26,17 +26,25 @@ public class Terminal : MonoBehaviour, ISubmitHandler, ISelectHandler
     public Color successTextColor;
     public float terminalMessageTime;
 
-    private Stack<string> commandHistory;
+    [HideInInspector]
+    public Stack<string> commandHistory;
 
-    private InputField inputField;
-    private Text inputFieldPlaceholder;
-    private string originalPlaceholderText;
-    private string completedCode;
+    [HideInInspector]
+    public InputField inputField;
+    [HideInInspector]
+    public Text inputFieldPlaceholder;
+    [HideInInspector]
+    public string originalPlaceholderText;
+    [HideInInspector]
+    public string completedCode;
 
     public delegate void ActorSelectionDelegate();
     public event ActorSelectionDelegate OnActorDeselection;
+    #endregion
 
-    public void SelectActor(Actor actor)
+    #region Methods
+    //Actor Selection
+    private void SelectActor(Actor actor)
     {
         ClearActorSelection();
 
@@ -51,16 +59,11 @@ public class Terminal : MonoBehaviour, ISubmitHandler, ISelectHandler
 
     public void SetSelectedActor(Actor actor)
     {
-        if (RicciIsInSelectionRange(actor.transform.position) && actor != null)
+        if (Ricci.Instance.IsInSelectionRange(actor.transform.position) && actor != null)
         {
             SelectActor(actor);
         }
-    }
-
-    public bool RicciIsInSelectionRange(Vector3 target)
-    {
-        return Vector3.Distance(Ricci.Instance.gameObject.transform.position, target) < actorSelectionRange;
-    }
+    }    
 
     public bool HasSelectedActor()
     {
@@ -116,54 +119,19 @@ public class Terminal : MonoBehaviour, ISubmitHandler, ISelectHandler
 #pragma warning restore 0168
     }
 
-    private void HandleInputs()
-    {
-        if (HasSelectedActor())
-        {
-            if (!RicciIsInSelectionRange(selectedActor.transform.position) || Input.GetMouseButtonUp(1))
-                ClearActorSelection();
-        }
-
-        if(inputField.isActiveAndEnabled)
-        {
-            if (Input.GetKeyUp(KeyCode.Return))
-            {
-                ExecuteEvents.Execute<ISubmitHandler>(gameObject, null, (x, y) => x.OnSubmit(null));
-            }
-
-            if (inputField.text.Equals(string.Empty) && Input.GetKeyUp(KeyCode.UpArrow))
-            {
-                SetInputFieldText(commandHistory.Peek());
-                inputField.MoveTextEnd(false);
-
-                SetPlaceholderText(inputField.text);
-            }
-
-            if (Input.GetKeyUp(KeyCode.Tab) || Input.GetKeyUp(KeyCode.RightArrow) && !Regex.IsMatch(inputField.text, GlobalDefinitions.TerminalCommandRegexPattern))
-            {
-                SetInputFieldText(completedCode);
-                inputField.MoveTextEnd(false);
-            }
-        }
-        else
-        {
-            if (Input.GetKeyUp(KeyCode.Return))
-                inputField.Select();
-        }
-    }
-
+    //Input Field
     public void ResetPlaceholderIfEmpty()
     {
         if (inputField.text.Equals(string.Empty))
             SetPlaceholderText(originalPlaceholderText);
     }
 
-    private void SetPlaceholderText(string text)
+    public void SetPlaceholderText(string text)
     {
         inputFieldPlaceholder.text = text;
     }
 
-    private void SetInputFieldText(string text)
+    public void SetInputFieldText(string text)
     {
         inputField.text = text;
         inputField.MoveTextEnd(false);
@@ -268,7 +236,9 @@ public class Terminal : MonoBehaviour, ISubmitHandler, ISelectHandler
 
         inputField.textComponent.color = normalTextColor;
     }
+    #endregion
 
+    #region MonoBehaviour
     public void OnSelect(BaseEventData eventData)
     {
         SetPlaceholderText(string.Empty);
@@ -299,9 +269,5 @@ public class Terminal : MonoBehaviour, ISubmitHandler, ISelectHandler
 
         originalPlaceholderText = ((Text)inputField.placeholder).text;
     }
-
-    void Update()
-    {
-        HandleInputs();
-    }
+    #endregion
 }
