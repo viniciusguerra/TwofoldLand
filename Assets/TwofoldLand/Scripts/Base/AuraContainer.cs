@@ -14,7 +14,7 @@ public class AuraContainer : MonoBehaviour
     
     public int Amount { get { return amount; } }
 
-    private Rigidbody rigidbody;
+    private new Rigidbody rigidbody;
 	#endregion
 
 	#region Methods

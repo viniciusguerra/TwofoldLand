@@ -112,7 +112,7 @@ public class Ricci : Singleton<Ricci>
     {
         availableAura += amount;
 
-        HUD.Instance.UpdateAuraUI(amount);
+        HUD.Instance.UpdateAuraUI(availableAura);
         HUD.Instance.log.Push("Acquired " + amount + " aura");
     }
     #endregion

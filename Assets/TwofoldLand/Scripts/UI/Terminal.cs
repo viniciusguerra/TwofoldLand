@@ -14,7 +14,7 @@ public enum TerminalMessageMode
     Success
 }
 
-public class Terminal : MonoBehaviour, ISubmitHandler, ISelectHandler
+public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
 {
     #region Properties
     [Header("Actor Selection")]
@@ -257,8 +257,10 @@ public class Terminal : MonoBehaviour, ISubmitHandler, ISelectHandler
         }
     }
 
-    void Start()
+    public override void Start()
     {
+        base.Start();
+
         inputField = GetComponent<InputField>();
         inputFieldPlaceholder = (Text)inputField.placeholder;
 

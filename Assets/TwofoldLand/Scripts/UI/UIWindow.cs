@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public abstract class UIWindow : MonoBehaviour
+public class UIWindow : MonoBehaviour
 {
     #region Properties
     public bool startsActive;
@@ -11,6 +11,9 @@ public abstract class UIWindow : MonoBehaviour
     public iTween.EaseType uiFadeEaseType = iTween.EaseType.easeOutCubic;
 
     protected bool isVisible;
+
+    public bool IsVisible { get { return isVisible; } }
+
     private CanvasGroup canvasGroup;
     #endregion
 
