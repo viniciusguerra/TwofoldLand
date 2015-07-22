@@ -50,7 +50,7 @@ public abstract class UIWindow : MonoBehaviour
     }
 
     #region MonoBehaviour
-    void Start()
+    public virtual void Start()
     {
         canvasGroup = GetComponent<CanvasGroup>();
 

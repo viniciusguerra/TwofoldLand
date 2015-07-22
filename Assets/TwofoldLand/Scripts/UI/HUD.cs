@@ -12,6 +12,7 @@ public class HUD : Singleton<HUD>
     public Codex codex;
     public Storage storage;
     public InfoPanel infoPanel;
+    public BinaryConversion binaryConversion;
 
     private Slider healthBar;
     private Slider staminaBar;
@@ -23,19 +24,9 @@ public class HUD : Singleton<HUD>
 	#endregion
 
     #region UI Methods
-    public void ShowCodex()
+    public void UpdateAuraUI(float amount)
     {
-
-    }
-
-    public void ShowMemory()
-    {
-
-    }
-
-    public void ShowNotes()
-    {
-
+        auraText.text = amount + " Au";
     }
     #endregion
 

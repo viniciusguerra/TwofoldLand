@@ -7,24 +7,22 @@ using System.Reflection;
 
 public class Ricci : Singleton<Ricci>
 {
+    #region Properties
     public float actorSelectionRange = 4;
 
     [Header("Skills")]
     public List<Skill> skillList;
 
+    [Header("Aurum")]
+    public int availableAura;
+
     //[Header("Spells")]
     //public List<Spell> spellList;
 
     private NavMeshAgent agent;
+    #endregion
 
-    public static List<Skill> Skills
-    {
-        get
-        {
-            return Instance.skillList;
-        }
-    }
-
+    #region Methods
     public void AddInterface(Skill interfaceContainer)
     {
         skillList.Add(interfaceContainer);
@@ -110,8 +108,33 @@ public class Ricci : Singleton<Ricci>
         return Vector3.Distance(Ricci.Instance.gameObject.transform.position, target) < actorSelectionRange;
     }
 
+    private void CollectAura(int amount)
+    {
+        availableAura += amount;
+
+        HUD.Instance.UpdateAuraUI(amount);
+        HUD.Instance.log.Push("Acquired " + amount + " aura");
+    }
+    #endregion
+
+    #region MonoBehaviour
+    void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.tag == GlobalDefinitions.AuraTag)
+        {
+            AuraContainer auraContainer = collision.gameObject.GetComponent<AuraContainer>();
+
+            CollectAura(auraContainer.Amount);
+
+            auraContainer.Destroy();
+        }
+    }
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+
+        HUD.Instance.UpdateAuraUI(availableAura);
     }
+    #endregion
 }

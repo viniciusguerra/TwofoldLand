@@ -6,7 +6,8 @@ public static class GlobalDefinitions
     //Tags
     public const string PlayerTag = "Player";
     public const string ActorTag = "Actor";
-    public const string PathTag = "Path";  
+    public const string PathTag = "Path";
+    public const string AuraTag = "Aura";
 
     //Misc Strings     
     public static readonly char[] CommandSplitCharacters = {'.','(',',',')'};

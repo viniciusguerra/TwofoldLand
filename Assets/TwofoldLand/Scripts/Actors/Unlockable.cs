@@ -8,6 +8,17 @@ public class Unlockable : Actor, IUnlockable
     private bool open;
     public bool unlocked;
 
+    private bool alreadyOpened;
+    public GameObject prefabToRelease;
+
+    public string BinaryKey
+    {
+        get
+        {
+            return binaryKey;
+        }
+    }
+
     public bool Unlocked
     {
         get
@@ -20,32 +31,32 @@ public class Unlockable : Actor, IUnlockable
 
     public void Unlock()
     {
-
+        HUD.Instance.binaryConversion.Create((IUnlockable)this);        
     }
 
     private void DisplayLockedFeedback()
     {
-        HUD.Instance.log.Push("Chest Locked");
+        HUD.Instance.log.Push(name + " locked");
         lidAnimator.SetTrigger("toggle");
     }
 
-    public void Unlock(object decimalKey)
+    public void Unlock(object key)
     {
         if (unlocked)
         {
-            Debug.Log("IUnlockable already unlocked");
+            HUD.Instance.log.Push(name + " already unlocked");
         }
         else
         {
-            if (Convert.ToString(Int16.Parse((string)decimalKey), 2) == binaryKey)
+            if (Convert.ToString(Int16.Parse((string)key), 2) == binaryKey)
             {
                 unlocked = true;
                 lidAnimator.SetBool("unlocked", unlocked);
                 lidAnimator.SetBool("open", true);
-                lidAnimator.SetTrigger("toggle");
-                open = true;
 
-                HUD.Instance.log.Push("Chest unlocked");
+                Toggle();
+
+                HUD.Instance.log.Push(name + " unlocked");
             }
             else
             {
@@ -60,11 +71,32 @@ public class Unlockable : Actor, IUnlockable
         {
             open = !open;
             lidAnimator.SetTrigger("toggle");
+
+            if(!alreadyOpened)
+            {
+                StartCoroutine(ReleaseItemCoroutine());
+            }
         }
         else
         {
             DisplayLockedFeedback();
         }
+    }
+
+    private IEnumerator ReleaseItemCoroutine()
+    {
+        while (!lidAnimator.GetCurrentAnimatorStateInfo(0).IsName("ChestLidOpenAnimation"))
+            yield return null;
+
+        while (lidAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
+            yield return null;
+
+        GameObject releasedItem = Instantiate<GameObject>(prefabToRelease);
+        releasedItem.transform.position = transform.position + new Vector3(0, 0.6f, 0);
+        Vector3 force = transform.TransformDirection(new Vector3(0, 300, 120));
+        releasedItem.GetComponent<Rigidbody>().AddForce(force);
+
+        alreadyOpened = true;
     }
 
     public override void Start()
@@ -75,5 +107,7 @@ public class Unlockable : Actor, IUnlockable
         
         lidAnimator.SetBool("unlocked", unlocked);
         lidAnimator.SetBool("open", !open);
+
+        alreadyOpened = false;
     }
 }
