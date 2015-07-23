@@ -24,6 +24,8 @@ public class Command
     public Type abstractionInterfaceType;
     public MethodInfo methodInfo;
     public object[] parameters;
+    public int staminaCost;
+    public int auraCostToCompile;
 
     public override string ToString()
     {
@@ -58,8 +60,19 @@ public class Command
         this.abstractionInterfaceType = abstractionInterfaceType;
         this.methodInfo = methodInfo;
         this.parameters = parameters;
+
+        //Todo add interface size
+        //Stamina Cost is defined by parameter count + StaminaCost attribute
+        CodexDescriptionAttribute descriptionAttribute = (CodexDescriptionAttribute)Attribute.GetCustomAttribute(methodInfo, typeof(CodexDescriptionAttribute));
+
+        staminaCost = (parameters == null ? 0 : parameters.Length);
+        staminaCost += descriptionAttribute.StaminaCost;
+
+        //Aura Cost is defined by Stamina Cost * AuraCostConstant
+        auraCostToCompile = (staminaCost == 0 ? 1 : staminaCost) * GlobalDefinitions.AuraCostConstant;
     }
 
+    #region Static Methods
     ///<exception cref="MissingMemberException">Thrown when there is no existent interface with the given name</exception>
     public static Type FindInterface(string interfaceName)
     {
@@ -168,4 +181,5 @@ public class Command
             //if the Command's syntax doesn't match the Regex pattern
             throw new WrongCommandSyntaxException();
     }
+    #endregion
 }

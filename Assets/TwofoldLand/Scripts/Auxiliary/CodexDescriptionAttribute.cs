@@ -5,8 +5,11 @@ public class CodexDescriptionAttribute : System.Attribute
 {
     public readonly string Description;
 
-    public CodexDescriptionAttribute(string description)
+    public readonly int StaminaCost;
+
+    public CodexDescriptionAttribute(string description, int staminaCost)
     {
         this.Description = description;
+        this.StaminaCost = staminaCost;
     }
 }

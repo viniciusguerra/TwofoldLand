@@ -3,11 +3,15 @@ using System.Collections;
 
 public static class GlobalDefinitions
 {
+    //Values
+    public const int AuraCostConstant = 64;
+
     //Tags
     public const string PlayerTag = "Player";
     public const string ActorTag = "Actor";
     public const string PathTag = "Path";
     public const string AuraTag = "Aura";
+    public const string CompilerTag = "Compiler";
 
     //Misc Strings     
     public static readonly char[] CommandSplitCharacters = {'.','(',',',')'};

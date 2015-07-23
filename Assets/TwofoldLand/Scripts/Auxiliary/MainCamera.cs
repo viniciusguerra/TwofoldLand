@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CameraFollow : Singleton<CameraFollow>
+public class MainCamera : Singleton<MainCamera>
 {
     public Transform target;
     public bool follow = true;
-    public Vector3 relativePosition;
-    public float offsetChangeTime = 0.2f;
 
-    private Vector3 offset;
+    public Vector3 relativePosition;
+
+    public float offsetChangeTime = 0.2f;
+    public Vector3 offset;
 
     private void FollowTarget()
     {
@@ -33,9 +34,12 @@ public class CameraFollow : Singleton<CameraFollow>
 
     void LateUpdate()
     {
-        offset = Vector3.zero;
-
         if (follow)
             FollowTarget();
-    } 
+    }
+
+    void Start()
+    {
+        offset = Vector3.zero;
+    }
 }

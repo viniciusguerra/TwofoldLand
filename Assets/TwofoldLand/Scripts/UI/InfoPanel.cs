@@ -70,6 +70,10 @@ public class InfoPanel : UIWindow
 	#endregion
 
 	#region MonoBehaviour
-
+    void FixedUpdate()
+    {
+        if (HUD.Instance.ide.IsVisible)
+            Hide();
+    }
 	#endregion
 }

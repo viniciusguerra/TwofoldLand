@@ -109,6 +109,8 @@ public class Actor : MonoBehaviour, IPointerClickHandler
 
     public void SubmitSpell(Spell spell)
     {
+        string errorMessage = string.Empty;
+        
         foreach (Command c in spell.commands)
         {
             try
@@ -118,24 +120,28 @@ public class Actor : MonoBehaviour, IPointerClickHandler
 #pragma warning disable 0168
             catch (MethodAccessException mae)
             {
-                HUD.Instance.log.Push(GlobalDefinitions.InvalidMethodErrorMessage);
-                break;
+                errorMessage = GlobalDefinitions.InvalidMethodErrorMessage;
+                return;
             }
             catch (NotImplementedException nie)
             {
-                HUD.Instance.log.Push(GlobalDefinitions.InvalidMethodErrorMessage);
-                break;
+                errorMessage = GlobalDefinitions.InvalidMethodErrorMessage;
+                return;
             }
             catch (MissingMethodException mme)
             {
-                HUD.Instance.log.Push(GlobalDefinitions.InvalidMethodErrorMessage);
-                break;   
+                errorMessage = GlobalDefinitions.InvalidMethodErrorMessage;
+                return; 
             }
             catch (TargetParameterCountException tpce)
 #pragma warning restore 0168
             {
-                HUD.Instance.log.Push(GlobalDefinitions.InvalidParametersErrorMessage);
-                break;
+                errorMessage = GlobalDefinitions.InvalidParametersErrorMessage;
+                return;
+            }
+            finally
+            {
+                HUD.Instance.log.Push(errorMessage + " - Spell interrupted");                
             }
         }
     }

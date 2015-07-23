@@ -20,6 +20,7 @@ public class InputHandler : MonoBehaviour
             if (!Ricci.Instance.IsInSelectionRange(HUD.Instance.terminal.selectedActor.transform.position) || Input.GetMouseButtonUp(1))
             {
                 HUD.Instance.terminal.ClearActorSelection();
+                HUD.Instance.binaryConversion.Hide();
             }
         }
         else

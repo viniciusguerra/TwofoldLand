@@ -14,10 +14,30 @@ public class Ricci : Singleton<Ricci>
     public List<Skill> skillList;
 
     [Header("Aurum")]
-    public int availableAura;
+    private int availableAura;
 
-    //[Header("Spells")]
-    //public List<Spell> spellList;
+    public int Aura
+    { 
+        get
+        {
+            return availableAura;
+        }
+        set
+        {
+            if (value < 0)
+                SpendAura(value);
+            else
+                CollectAura(value);
+        }
+    }
+
+    [Header("Spells")]
+    public List<Spell> spellList;
+    
+    [SerializeField]
+    private bool compilerAvailable = false;
+
+    public bool IsCompilerAvailable { get { return compilerAvailable; } }
 
     private NavMeshAgent agent;
     #endregion
@@ -37,6 +57,11 @@ public class Ricci : Singleton<Ricci>
         }
 
         return false;
+    }
+
+    public void AddSpell(Spell spell)
+    {
+        spellList.Add(spell);
     }
 
     ///<exception cref="MissingMemberException">Thrown when there is no existent interface with the given name</exception>
@@ -110,10 +135,18 @@ public class Ricci : Singleton<Ricci>
 
     private void CollectAura(int amount)
     {
-        availableAura += amount;
+        availableAura += Mathf.Abs(amount);
 
         HUD.Instance.UpdateAuraUI(availableAura);
-        HUD.Instance.log.Push("Acquired " + amount + " aura");
+        HUD.Instance.log.Push("Acquired " + Mathf.Abs(amount) + " aura");
+    }
+
+    private void SpendAura(int amount)
+    {
+        availableAura -= Mathf.Abs(amount);
+
+        HUD.Instance.UpdateAuraUI(availableAura);
+        HUD.Instance.log.Push("Spent " + Mathf.Abs(amount) + " aura");
     }
     #endregion
 
@@ -130,11 +163,31 @@ public class Ricci : Singleton<Ricci>
         }
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == GlobalDefinitions.CompilerTag)
+        {
+            compilerAvailable = true;
+            HUD.Instance.ide.SetCompileButton();
+        }
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag == GlobalDefinitions.CompilerTag)
+        {
+            compilerAvailable = false;
+            HUD.Instance.ide.SetCompileButton();
+        }
+    }
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
 
         HUD.Instance.UpdateAuraUI(availableAura);
+
+        compilerAvailable = false;
     }
     #endregion
 }
