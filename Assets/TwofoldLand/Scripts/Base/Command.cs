@@ -66,7 +66,7 @@ public class Command
         CodexDescriptionAttribute descriptionAttribute = (CodexDescriptionAttribute)Attribute.GetCustomAttribute(methodInfo, typeof(CodexDescriptionAttribute));
 
         staminaCost = (parameters == null ? 0 : parameters.Length);
-        staminaCost += descriptionAttribute.StaminaCost;
+        staminaCost += descriptionAttribute == null ? 0 : descriptionAttribute.StaminaCost;
 
         //Aura Cost is defined by Stamina Cost * AuraCostConstant
         auraCostToCompile = (staminaCost == 0 ? 1 : staminaCost) * GlobalDefinitions.AuraCostConstant;

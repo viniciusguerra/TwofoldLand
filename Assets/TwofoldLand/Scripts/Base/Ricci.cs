@@ -30,9 +30,6 @@ public class Ricci : Singleton<Ricci>
                 CollectAura(value);
         }
     }
-
-    [Header("Spells")]
-    public List<Spell> spellList;
     
     [SerializeField]
     private bool compilerAvailable = false;
@@ -57,11 +54,6 @@ public class Ricci : Singleton<Ricci>
         }
 
         return false;
-    }
-
-    public void AddSpell(Spell spell)
-    {
-        spellList.Add(spell);
     }
 
     ///<exception cref="MissingMemberException">Thrown when there is no existent interface with the given name</exception>

@@ -8,6 +8,17 @@ using System.Reflection;
 public class Codex : UIWindow
 {
     #region Properties
+    [Header("Spell Area")]
+    public ChangeButtonTextStyle spellAreaButton;
+    public UIWindow spellArea;
+
+    public RectTransform spellListPanel;
+    public GameObject spellPrefab;
+    public List<Spell> compiledSpells;
+
+    [Header("Interface Area")]
+    public ChangeButtonTextStyle interfaceAreaButton;
+    public UIWindow interfaceArea;
     public InterfaceToggleList interfaceList;
 
     public Text interfaceNameText;
@@ -15,15 +26,16 @@ public class Codex : UIWindow
     public RectTransform propertyPanel;
     public RectTransform propertyListPanel;
     public RectTransform methodPanel;
-    public RectTransform methodListPanel;
+    public RectTransform methodListPanel;    
 
     public GameObject propertyPrefab;
-    public GameObject methodPrefab;
+    public GameObject methodPrefab;    
 
     public List<RectTransform> propertyList;
     public List<RectTransform> methodList;
+    public List<RectTransform> spellList;
 
-    public Vector2 panelPadding;
+    public Vector3 cameraOffsetWhenOpen;
 
     private Type currentInterfaceType;
 
@@ -39,7 +51,15 @@ public class Codex : UIWindow
 
         if (isVisible)
         {
+            MainCamera.Instance.AddOffset(cameraOffsetWhenOpen);
+
+            DisplayInterfaceArea();
+
             PopulateInterfaceList();
+        }
+        else
+        {
+            MainCamera.Instance.Center();
         }
     }
 
@@ -47,7 +67,11 @@ public class Codex : UIWindow
     {
         base.Show();
 
+        MainCamera.Instance.AddOffset(cameraOffsetWhenOpen);
+
         ClearShownInterface();
+
+        DisplayInterfaceArea();
 
         PopulateInterfaceList();
     }
@@ -56,7 +80,54 @@ public class Codex : UIWindow
     {
         base.Hide();
 
+        MainCamera.Instance.Center();
+
         ClearShownInterface();
+    }
+
+    public void DisplayInterfaceArea()
+    {
+        if (interfaceArea.IsVisible)
+            return;
+
+        spellArea.Hide();
+        spellAreaButton.SetNormal();
+        interfaceArea.Show();
+        interfaceAreaButton.SetBold();
+    }
+
+    public void DisplaySpellArea()
+    {
+        if (spellArea.IsVisible)
+            return;
+
+        interfaceArea.Hide();
+        interfaceAreaButton.SetNormal();
+        spellArea.Show();
+        spellAreaButton.SetBold();
+    }
+
+    [ContextMenu("Update Spells")]
+    public void UpdateSpells()
+    {
+        ClearRectTransformList(spellList);
+
+        DisplaySpells();
+    }
+
+    public void AddSpell(Spell spell)
+    {
+        compiledSpells.Add(spell);
+
+        UpdateSpells();
+    }
+
+    private void DisplaySpells()
+    {
+        foreach(Spell s in compiledSpells)
+        {
+            spellList.Add(CreateSpellUI(s));
+        }
     }
 
     private void PopulateInterfaceList()
@@ -74,6 +145,8 @@ public class Codex : UIWindow
     public void DisplayInterface(string name)
     {
         Show();
+
+        DisplayInterfaceArea();
 
         currentInterfaceType = Type.GetType(name);
 
@@ -95,6 +168,8 @@ public class Codex : UIWindow
 
         Show();
 
+        DisplayInterfaceArea();
+
         currentInterfaceType = Type.GetType(name);
 
         interfaceNameText.text = currentInterfaceType.Name;
@@ -114,7 +189,7 @@ public class Codex : UIWindow
 
         ClearRectTransformList(propertyList);
 
-        ClearRectTransformList(methodList);        
+        ClearRectTransformList(methodList);       
     }
 
     private void DisplayProperties()
@@ -137,6 +212,24 @@ public class Codex : UIWindow
             if(!methodInfo.Name.StartsWith("get_") && !methodInfo.Name.StartsWith("set_"))
                 methodList.Add(CreateMethodUI(methodInfo));
         }
+    }
+
+    private RectTransform CreateSpellUI(Spell spell)
+    {
+        GameObject spellGo = Instantiate<GameObject>(spellPrefab);
+        spellGo.transform.SetParent(spellListPanel, false);
+
+        RectTransform rt = spellGo.GetComponent<RectTransform>();
+        Rect prefabRect = spellPrefab.GetComponent<RectTransform>().rect;
+        rt.rect.Set(prefabRect.x, prefabRect.y, prefabRect.width, prefabRect.height);
+
+        List<Transform> childList = new List<Transform>(spellGo.transform.GetComponentsInChildren<Transform>());
+
+        childList.Find(x => x.name == "SpellTitle").GetComponent<Text>().text = spell.SpellTitle;
+        childList.Find(x => x.name == "AuraCost").GetComponent<Text>().text = "Aura Cost: " + "<b>" + spell.AuraCost.ToString() + "</b>";
+        childList.Find(x => x.name == "StaminaCost").GetComponent<Text>().text = "Stamina Cost: " + "<b>" + spell.StaminaCost.ToString() + "</b>";
+
+        return rt;
     }
 
     private RectTransform CreatePropertyUI(PropertyInfo propertyInfo)
@@ -215,6 +308,9 @@ public class Codex : UIWindow
 
         methodList = new List<RectTransform>();
         propertyList = new List<RectTransform>();
+        spellList = new List<RectTransform>();
+
+        UpdateSpells();
     }
     #endregion
 }

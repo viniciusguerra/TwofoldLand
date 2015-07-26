@@ -27,13 +27,34 @@ public class IDE : UIWindow
 
     #region Methods
     //Event Triggered Methods
+    public void CycleSpells()
+    {
+        if (spellList.Count == 0)
+            return;
+
+        if (spellList.IndexOf(currentSpell, 0) == spellList.Count - 1)
+            SetCurrentSpell(spellList[0]);
+        else
+            SetCurrentSpell(spellList[spellList.IndexOf(currentSpell, 0) + 1]);
+    }
+
+    public void DeleteCurrentSpell()
+    {
+        spellList.Remove(currentSpell);
+
+        ClearDisplay();
+    }
+
     public void SetCurrentSpell(Spell s)
     {
         currentSpell = s;
 
+        spellTitleInputField.interactable = true;
         spellTitleInputField.text = s.SpellTitle;
         spellTitleInputField.MoveTextEnd(false);
 
+        spellInputField.text = s.SpellWords != null? s.SpellWords : string.Empty;
+        spellInputField.MoveTextStart(false);
         spellInputField.interactable = true;        
     }
 
@@ -68,7 +89,7 @@ public class IDE : UIWindow
 
     public void CompileSpell()
     {
-        Ricci.Instance.AddSpell(currentSpell);
+        HUD.Instance.codex.AddSpell(currentSpell);
         Ricci.Instance.Aura = -currentSpell.AuraCost;
 
         spellList.Remove(currentSpell);
@@ -116,6 +137,7 @@ public class IDE : UIWindow
     {
         currentSpell = null;
 
+        spellTitleInputField.interactable = false;
         spellTitleInputField.text = "Select a Spell";
         spellTitleInputField.MoveTextEnd(false);
 

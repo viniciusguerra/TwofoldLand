@@ -12,28 +12,29 @@ public class ChangeButtonTextStyle : MonoBehaviour
     #endregion
 
     #region Methods
-    public void ToggleBold(bool toggle)
+    public void ToggleBold()
     {
-        if (toggle)
-            text.fontStyle = FontStyle.Bold;
-        else
-            text.fontStyle = originalFontStyle;
+        text.fontStyle = text.fontStyle == FontStyle.Bold ? originalFontStyle : FontStyle.Bold;
     }
 
-    public void ToggleItalic(bool toggle)
+    public void ToggleItalic()
     {
-        if (toggle)
-            text.fontStyle = FontStyle.Italic;
-        else
-            text.fontStyle = originalFontStyle;
+        text.fontStyle = text.fontStyle == FontStyle.Italic ? originalFontStyle : FontStyle.Italic;
     }
 
-    public void ToggleBoldAndItalic(bool toggle)
+    public void ToggleBoldAndItalic()
     {
-        if (toggle)
-            text.fontStyle = FontStyle.BoldAndItalic;
-        else
-            text.fontStyle = originalFontStyle;
+        text.fontStyle = text.fontStyle == FontStyle.BoldAndItalic ? originalFontStyle : FontStyle.BoldAndItalic;
+    }
+
+    public void SetNormal()
+    {
+        text.fontStyle = FontStyle.Normal;
+    }
+
+    public void SetBold()
+    {
+        text.fontStyle = FontStyle.Bold;
     }
     #endregion
 
@@ -41,11 +42,6 @@ public class ChangeButtonTextStyle : MonoBehaviour
     void Awake()
     {
         originalFontStyle = text.fontStyle;
-    }
-
-    void Update()
-    {
-
     }
     #endregion
 }

@@ -57,6 +57,23 @@ public class Spell
         }
     }
 
+    [SerializeField]
+    private int staminaCost;
+
+    public int StaminaCost
+    {
+        get
+        {
+            staminaCost = CalculateStaminaCost();
+
+            return staminaCost;
+        }
+        private set
+        {
+            staminaCost = value;
+        }
+    }
+
     private int CalculateAuraCost()
     {
         if (commands == null)
@@ -70,6 +87,21 @@ public class Spell
         }
 
         return auraCost;
+    }
+
+    private int CalculateStaminaCost()
+    {
+        if (commands == null)
+            return 0;
+
+        int staminaCost = 0;
+
+        foreach (Command c in commands)
+        {
+            staminaCost += c.staminaCost;
+        }
+
+        return staminaCost;
     }
 
     public Command[] commands;
