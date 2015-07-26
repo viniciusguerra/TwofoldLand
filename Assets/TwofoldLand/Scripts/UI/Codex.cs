@@ -122,6 +122,16 @@ public class Codex : UIWindow
         UpdateSpells();
     }
 
+    public void SetSpellToSlot(RectTransform spellUI)
+    {
+        if(HUD.Instance.storage.currentSelectedSpellSlot != null)
+        {
+            Spell selectedSpell = compiledSpells[spellList.IndexOf(spellUI)];
+
+            HUD.Instance.storage.SelectSpell(selectedSpell);
+        }
+    }
+
     private void DisplaySpells()
     {
         foreach(Spell s in compiledSpells)
@@ -228,6 +238,8 @@ public class Codex : UIWindow
         childList.Find(x => x.name == "SpellTitle").GetComponent<Text>().text = spell.SpellTitle;
         childList.Find(x => x.name == "AuraCost").GetComponent<Text>().text = "Aura Cost: " + "<b>" + spell.AuraCost.ToString() + "</b>";
         childList.Find(x => x.name == "StaminaCost").GetComponent<Text>().text = "Stamina Cost: " + "<b>" + spell.StaminaCost.ToString() + "</b>";
+
+        spellGo.GetComponent<Button>().onClick.AddListener(() => HUD.Instance.codex.SetSpellToSlot(rt));
 
         return rt;
     }

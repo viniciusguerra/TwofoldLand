@@ -48,10 +48,9 @@ public class InputHandler : MonoBehaviour
                 HUD.Instance.terminal.SetPlaceholderText(HUD.Instance.terminal.inputField.text);
             }
 
-            if (Input.GetKeyUp(KeyCode.Tab) || Input.GetKeyUp(KeyCode.RightArrow) && !Regex.IsMatch(HUD.Instance.terminal.inputField.text, GlobalDefinitions.TerminalCommandRegexPattern))
+            if (Input.GetKeyUp(KeyCode.Tab) || Input.GetKeyUp(KeyCode.RightArrow))
             {
-                HUD.Instance.terminal.SetInputFieldText(HUD.Instance.terminal.completedCode);
-                HUD.Instance.terminal.inputField.MoveTextEnd(false);
+                HUD.Instance.terminal.CompleteInputField();                
             }
         }
         else

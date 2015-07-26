@@ -18,7 +18,7 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
 {
     #region Properties
     [Header("Actor Selection")]
-    public Actor selectedActor;    
+    public Actor selectedActor;
 
     [Header("Error Message Configuration")]
     public Color normalTextColor;
@@ -40,6 +40,8 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
 
     public delegate void ActorSelectionDelegate();
     public event ActorSelectionDelegate OnActorDeselection;
+
+    private bool codeCompleteIsAddressContent = false;
     #endregion
 
     #region Methods
@@ -63,7 +65,7 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
         {
             SelectActor(actor);
         }
-    }    
+    }
 
     public bool HasSelectedActor()
     {
@@ -78,13 +80,31 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
 
     public void SubmitCommandToSelectedActor()
     {
+        if (Regex.IsMatch(inputField.text, GlobalDefinitions.StorageAddressPattern))
+        {
+            Spell spellAtAddress = HUD.Instance.storage.GetSpellFromAddress(inputField.text);
+
+            if (spellAtAddress != null)
+            {
+                selectedActor.SubmitSpell(spellAtAddress);                
+            }
+            else
+            {
+                ShowMessage(GlobalDefinitions.InvalidAddressErrorMessage, TerminalMessageMode.Error);
+            }
+
+            SetInputFieldText(string.Empty);
+
+            return;
+        }
+
         try
         {
             Command command = Command.BuildCommand(inputField.text);
 
             try
             {
-                selectedActor.SubmitCommand(command);                
+                selectedActor.SubmitCommand(command);
             }
 #pragma warning disable 0168
             catch (MethodAccessException mae)
@@ -111,7 +131,7 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
         catch (WrongCommandSyntaxException wcs)
         {
             ShowMessage(GlobalDefinitions.WrongSyntaxErrorMessage, TerminalMessageMode.Error);
-        }        
+        }
         catch (MissingMemberException mme)
         {
             ShowMessage(GlobalDefinitions.InvalidMethodErrorMessage, TerminalMessageMode.Error);
@@ -137,6 +157,15 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
         inputField.MoveTextEnd(false);
     }
 
+    public void CompleteInputField()
+    {
+        if (!codeCompleteIsAddressContent)
+        {
+            HUD.Instance.terminal.SetInputFieldText(HUD.Instance.terminal.completedCode);
+            HUD.Instance.terminal.inputField.MoveTextEnd(false);
+        }
+    }
+
     public void CodeCompletion()
     {
         inputField.placeholder.enabled = true;
@@ -147,8 +176,28 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
             return;
         }
 
+        if (Regex.IsMatch(inputField.text, GlobalDefinitions.StorageAddressPattern))
+        {
+            codeCompleteIsAddressContent = false;
+
+            Spell spellAtAddress = HUD.Instance.storage.GetSpellFromAddress(inputField.text);
+            completedCode = inputField.text;
+
+            if (spellAtAddress != null)
+            {
+                completedCode += " " + spellAtAddress.SpellTitle;
+                codeCompleteIsAddressContent = true;
+            }
+
+            SetPlaceholderText(completedCode);
+
+            return;
+        }
+
         if (Regex.IsMatch(inputField.text, GlobalDefinitions.TerminalInterfaceRegexPattern))
         {
+            codeCompleteIsAddressContent = false;
+
             try
             {
                 completedCode = Ricci.Instance.FindInterfaceStartingWith(inputField.text).Name;
@@ -163,10 +212,14 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
             {
                 SetPlaceholderText(completedCode);
             }
+
+            return;
         }
 
         if (Regex.IsMatch(inputField.text, GlobalDefinitions.TerminalInterfaceAndMethodRegexPattern))
         {
+            codeCompleteIsAddressContent = false;
+
             string[] commandSplit = inputField.text.Split('.');
 
             completedCode = inputField.text;
@@ -175,7 +228,7 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
             {
                 string remainder = Ricci.Instance.FindRemainderOfMethodStartingWith(Ricci.Instance.FindInterface(commandSplit[0]), commandSplit[1]);
 
-                if(!string.IsNullOrEmpty(remainder))
+                if (!string.IsNullOrEmpty(remainder))
                     remainder += "()";
 
                 completedCode += remainder;
@@ -188,6 +241,8 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
             }
 
             SetPlaceholderText(completedCode);
+
+            return;
         }
     }
 
