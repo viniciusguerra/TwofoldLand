@@ -15,12 +15,12 @@ public interface IUnlockable : IBase
         get;
     }
 
-    [CodexDescription("Brings up the Binary Conversion UI", 0)]
+    [CodexDescription("Brings up the Binary Conversion UI", 10)]
     void Unlock();
 
-    [CodexDescription("Unlocks when giving the adequate key", 8)]
+    [CodexDescription("Unlocks when giving the adequate key", 0)]
     void Unlock(object key);
 
-    [CodexDescription("Opens and closes if unlocked", 2)]
+    [CodexDescription("Opens and closes if unlocked", 20)]
     void Toggle();
 }

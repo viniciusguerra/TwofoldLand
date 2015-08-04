@@ -5,7 +5,7 @@ using System.Linq;
 using System;
 using System.Reflection;
 
-public class Ricci : Singleton<Ricci>
+public class Ricci : Singleton<Ricci>, IDamageable
 {
     #region Properties
     public float actorSelectionRange = 4;
@@ -13,28 +13,110 @@ public class Ricci : Singleton<Ricci>
     [Header("Skills")]
     public List<Skill> skillList;
 
+    [SerializeField]
+    private bool compilerAvailable = false;
+    public bool IsCompilerAvailable
+    {
+        get
+        {
+            return compilerAvailable;
+        }
+        private set
+        {
+            compilerAvailable = value;
+
+            if (compilerAvailable)
+                Rest();
+        }
+    }
+
     [Header("Aurum")]
+    [SerializeField]
     private int availableAura;
 
     public int Aura
-    { 
+    {
+        get { return availableAura; }
+    }
+
+    [Header("IDamageable")]
+    [SerializeField]
+    private float maxHealth;
+    [SerializeField]
+    private float currentHealth;
+
+    public float Health
+    {
         get
         {
-            return availableAura;
+            return currentHealth;
         }
         set
         {
-            if (value < 0)
-                SpendAura(value);
-            else
-                CollectAura(value);
+            currentHealth = Mathf.Max(0, value);
+
+            HUD.Instance.SetHealthBarValue(currentHealth);
         }
     }
-    
-    [SerializeField]
-    private bool compilerAvailable = false;
 
-    public bool IsCompilerAvailable { get { return compilerAvailable; } }
+    public float MaxHealth
+    {
+        get
+        {
+            return maxHealth;
+        }
+        set
+        {
+            maxHealth = Mathf.Max(0, value);
+
+            HUD.Instance.SetMaxHealth(maxHealth);
+        }
+    }
+
+    [Header("Stamina")]
+    [SerializeField]
+    private float maxStamina;
+    [SerializeField]
+    private float currentStamina;
+
+    public float staminaRegenRate = 0.2f;
+    public float staminaRegenWait = 1;
+    private float currentStaminaRegenWait;
+    private bool regeneratingStamina = false;
+
+    public float Stamina
+    {
+        get
+        {
+            return currentStamina;
+        }
+        set
+        {
+            currentStamina = Mathf.Max(0, value);           
+
+            HUD.Instance.SetStaminaBarValue(currentStamina);
+
+            //if (currentStamina < MaxStamina && !regeneratingStamina)
+            //{
+            //    currentStaminaRegenWait = 0;
+            //    StartCoroutine(StaminaRegen());
+            //}
+        }
+    }
+
+    public float MaxStamina
+    {
+        get
+        {
+            return maxStamina;
+        }
+        set
+        {
+            maxStamina = Mathf.Max(0, value);
+
+            HUD.Instance.SetMaxStamina(maxStamina);
+        }
+    }
 
     private NavMeshAgent agent;
     #endregion
@@ -47,7 +129,7 @@ public class Ricci : Singleton<Ricci>
 
     public bool KnowsInterface(Type interfaceType)
     {
-        foreach(Skill s in skillList)
+        foreach (Skill s in skillList)
         {
             if (s.interfaceContainer.InterfaceType == interfaceType)
                 return true;
@@ -71,7 +153,7 @@ public class Ricci : Singleton<Ricci>
     ///<exception cref="MissingMemberException">Thrown when there is no existent interface with the given name</exception>
     public Type FindInterfaceStartingWith(string text)
     {
-        foreach(Skill s in skillList)
+        foreach (Skill s in skillList)
         {
             if (s.interfaceContainer.InterfaceType.Name.StartsWith(text))
                 return s.interfaceContainer.InterfaceType;
@@ -83,10 +165,10 @@ public class Ricci : Singleton<Ricci>
     public string FindRemainderOfMethodStartingWith(Type interfaceType, string text)
     {
         if (!string.IsNullOrEmpty(text))
-        {            
+        {
             string remainder = string.Empty;
 
-            foreach(Skill s in skillList)
+            foreach (Skill s in skillList)
             {
                 if (s.interfaceContainer.InterfaceType == interfaceType)
                 {
@@ -96,7 +178,7 @@ public class Ricci : Singleton<Ricci>
                             remainder = m.Name.Replace(text, String.Empty);
                     }
                 }
-            }            
+            }
 
             return remainder;
         }
@@ -106,11 +188,11 @@ public class Ricci : Singleton<Ricci>
 
     public void LookAt(Vector3 target)
     {
-        transform.LookAt(target);    
+        transform.LookAt(target);
     }
 
     public void MoveToPosition(Vector3 targetPosition)
-    {        
+    {
         agent.SetDestination(targetPosition);
         agent.Resume();
     }
@@ -125,7 +207,7 @@ public class Ricci : Singleton<Ricci>
         return Vector3.Distance(Ricci.Instance.gameObject.transform.position, target) < actorSelectionRange;
     }
 
-    private void CollectAura(int amount)
+    public void CollectAura(int amount)
     {
         availableAura += Mathf.Abs(amount);
 
@@ -133,19 +215,45 @@ public class Ricci : Singleton<Ricci>
         HUD.Instance.log.Push("Acquired " + Mathf.Abs(amount) + " aura");
     }
 
-    private void SpendAura(int amount)
+    public void SpendAura(int amount)
     {
         availableAura -= Mathf.Abs(amount);
 
         HUD.Instance.UpdateAuraUI(availableAura);
         HUD.Instance.log.Push("Spent " + Mathf.Abs(amount) + " aura");
     }
+
+    //TODO Stamina Regen
+    //private IEnumerator StaminaRegen()
+    //{
+    //    regeneratingStamina = true;
+
+    //    while (currentStaminaRegenWait < staminaRegenWait)
+    //    {
+    //        currentStaminaRegenWait += Time.deltaTime;
+    //        yield return null;
+    //    }
+
+    //    while (Stamina <= MaxStamina)
+    //    {
+    //        Stamina += MaxStamina * staminaRegenRate * Time.deltaTime;
+    //        yield return null;
+    //    }
+
+    //    regeneratingStamina = false;
+    //}
+
+    public void Rest()
+    {
+        Health = MaxHealth;
+        Stamina = MaxStamina;
+    }
     #endregion
 
     #region MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.tag == GlobalDefinitions.AuraTag)
+        if (collision.gameObject.tag == GlobalDefinitions.AuraTag)
         {
             AuraContainer auraContainer = collision.gameObject.GetComponent<AuraContainer>();
 
@@ -159,7 +267,7 @@ public class Ricci : Singleton<Ricci>
     {
         if (other.tag == GlobalDefinitions.CompilerTag)
         {
-            compilerAvailable = true;
+            IsCompilerAvailable = true;
             HUD.Instance.ide.SetCompileButton();
         }
     }
@@ -168,7 +276,7 @@ public class Ricci : Singleton<Ricci>
     {
         if (other.tag == GlobalDefinitions.CompilerTag)
         {
-            compilerAvailable = false;
+            IsCompilerAvailable = false;
             HUD.Instance.ide.SetCompileButton();
         }
     }
@@ -179,7 +287,13 @@ public class Ricci : Singleton<Ricci>
 
         HUD.Instance.UpdateAuraUI(availableAura);
 
-        compilerAvailable = false;
-    }
+        HUD.Instance.SetMaxHealth(maxHealth);
+        HUD.Instance.SetMaxStamina(maxStamina);        
+
+        HUD.Instance.UpdateHealthBarValue(Health);
+        HUD.Instance.UpdateStaminaBarValue(Stamina);
+
+        compilerAvailable = false;        
+    }    
     #endregion
 }

@@ -28,6 +28,7 @@ public static class GlobalDefinitions
     public const string NoTargetErrorMessage = "No Selected Target";
     public const string InvalidParametersErrorMessage = "Invalid Parameters";
     public const string InvalidAddressErrorMessage = "Invalid Use of Memory Address";
+    public const string NotEnoughStaminaErrorMessage = "Not Enough Stamina";
 
     //Buttons
     public const string CodexButton = "Codex";

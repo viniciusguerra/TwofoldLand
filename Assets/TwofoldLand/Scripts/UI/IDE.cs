@@ -90,7 +90,7 @@ public class IDE : UIWindow
     public void CompileSpell()
     {
         HUD.Instance.codex.AddSpell(currentSpell);
-        Ricci.Instance.Aura = -currentSpell.AuraCost;
+        Ricci.Instance.SpendAura(currentSpell.AuraCost);
 
         spellList.Remove(currentSpell);
 

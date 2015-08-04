@@ -86,7 +86,15 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
 
             if (spellAtAddress != null)
             {
-                selectedActor.SubmitSpell(spellAtAddress);                
+                if (Ricci.Instance.Stamina >= spellAtAddress.StaminaCost)
+                {
+                    Ricci.Instance.Stamina -= spellAtAddress.StaminaCost;
+                    selectedActor.SubmitSpell(spellAtAddress);
+                }
+                else
+                {
+                    HUD.Instance.log.Push(GlobalDefinitions.NotEnoughStaminaErrorMessage);
+                }
             }
             else
             {
@@ -104,7 +112,15 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
 
             try
             {
-                selectedActor.SubmitCommand(command);
+                if (Ricci.Instance.Stamina >= command.staminaCost)
+                {
+                    Ricci.Instance.Stamina -= command.staminaCost;
+                    selectedActor.SubmitCommand(command);
+                }
+                else
+                {
+                    HUD.Instance.log.Push(GlobalDefinitions.NotEnoughStaminaErrorMessage);
+                }
             }
 #pragma warning disable 0168
             catch (MethodAccessException mae)
