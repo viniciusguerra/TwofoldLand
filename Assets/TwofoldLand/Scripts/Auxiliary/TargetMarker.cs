@@ -1,45 +1,94 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class TargetMarker : SingletonMonoBehaviour<TargetMarker>
-{    
+public class TargetMarker : Singleton<TargetMarker>
+{
     public float yOffset;
-    public float hideDistance = 1;
+    public Vector3 scaleGrowth;
+    public float blinkTime = 0.3f;
+    public float timeToHide = 0.6f;
+    private Material material;
 
-    private MeshRenderer meshRenderer;
+    public Color auxiliaryColor;
+
+    public void Set(Vector3 target)
+    {
+        iTween.StopByName(gameObject, name + "Scale");
+        iTween.StopByName(gameObject, name + "Color");             
+        
+        Blink();
+        SetPosition(target);
+    }
 
     public void SetPosition(Vector3 target)
     {
-        StopAllCoroutines();
+        ShowInstantly();
 
-        Show();
         transform.position = target + new Vector3(0, yOffset, 0);
-        StartCoroutine(HideOnArrival());
     }
 
-    private void Show()
+    public void HideTween()
     {
-        meshRenderer.enabled = true;
+        auxiliaryColor = material.color;
+        auxiliaryColor.a = 0;
+
+        if (iTween.tweens.Exists(x => x.ContainsValue(name + "Color")))
+            ResumeHiding();
+        else
+            StartHiding();
     }
 
-    public void Hide()
+    public void HideInstantly()
     {
-        meshRenderer.enabled = false;
-        StopAllCoroutines();
+        iTween.StopByName(gameObject, name + "Scale");
+        iTween.StopByName(gameObject, name + "Color");
+
+        transform.localScale = Vector3.one;
+
+        auxiliaryColor = material.color;
+        auxiliaryColor.a = 0;
+
+        material.color = auxiliaryColor;
     }
 
-    private IEnumerator HideOnArrival()
+    private void ShowInstantly()
     {
-        while (Vector3.Distance(transform.position,Ricci.Instance.transform.position) > hideDistance)
-            yield return null;
-
-        Hide();
+        auxiliaryColor = material.color;
+        auxiliaryColor.a = 1;
+        material.color = auxiliaryColor;
     }    
+
+    private void Blink()
+    {
+        transform.localScale = Vector3.one;
+        iTween.PunchScale(gameObject, iTween.Hash("name", name + "Scale", "amount", scaleGrowth, "time", blinkTime));
+    }
+
+    private void StartHiding()
+    {
+        iTween.ColorTo(gameObject, iTween.Hash("name", name + "Color", "color", auxiliaryColor, "delay", blinkTime, "time", timeToHide));
+    }
+
+    private void ResumeHiding()
+    {
+        iTween.Resume(gameObject, name + "Color");
+    }
 
     void Start()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
+        material = GetComponent<MeshRenderer>().material;
 
-        HideOnArrival();
+        HideInstantly();
+    }
+
+    void Update()
+    {
+        
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.tag.Equals(GlobalDefinitions.PlayerTag))            
+            HideInstantly();
     }
 }

@@ -3,8 +3,17 @@ using System.Collections;
 
 public static class GlobalDefinitions
 {
-    //Misc Strings
-    public const string ActorTag = "Actor";   
+    //Values
+    public const int AuraCostConstant = 64;
+
+    //Tags
+    public const string PlayerTag = "Player";
+    public const string ActorTag = "Actor";
+    public const string PathTag = "Path";
+    public const string AuraTag = "Aura";
+    public const string CompilerTag = "Compiler";
+
+    //Misc Strings     
     public static readonly char[] CommandSplitCharacters = {'.','(',',',')'};
     public const string SelectedMaterialPath = "Materials/SelectedMaterial";
     public const string SpellSuffix = ".spl";
@@ -18,13 +27,18 @@ public static class GlobalDefinitions
     public const string UnnaccessibleMethodErrorMessage = "Unnaccessible Method";
     public const string NoTargetErrorMessage = "No Selected Target";
     public const string InvalidParametersErrorMessage = "Invalid Parameters";
+    public const string InvalidAddressErrorMessage = "Invalid Use of Memory Address";
+    public const string NotEnoughStaminaErrorMessage = "Not Enough Stamina";
+
+    //Buttons
+    public const string CodexButton = "Codex";
+    public const string StorageButton = "Storage";
+    public const string NotesButton = "Notes";
 
     //Regex Patterns
     //Tested at http://www.regexr.com/
     public const string TerminalCommandRegexPattern = @"^(?:\w+)(?:\.)(?:\w+)(?:\()(?:\w|\,\w){0,}(?:\))$";
     public const string TerminalInterfaceRegexPattern = @"^(?:\w+)$";
     public const string TerminalInterfaceAndMethodRegexPattern = @"^(?:\w+)\.(?:|\w+)$";
+    public const string StorageAddressPattern = @"^0x[A-F0-9]+$";
 }
-
-//TODO FEATURE Write Spells(collections of commands). Spells cost Resource and are compiled at a Compiler. Send them via hotkey after assigning them.
-//TODO FEATURE Cast assigned Spells via Spellcasting Commorose. By activating it, time slows down like when choosing Signs on The Witcher 3.

@@ -14,11 +14,11 @@ public enum TerminalMessageMode
     Success
 }
 
-public class Terminal : SingletonMonoBehaviour<Terminal>, ISubmitHandler, ISelectHandler
+public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
 {
+    #region Properties
     [Header("Actor Selection")]
     public Actor selectedActor;
-    public float actorSelectionRange = 4;
 
     [Header("Error Message Configuration")]
     public Color normalTextColor;
@@ -26,17 +26,27 @@ public class Terminal : SingletonMonoBehaviour<Terminal>, ISubmitHandler, ISelec
     public Color successTextColor;
     public float terminalMessageTime;
 
-    private Stack<string> commandHistory;
+    [HideInInspector]
+    public Stack<string> commandHistory;
 
-    private InputField inputField;
-    private Text inputFieldPlaceholder;
-    private string originalPlaceholderText;
-    private string completedCode;
+    [HideInInspector]
+    public InputField inputField;
+    [HideInInspector]
+    public Text inputFieldPlaceholder;
+    [HideInInspector]
+    public string originalPlaceholderText;
+    [HideInInspector]
+    public string completedCode;
 
     public delegate void ActorSelectionDelegate();
     public event ActorSelectionDelegate OnActorDeselection;
 
-    public void SelectActor(Actor actor)
+    private bool codeCompleteIsAddressContent = false;
+    #endregion
+
+    #region Methods
+    //Actor Selection
+    private void SelectActor(Actor actor)
     {
         ClearActorSelection();
 
@@ -44,22 +54,17 @@ public class Terminal : SingletonMonoBehaviour<Terminal>, ISubmitHandler, ISelec
 
         Ricci.Instance.LookAt(selectedActor.transform.position);
         Ricci.Instance.StopMoving();
-        TargetMarker.Instance.Hide();
+        TargetMarker.Instance.HideInstantly();
 
         inputField.Select();
     }
 
     public void SetSelectedActor(Actor actor)
     {
-        if (RicciIsInSelectionRange(actor.transform.position) && actor != null)
+        if (Ricci.Instance.IsInSelectionRange(actor.transform.position) && actor != null)
         {
             SelectActor(actor);
         }
-    }
-
-    public bool RicciIsInSelectionRange(Vector3 target)
-    {
-        return Vector3.Distance(Ricci.Instance.gameObject.transform.position, target) < actorSelectionRange;
     }
 
     public bool HasSelectedActor()
@@ -75,13 +80,47 @@ public class Terminal : SingletonMonoBehaviour<Terminal>, ISubmitHandler, ISelec
 
     public void SubmitCommandToSelectedActor()
     {
+        if (Regex.IsMatch(inputField.text, GlobalDefinitions.StorageAddressPattern))
+        {
+            Spell spellAtAddress = HUD.Instance.storage.GetSpellFromAddress(inputField.text);
+
+            if (spellAtAddress != null)
+            {
+                if (Ricci.Instance.Stamina >= spellAtAddress.StaminaCost)
+                {
+                    Ricci.Instance.Stamina -= spellAtAddress.StaminaCost;
+                    selectedActor.SubmitSpell(spellAtAddress);
+                }
+                else
+                {
+                    HUD.Instance.log.Push(GlobalDefinitions.NotEnoughStaminaErrorMessage);
+                }
+            }
+            else
+            {
+                ShowMessage(GlobalDefinitions.InvalidAddressErrorMessage, TerminalMessageMode.Error);
+            }
+
+            SetInputFieldText(string.Empty);
+
+            return;
+        }
+
         try
         {
             Command command = Command.BuildCommand(inputField.text);
 
             try
             {
-                selectedActor.SubmitCommand(command);                
+                if (Ricci.Instance.Stamina >= command.staminaCost)
+                {
+                    Ricci.Instance.Stamina -= command.staminaCost;
+                    selectedActor.SubmitCommand(command);
+                }
+                else
+                {
+                    HUD.Instance.log.Push(GlobalDefinitions.NotEnoughStaminaErrorMessage);
+                }
             }
 #pragma warning disable 0168
             catch (MethodAccessException mae)
@@ -108,7 +147,7 @@ public class Terminal : SingletonMonoBehaviour<Terminal>, ISubmitHandler, ISelec
         catch (WrongCommandSyntaxException wcs)
         {
             ShowMessage(GlobalDefinitions.WrongSyntaxErrorMessage, TerminalMessageMode.Error);
-        }        
+        }
         catch (MissingMemberException mme)
         {
             ShowMessage(GlobalDefinitions.InvalidMethodErrorMessage, TerminalMessageMode.Error);
@@ -116,57 +155,31 @@ public class Terminal : SingletonMonoBehaviour<Terminal>, ISubmitHandler, ISelec
 #pragma warning restore 0168
     }
 
-    private void HandleInputs()
-    {
-        if (HasSelectedActor())
-        {
-            if (!RicciIsInSelectionRange(selectedActor.transform.position) || Input.GetMouseButtonUp(1))
-                ClearActorSelection();
-        }
-
-        if(inputField.isActiveAndEnabled)
-        {
-            if (Input.GetKeyUp(KeyCode.Return))
-            {
-                ExecuteEvents.Execute<ISubmitHandler>(gameObject, null, (x, y) => x.OnSubmit(null));
-            }
-
-            if (inputField.text.Equals(string.Empty) && Input.GetKeyUp(KeyCode.UpArrow))
-            {
-                SetInputFieldText(commandHistory.Peek());
-                inputField.MoveTextEnd(false);
-
-                SetPlaceholderText(inputField.text);
-            }
-
-            if (Input.GetKeyUp(KeyCode.Tab) || Input.GetKeyUp(KeyCode.RightArrow) && !Regex.IsMatch(inputField.text, GlobalDefinitions.TerminalCommandRegexPattern))
-            {
-                SetInputFieldText(completedCode);
-                inputField.MoveTextEnd(false);
-            }
-        }
-        else
-        {
-            if (Input.GetKeyUp(KeyCode.Return))
-                inputField.Select();
-        }
-    }
-
+    //Input Field
     public void ResetPlaceholderIfEmpty()
     {
         if (inputField.text.Equals(string.Empty))
             SetPlaceholderText(originalPlaceholderText);
     }
 
-    private void SetPlaceholderText(string text)
+    public void SetPlaceholderText(string text)
     {
         inputFieldPlaceholder.text = text;
     }
 
-    private void SetInputFieldText(string text)
+    public void SetInputFieldText(string text)
     {
         inputField.text = text;
         inputField.MoveTextEnd(false);
+    }
+
+    public void CompleteInputField()
+    {
+        if (!codeCompleteIsAddressContent)
+        {
+            HUD.Instance.terminal.SetInputFieldText(HUD.Instance.terminal.completedCode);
+            HUD.Instance.terminal.inputField.MoveTextEnd(false);
+        }
     }
 
     public void CodeCompletion()
@@ -179,8 +192,28 @@ public class Terminal : SingletonMonoBehaviour<Terminal>, ISubmitHandler, ISelec
             return;
         }
 
+        if (Regex.IsMatch(inputField.text, GlobalDefinitions.StorageAddressPattern))
+        {
+            codeCompleteIsAddressContent = false;
+
+            Spell spellAtAddress = HUD.Instance.storage.GetSpellFromAddress(inputField.text);
+            completedCode = inputField.text;
+
+            if (spellAtAddress != null)
+            {
+                completedCode += " " + spellAtAddress.SpellTitle;
+                codeCompleteIsAddressContent = true;
+            }
+
+            SetPlaceholderText(completedCode);
+
+            return;
+        }
+
         if (Regex.IsMatch(inputField.text, GlobalDefinitions.TerminalInterfaceRegexPattern))
         {
+            codeCompleteIsAddressContent = false;
+
             try
             {
                 completedCode = Ricci.Instance.FindInterfaceStartingWith(inputField.text).Name;
@@ -195,10 +228,14 @@ public class Terminal : SingletonMonoBehaviour<Terminal>, ISubmitHandler, ISelec
             {
                 SetPlaceholderText(completedCode);
             }
+
+            return;
         }
 
         if (Regex.IsMatch(inputField.text, GlobalDefinitions.TerminalInterfaceAndMethodRegexPattern))
         {
+            codeCompleteIsAddressContent = false;
+
             string[] commandSplit = inputField.text.Split('.');
 
             completedCode = inputField.text;
@@ -207,7 +244,7 @@ public class Terminal : SingletonMonoBehaviour<Terminal>, ISubmitHandler, ISelec
             {
                 string remainder = Ricci.Instance.FindRemainderOfMethodStartingWith(Ricci.Instance.FindInterface(commandSplit[0]), commandSplit[1]);
 
-                if(!string.IsNullOrEmpty(remainder))
+                if (!string.IsNullOrEmpty(remainder))
                     remainder += "()";
 
                 completedCode += remainder;
@@ -220,6 +257,8 @@ public class Terminal : SingletonMonoBehaviour<Terminal>, ISubmitHandler, ISelec
             }
 
             SetPlaceholderText(completedCode);
+
+            return;
         }
     }
 
@@ -268,7 +307,9 @@ public class Terminal : SingletonMonoBehaviour<Terminal>, ISubmitHandler, ISelec
 
         inputField.textComponent.color = normalTextColor;
     }
+    #endregion
 
+    #region MonoBehaviour
     public void OnSelect(BaseEventData eventData)
     {
         SetPlaceholderText(string.Empty);
@@ -287,8 +328,10 @@ public class Terminal : SingletonMonoBehaviour<Terminal>, ISubmitHandler, ISelec
         }
     }
 
-    void Start()
+    public override void Start()
     {
+        base.Start();
+
         inputField = GetComponent<InputField>();
         inputFieldPlaceholder = (Text)inputField.placeholder;
 
@@ -299,9 +342,5 @@ public class Terminal : SingletonMonoBehaviour<Terminal>, ISubmitHandler, ISelec
 
         originalPlaceholderText = ((Text)inputField.placeholder).text;
     }
-
-    void Update()
-    {
-        HandleInputs();
-    }
+    #endregion
 }
