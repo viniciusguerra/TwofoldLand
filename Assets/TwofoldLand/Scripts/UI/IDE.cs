@@ -20,8 +20,6 @@ public class IDE : UIWindow
 
     public List<Spell> spellList;
 
-    public Vector3 cameraOffsetWhenOpen;
-
     private string auraCostLabel = " Au to Compile";
     #endregion
 
@@ -123,14 +121,14 @@ public class IDE : UIWindow
 
         ClearDisplay();
 
-        MainCamera.Instance.AddOffset(cameraOffsetWhenOpen);
+        MainCamera.Instance.SetOffset(MainCameraOffsetDirection.Left);
     }
 
     public override void Hide()
     {
-        base.Hide();        
+        base.Hide();
 
-        MainCamera.Instance.Center();
+        MainCamera.Instance.SetOffset(MainCameraOffsetDirection.Reset);
     }
 
     private void ClearDisplay()

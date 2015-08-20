@@ -35,8 +35,6 @@ public class Codex : UIWindow
     public List<RectTransform> methodList;
     public List<RectTransform> spellList;
 
-    public Vector3 cameraOffsetWhenOpen;
-
     private Type currentInterfaceType;
 
     public Canvas canvas;
@@ -51,7 +49,7 @@ public class Codex : UIWindow
 
         if (isVisible)
         {
-            MainCamera.Instance.AddOffset(cameraOffsetWhenOpen);
+            MainCamera.Instance.SetOffset(MainCameraOffsetDirection.Right);
 
             DisplayInterfaceArea();
 
@@ -59,7 +57,7 @@ public class Codex : UIWindow
         }
         else
         {
-            MainCamera.Instance.Center();
+            MainCamera.Instance.SetOffset(MainCameraOffsetDirection.Reset);
         }
     }
 
@@ -67,7 +65,7 @@ public class Codex : UIWindow
     {
         base.Show();
 
-        MainCamera.Instance.AddOffset(cameraOffsetWhenOpen);
+        MainCamera.Instance.SetOffset(MainCameraOffsetDirection.Right);
 
         ClearShownInterface();
 
@@ -80,7 +78,7 @@ public class Codex : UIWindow
     {
         base.Hide();
 
-        MainCamera.Instance.Center();
+        MainCamera.Instance.SetOffset(MainCameraOffsetDirection.Reset);
 
         ClearShownInterface();
     }

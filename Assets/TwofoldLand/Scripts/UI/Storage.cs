@@ -10,7 +10,6 @@ public class Storage : UIWindow
     public SpellSlot currentSelectedSpellSlot;
     public List<SpellSlot> spellSlotList;
     public float offsetTime = 0.1f;
-    public Vector3 cameraOffsetWhenOpen;
 
     public ToggleGroup loadedSpellsToggleGroup;
     private RectTransform rt;
@@ -23,14 +22,14 @@ public class Storage : UIWindow
 
         if (isVisible)
         {
-            MainCamera.Instance.AddOffset(cameraOffsetWhenOpen);
+            MainCamera.Instance.SetOffset(MainCameraOffsetDirection.Right);
         }
         else
         {
             if(currentSelectedSpellSlot != null)
                 CancelSlotSelection();
 
-            MainCamera.Instance.Center();
+            MainCamera.Instance.SetOffset(MainCameraOffsetDirection.Reset);
         }
     }
 
@@ -38,7 +37,7 @@ public class Storage : UIWindow
     {
         base.Show();
 
-        MainCamera.Instance.AddOffset(cameraOffsetWhenOpen);
+        MainCamera.Instance.SetOffset(MainCameraOffsetDirection.Right);
     }
 
     public override void Hide()
@@ -48,7 +47,7 @@ public class Storage : UIWindow
         if (currentSelectedSpellSlot != null)
             CancelSlotSelection();
 
-        MainCamera.Instance.Center();
+        MainCamera.Instance.SetOffset(MainCameraOffsetDirection.Reset);
     }
 
     public Spell GetSpellFromSlot(int slot)
