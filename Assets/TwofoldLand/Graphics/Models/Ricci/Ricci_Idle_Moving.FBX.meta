@@ -1,0 +1,978 @@
+fileFormatVersion: 2
+guid: a18458f0dbfd5a5469e8062676564015
+timeCreated: 1440116580
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: Bones01
+    100002: Bones02
+    100004: Bones03
+    100006: Bones04
+    100008: Bones05
+    100010: Bones06
+    100012: Bones07
+    100014: Bones08
+    100016: Bones09
+    100018: Bones10
+    100020: Bones11
+    100022: Bones12
+    100024: Bones13
+    100026: Bones14
+    100028: Bones15
+    100030: Bones16
+    100032: Bones17
+    100034: Bones18
+    100036: Bones19
+    100038: Bones20
+    100040: Bones21
+    100042: Bones22
+    100044: Bones23
+    100046: Bones24
+    100048: Bones25
+    100050: Bones26
+    100052: Bones27
+    100054: Bones28
+    100056: Bones29
+    100058: Bones30
+    100060: Bones31
+    100062: Bones32
+    100064: Bones33
+    100066: Bones34
+    100068: Bones35
+    100070: Bones36
+    100072: Bones37
+    100074: Bones38
+    100076: Bones39
+    100078: Bones40
+    100080: Bones41
+    100082: Bones42
+    100084: Bones43
+    100086: Bones44
+    100088: Bones45
+    100090: Bones46
+    100092: Bones47
+    100094: Bones48
+    100096: Bones49
+    100098: Bones50
+    100100: Bones51
+    100102: Bones52
+    100104: Bones53
+    100106: Bones54
+    100108: Bones55
+    100110: Bones56
+    100112: Bones57
+    100114: Bones58
+    100116: Bones59
+    100118: Bones60
+    100120: Bones61
+    100122: Bones62
+    100124: Bones63
+    100126: Bones64
+    100128: Bones65
+    100130: Bones66
+    100132: Bones67
+    100134: Bones68
+    100136: Bones69
+    100138: Bones70
+    100140: Bones71
+    100142: Bones72
+    100144: Bones73
+    100146: Bones74
+    100148: Bones75
+    100150: Bones76
+    100152: Bones77
+    100154: Bones78
+    100156: Bones79
+    100158: Bones80
+    100160: Bones81
+    100162: Bones82
+    100164: Bones83
+    100166: Bones84
+    100168: Bones85
+    100170: ricci_body
+    100172: ricci_center
+    100174: ricci_ctrl_left_index
+    100176: ricci_ctrl_left_middle
+    100178: ricci_ctrl_left_pinky
+    100180: ricci_ctrl_left_ring
+    100182: ricci_ctrl_left_thumb
+    100184: ricci_ctrl_main
+    100186: ricci_ctrl_mass
+    100188: ricci_ctrl_right_index
+    100190: ricci_ctrl_right_middle
+    100192: ricci_ctrl_right_pinky
+    100194: ricci_ctrl_right_ring
+    100196: ricci_ctrl_right_thumb
+    100198: ricci_hair
+    100200: ricci_horns
+    100202: //RootNode
+    400000: Bones01
+    400002: Bones02
+    400004: Bones03
+    400006: Bones04
+    400008: Bones05
+    400010: Bones06
+    400012: Bones07
+    400014: Bones08
+    400016: Bones09
+    400018: Bones10
+    400020: Bones11
+    400022: Bones12
+    400024: Bones13
+    400026: Bones14
+    400028: Bones15
+    400030: Bones16
+    400032: Bones17
+    400034: Bones18
+    400036: Bones19
+    400038: Bones20
+    400040: Bones21
+    400042: Bones22
+    400044: Bones23
+    400046: Bones24
+    400048: Bones25
+    400050: Bones26
+    400052: Bones27
+    400054: Bones28
+    400056: Bones29
+    400058: Bones30
+    400060: Bones31
+    400062: Bones32
+    400064: Bones33
+    400066: Bones34
+    400068: Bones35
+    400070: Bones36
+    400072: Bones37
+    400074: Bones38
+    400076: Bones39
+    400078: Bones40
+    400080: Bones41
+    400082: Bones42
+    400084: Bones43
+    400086: Bones44
+    400088: Bones45
+    400090: Bones46
+    400092: Bones47
+    400094: Bones48
+    400096: Bones49
+    400098: Bones50
+    400100: Bones51
+    400102: Bones52
+    400104: Bones53
+    400106: Bones54
+    400108: Bones55
+    400110: Bones56
+    400112: Bones57
+    400114: Bones58
+    400116: Bones59
+    400118: Bones60
+    400120: Bones61
+    400122: Bones62
+    400124: Bones63
+    400126: Bones64
+    400128: Bones65
+    400130: Bones66
+    400132: Bones67
+    400134: Bones68
+    400136: Bones69
+    400138: Bones70
+    400140: Bones71
+    400142: Bones72
+    400144: Bones73
+    400146: Bones74
+    400148: Bones75
+    400150: Bones76
+    400152: Bones77
+    400154: Bones78
+    400156: Bones79
+    400158: Bones80
+    400160: Bones81
+    400162: Bones82
+    400164: Bones83
+    400166: Bones84
+    400168: Bones85
+    400170: ricci_body
+    400172: ricci_center
+    400174: ricci_ctrl_left_index
+    400176: ricci_ctrl_left_middle
+    400178: ricci_ctrl_left_pinky
+    400180: ricci_ctrl_left_ring
+    400182: ricci_ctrl_left_thumb
+    400184: ricci_ctrl_main
+    400186: ricci_ctrl_mass
+    400188: ricci_ctrl_right_index
+    400190: ricci_ctrl_right_middle
+    400192: ricci_ctrl_right_pinky
+    400194: ricci_ctrl_right_ring
+    400196: ricci_ctrl_right_thumb
+    400198: ricci_hair
+    400200: ricci_horns
+    400202: //RootNode
+    2300000: ricci_center
+    2300002: ricci_hair
+    2300004: ricci_horns
+    3300000: ricci_center
+    3300002: ricci_hair
+    3300004: ricci_horns
+    4300000: ricci_body
+    4300002: ricci_center
+    4300004: ricci_horns
+    4300006: ricci_hair
+    7400000: Idle
+    7400002: IdleMoveTransition
+    7400004: Move
+    9500000: //RootNode
+    13700000: ricci_body
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 0
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 59
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ricci_body
+        weight: 1
+      - path: ricci_ctrl_main
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones01
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones02
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones03
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/Bones24
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_index
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_index/Bones15
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_index/Bones15/Bones14
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_index/Bones15/Bones14/Bones13
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_index/Bones15/Bones14/Bones13/Bones12
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_middle
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_middle/Bones07
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_middle/Bones07/Bones06
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_middle/Bones07/Bones06/Bones05
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_middle/Bones07/Bones06/Bones05/Bones04
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_pinky
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_pinky/Bones11
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_pinky/Bones11/Bones10
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_pinky/Bones11/Bones10/Bones09
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_pinky/Bones11/Bones10/Bones09/Bones08
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_ring
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_ring/Bones19
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_ring/Bones19/Bones18
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_ring/Bones19/Bones18/Bones17
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_ring/Bones19/Bones18/Bones17/Bones16
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_thumb
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_thumb/Bones23
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_thumb/Bones23/Bones22
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_thumb/Bones23/Bones22/Bones21
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_thumb/Bones23/Bones22/Bones21/Bones20
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones31
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones31/Bones30
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones31/Bones30/Bones29
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones34
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones34/Bones33
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones34/Bones33/Bones32
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones38
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones38/Bones37
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones38/Bones37/Bones36
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones41
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones41/Bones40
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones41/Bones40/Bones39
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones42
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones43
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones44
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/Bones65
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_index
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_index/Bones60
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_index/Bones60/Bones59
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_index/Bones60/Bones59/Bones58
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_index/Bones60/Bones59/Bones58/Bones57
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_middle
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_middle/Bones56
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_middle/Bones56/Bones55
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_middle/Bones56/Bones55/Bones54
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_middle/Bones56/Bones55/Bones54/Bones53
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_pinky
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_pinky/Bones48
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_pinky/Bones48/Bones47
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_pinky/Bones48/Bones47/Bones46
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_pinky/Bones48/Bones47/Bones46/Bones45
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_ring
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_ring/Bones52
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_ring/Bones52/Bones51
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_ring/Bones52/Bones51/Bones50
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_ring/Bones52/Bones51/Bones50/Bones49
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_thumb
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_thumb/Bones64
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_thumb/Bones64/Bones63
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_thumb/Bones64/Bones63/Bones62
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_thumb/Bones64/Bones63/Bones62/Bones61
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones73
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones73/Bones72
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones73/Bones72/Bones71
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones73/Bones72/ricci_hair
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones73/Bones72/ricci_horns
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones80
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones80/Bones79
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones80/Bones79/Bones78
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones83
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones83/Bones82
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones83/Bones82/Bones81
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones84
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/ricci_center
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: IdleMoveTransition
+      takeName: Take 001
+      firstFrame: 60
+      lastFrame: 70
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ricci_body
+        weight: 1
+      - path: ricci_ctrl_main
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones01
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones02
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones03
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/Bones24
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_index
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_index/Bones15
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_index/Bones15/Bones14
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_index/Bones15/Bones14/Bones13
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_index/Bones15/Bones14/Bones13/Bones12
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_middle
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_middle/Bones07
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_middle/Bones07/Bones06
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_middle/Bones07/Bones06/Bones05
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_middle/Bones07/Bones06/Bones05/Bones04
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_pinky
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_pinky/Bones11
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_pinky/Bones11/Bones10
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_pinky/Bones11/Bones10/Bones09
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_pinky/Bones11/Bones10/Bones09/Bones08
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_ring
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_ring/Bones19
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_ring/Bones19/Bones18
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_ring/Bones19/Bones18/Bones17
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_ring/Bones19/Bones18/Bones17/Bones16
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_thumb
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_thumb/Bones23
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_thumb/Bones23/Bones22
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_thumb/Bones23/Bones22/Bones21
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_thumb/Bones23/Bones22/Bones21/Bones20
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones31
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones31/Bones30
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones31/Bones30/Bones29
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones34
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones34/Bones33
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones34/Bones33/Bones32
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones38
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones38/Bones37
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones38/Bones37/Bones36
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones41
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones41/Bones40
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones41/Bones40/Bones39
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones42
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones43
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones44
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/Bones65
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_index
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_index/Bones60
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_index/Bones60/Bones59
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_index/Bones60/Bones59/Bones58
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_index/Bones60/Bones59/Bones58/Bones57
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_middle
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_middle/Bones56
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_middle/Bones56/Bones55
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_middle/Bones56/Bones55/Bones54
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_middle/Bones56/Bones55/Bones54/Bones53
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_pinky
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_pinky/Bones48
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_pinky/Bones48/Bones47
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_pinky/Bones48/Bones47/Bones46
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_pinky/Bones48/Bones47/Bones46/Bones45
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_ring
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_ring/Bones52
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_ring/Bones52/Bones51
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_ring/Bones52/Bones51/Bones50
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_ring/Bones52/Bones51/Bones50/Bones49
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_thumb
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_thumb/Bones64
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_thumb/Bones64/Bones63
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_thumb/Bones64/Bones63/Bones62
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_thumb/Bones64/Bones63/Bones62/Bones61
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones73
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones73/Bones72
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones73/Bones72/Bones71
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones73/Bones72/ricci_hair
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones73/Bones72/ricci_horns
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones80
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones80/Bones79
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones80/Bones79/Bones78
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones83
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones83/Bones82
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones83/Bones82/Bones81
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones84
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/ricci_center
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    - serializedVersion: 16
+      name: Move
+      takeName: Take 001
+      firstFrame: 70
+      lastFrame: 129
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: ricci_body
+        weight: 1
+      - path: ricci_ctrl_main
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones01
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones02
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones03
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/Bones24
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_index
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_index/Bones15
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_index/Bones15/Bones14
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_index/Bones15/Bones14/Bones13
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_index/Bones15/Bones14/Bones13/Bones12
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_middle
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_middle/Bones07
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_middle/Bones07/Bones06
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_middle/Bones07/Bones06/Bones05
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_middle/Bones07/Bones06/Bones05/Bones04
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_pinky
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_pinky/Bones11
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_pinky/Bones11/Bones10
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_pinky/Bones11/Bones10/Bones09
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_pinky/Bones11/Bones10/Bones09/Bones08
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_ring
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_ring/Bones19
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_ring/Bones19/Bones18
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_ring/Bones19/Bones18/Bones17
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_ring/Bones19/Bones18/Bones17/Bones16
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_thumb
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_thumb/Bones23
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_thumb/Bones23/Bones22
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_thumb/Bones23/Bones22/Bones21
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones28/Bones27/Bones26/Bones25/ricci_ctrl_right_thumb/Bones23/Bones22/Bones21/Bones20
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones31
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones31/Bones30
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones31/Bones30/Bones29
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones34
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones34/Bones33
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones35/Bones34/Bones33/Bones32
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones38
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones38/Bones37
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones38/Bones37/Bones36
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones41
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones41/Bones40
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones41/Bones40/Bones39
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones42
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones43
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones44
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/Bones65
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_index
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_index/Bones60
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_index/Bones60/Bones59
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_index/Bones60/Bones59/Bones58
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_index/Bones60/Bones59/Bones58/Bones57
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_middle
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_middle/Bones56
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_middle/Bones56/Bones55
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_middle/Bones56/Bones55/Bones54
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_middle/Bones56/Bones55/Bones54/Bones53
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_pinky
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_pinky/Bones48
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_pinky/Bones48/Bones47
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_pinky/Bones48/Bones47/Bones46
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_pinky/Bones48/Bones47/Bones46/Bones45
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_ring
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_ring/Bones52
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_ring/Bones52/Bones51
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_ring/Bones52/Bones51/Bones50
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_ring/Bones52/Bones51/Bones50/Bones49
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_thumb
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_thumb/Bones64
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_thumb/Bones64/Bones63
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_thumb/Bones64/Bones63/Bones62
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones70/Bones69/Bones68/Bones67/Bones66/ricci_ctrl_left_thumb/Bones64/Bones63/Bones62/Bones61
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones73
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones73/Bones72
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones73/Bones72/Bones71
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones73/Bones72/ricci_hair
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones77/Bones76/Bones75/Bones74/Bones73/Bones72/ricci_horns
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones80
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones80/Bones79
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones80/Bones79/Bones78
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones83
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones83/Bones82
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones83/Bones82/Bones81
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/Bones84
+        weight: 1
+      - path: ricci_ctrl_main/ricci_ctrl_mass/Bones85/ricci_center
+        weight: 1
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

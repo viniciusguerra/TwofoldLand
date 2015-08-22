@@ -9,7 +9,7 @@ public class Unlockable : Actor, IUnlockable
     public bool unlocked;
 
     private bool alreadyOpened;
-    public GameObject prefabToRelease;
+    public int auraToSpawn;
 
     public string BinaryKey
     {
@@ -91,8 +91,8 @@ public class Unlockable : Actor, IUnlockable
         while (lidAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
             yield return null;
 
-        GameObject releasedItem = Instantiate<GameObject>(prefabToRelease);
-        releasedItem.transform.position = transform.position + new Vector3(0, 0.6f, 0);
+        GameObject releasedItem = SceneManager.Instance.SpawnAura(auraToSpawn, transform.position + new Vector3(0, 0.6f, 0));
+
         Vector3 force = transform.TransformDirection(new Vector3(0, 300, 120));
         releasedItem.GetComponent<Rigidbody>().AddForce(force);
 

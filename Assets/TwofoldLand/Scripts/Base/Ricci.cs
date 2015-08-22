@@ -118,7 +118,11 @@ public class Ricci : Singleton<Ricci>, IDamageable
         }
     }
 
+    [Header("Movement")]
+    public float lookSpeed = 45;
+
     private NavMeshAgent agent;
+    private Animator animator;
     #endregion
 
     #region Methods
@@ -188,7 +192,10 @@ public class Ricci : Singleton<Ricci>, IDamageable
 
     public void LookAt(Vector3 target)
     {
-        transform.LookAt(target);
+        string tweenName = GetInstanceID() + "LookTo";
+
+        iTween.StopByName(tweenName);
+        iTween.LookTo(gameObject, iTween.Hash("name", tweenName, "looktarget", target, "speed", lookSpeed));
     }
 
     public void MoveToPosition(Vector3 targetPosition)
@@ -255,11 +262,11 @@ public class Ricci : Singleton<Ricci>, IDamageable
     {
         if (collision.gameObject.tag == GlobalDefinitions.AuraTag)
         {
-            AuraContainer auraContainer = collision.gameObject.GetComponent<AuraContainer>();
+            Aura auraContainer = collision.gameObject.GetComponent<Aura>();
 
-            CollectAura(auraContainer.Amount);
+            CollectAura(auraContainer.auraAmount);
 
-            auraContainer.Destroy();
+            auraContainer.Absorb();
         }
     }
 
@@ -281,6 +288,11 @@ public class Ricci : Singleton<Ricci>, IDamageable
         }
     }
 
+    void Awake()
+    {
+        animator = GetComponentInChildren<Animator>();
+    }
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -293,7 +305,9 @@ public class Ricci : Singleton<Ricci>, IDamageable
         HUD.Instance.UpdateHealthBarValue(Health);
         HUD.Instance.UpdateStaminaBarValue(Stamina);
 
-        compilerAvailable = false;        
+        compilerAvailable = false;
+
+        animator.GetBehaviour<AgentVelocityGetter>().navMeshAgent = agent;
     }    
     #endregion
 }
