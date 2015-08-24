@@ -2,14 +2,33 @@
 using System.Collections;
 using System;
 
-public class Unlockable : Actor, IUnlockable
+public class Unlockable : Actor, IUnlockable, IVulnerable
 {
-    public string binaryKey;
-    private bool open;
-    public bool unlocked;
+    [SerializeField]
+    private string binaryKey;
+    [SerializeField]
+    private bool unlocked;
 
-    private bool alreadyOpened;
-    public int auraToSpawn;
+    [SerializeField]
+    private float maxHealth;
+    [SerializeField]
+    private float currentHealth;
+
+    public float MaxHealth
+    {
+        get
+        {
+            return maxHealth;
+        }
+    }
+
+    public float CurrentHealth
+    {
+        get
+        {
+            return currentHealth;
+        }
+    }
 
     public string BinaryKey
     {
@@ -27,7 +46,41 @@ public class Unlockable : Actor, IUnlockable
         }
     }
 
+    private AttackHandler attackHandler;
+
+    public AttackHandler AttackHandler
+    {
+        private set
+        {
+            attackHandler = value;
+        }
+        get
+        {
+            return attackHandler;
+        }
+    }
+
+    public int auraToSpawn;
+
+    public int lockBreakThreshold;
+
+    private bool alreadyOpened;
+    private bool open;
     private Animator lidAnimator;
+
+    private void DamageLock(object sender, AttackArgs attackArgs)
+    {
+        if (attackArgs.rawDamage > lockBreakThreshold)
+        {
+            Unlock(binaryKey);
+            attackHandler = new AttackHandler(Break);
+        }
+    }
+
+    private void Break(object sender, AttackArgs attackArgs)
+    {
+        currentHealth = Mathf.Max(0, currentHealth - attackArgs.rawDamage);
+    }
 
     public void Unlock()
     {
@@ -109,5 +162,10 @@ public class Unlockable : Actor, IUnlockable
         lidAnimator.SetBool("open", !open);
 
         alreadyOpened = false;
+
+        if (currentHealth == 0 || currentHealth == null)
+            currentHealth = maxHealth;
+
+        attackHandler = unlocked ? new AttackHandler(Break) : new AttackHandler(DamageLock);
     }
 }

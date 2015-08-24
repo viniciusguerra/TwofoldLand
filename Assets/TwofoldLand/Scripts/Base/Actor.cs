@@ -26,7 +26,7 @@ public class Actor : MonoBehaviour, IPointerClickHandler
             {
                 interfaceList.Add(implementedInterfaces[i].Name);
 
-                if (implementedInterfaces[i] == typeof(IDamageable))
+                if (implementedInterfaces[i] == typeof(IVulnerable))
                 {
                     showHealthBar = true;
                 }
@@ -34,7 +34,7 @@ public class Actor : MonoBehaviour, IPointerClickHandler
         }
 
         if (showHealthBar)
-            HUD.Instance.infoPanel.Show(name, interfaceList.ToArray(), (IDamageable)this);
+            HUD.Instance.infoPanel.Show(name, interfaceList.ToArray(), (IVulnerable)this);
         else
             HUD.Instance.infoPanel.Show(name, interfaceList.ToArray());
     }

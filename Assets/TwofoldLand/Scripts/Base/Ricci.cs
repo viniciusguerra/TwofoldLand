@@ -5,7 +5,7 @@ using System.Linq;
 using System;
 using System.Reflection;
 
-public class Ricci : Singleton<Ricci>, IDamageable
+public class Ricci : Singleton<Ricci>, IVulnerable
 {
     #region Properties
     public float actorSelectionRange = 4;
@@ -45,7 +45,7 @@ public class Ricci : Singleton<Ricci>, IDamageable
     [SerializeField]
     private float currentHealth;
 
-    public float Health
+    public float MaxHealth
     {
         get
         {
@@ -59,7 +59,7 @@ public class Ricci : Singleton<Ricci>, IDamageable
         }
     }
 
-    public float MaxHealth
+    public float CurrentHealth
     {
         get
         {
@@ -118,6 +118,20 @@ public class Ricci : Singleton<Ricci>, IDamageable
         }
     }
 
+    private AttackHandler attackHandler;
+
+    public AttackHandler AttackHandler
+    {
+        private set
+        {
+            attackHandler = value;
+        }
+        get
+        {
+            return attackHandler;
+        }
+    }
+
     [Header("Movement")]
     public float lookSpeed = 45;
 
@@ -125,7 +139,7 @@ public class Ricci : Singleton<Ricci>, IDamageable
     private Animator animator;
     #endregion
 
-    #region Methods
+    #region Skill Methods
     public void AddInterface(Skill interfaceContainer)
     {
         skillList.Add(interfaceContainer);
@@ -189,7 +203,9 @@ public class Ricci : Singleton<Ricci>, IDamageable
         else
             return string.Empty;
     }
+    #endregion
 
+    #region Methods
     public void LookAt(Vector3 target)
     {
         string tweenName = GetInstanceID() + "LookTo";
@@ -252,7 +268,7 @@ public class Ricci : Singleton<Ricci>, IDamageable
 
     public void Rest()
     {
-        Health = MaxHealth;
+        MaxHealth = MaxHealth;
         Stamina = MaxStamina;
     }
     #endregion
@@ -302,7 +318,7 @@ public class Ricci : Singleton<Ricci>, IDamageable
         HUD.Instance.SetMaxHealth(maxHealth);
         HUD.Instance.SetMaxStamina(maxStamina);        
 
-        HUD.Instance.UpdateHealthBarValue(Health);
+        HUD.Instance.UpdateHealthBarValue(MaxHealth);
         HUD.Instance.UpdateStaminaBarValue(Stamina);
 
         compilerAvailable = false;

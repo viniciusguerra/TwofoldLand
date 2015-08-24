@@ -19,20 +19,20 @@ public class InfoPanel : UIWindow
 
         actorNameText.text = actorName;
 
-        ToggleHealthBar(false);        
+        HideHealthBar();      
 
         interfaceList.DisplayInterfaces(interfaces);
     }
 
-    public void Show(string actorName, string[] interfaces, IDamageable damageable)
+    public void Show(string actorName, string[] interfaces, IVulnerable vulnerable)
     {
         base.Show();
 
         actorNameText.text = actorName;
 
-        ToggleHealthBar(true);
+        ShowHealthBar(vulnerable);
 
-        StartCoroutine(UpdateHealthBar(damageable));
+        StartCoroutine(UpdateHealthBar(vulnerable));
 
         interfaceList.DisplayInterfaces(interfaces);
     }
@@ -44,27 +44,26 @@ public class InfoPanel : UIWindow
         StopCoroutine("UpdateHealthBar");
     }
 
-    private void ToggleHealthBar(bool toggle)
+    private void ShowHealthBar(IVulnerable vulnerable)
     {
-        //Calculate interface panel height
-
-        if (toggle)
-        {            
-            
-        }
-        else
-        {
-            
-        }
-
-        healthBar.gameObject.SetActive(toggle);
+        healthBar.transform.parent.gameObject.SetActive(true);
+        StartCoroutine(UpdateHealthBar(vulnerable));
     }
 
-    private IEnumerator UpdateHealthBar(IDamageable damageable)
+    private void HideHealthBar()
     {
+        healthBar.transform.parent.gameObject.SetActive(false);
+        StopCoroutine("UpdateHealthBar");
+    }
+
+    private IEnumerator UpdateHealthBar(IVulnerable vulnerable)
+    {
+        healthBar.maxValue = vulnerable.MaxHealth;
+
         while(true)
         {
-            healthBar.value = damageable.Health;
+            healthBar.value = vulnerable.CurrentHealth;
+            yield return null;
         }
     }
 	#endregion

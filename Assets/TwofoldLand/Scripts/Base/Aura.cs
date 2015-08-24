@@ -4,7 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Aura : MonoBehaviour
+public class Aura : Collectable
 {
 	#region Properties
     public int auraAmount;
@@ -18,24 +18,35 @@ public class Aura : MonoBehaviour
     public Vector3 absorptionForce;
     public float absorptionRotationMultiplier;
 
-    private new Rigidbody rigidbody;
     private Light light;
     private Material material;
 	#endregion
 
-	#region Methods
-    public void Absorb()
+	#region Collectable Methods
+    public override void Absorb()
     {
         Color fadedColor = material.color;
         fadedColor.a = 0;
 
-        rigidbody.AddForce(absorptionForce);
+        rb.AddForce(absorptionForce);
         rotateDegreesBySecond *= absorptionRotationMultiplier;
 
         iTween.ValueTo(gameObject, iTween.Hash("from", light.intensity, "to", 0, "time", lightFadeTime, "easetype", lightFadeEaseType, "onupdate", "UpdateLightIntensity", "oncomplete", "Destroy"));
         iTween.ValueTo(gameObject, iTween.Hash("from", material.color, "to", fadedColor, "time", lightFadeTime, "easetype", lightFadeEaseType, "onupdate", "UpdateMaterialFade"));      
+    }    
+
+    protected override void Destroy()
+    {
+        Destroy(gameObject);
     }
 
+    protected override void Idle()
+    {
+        transform.Rotate(new Vector3(0, 1, 0) * rotateDegreesBySecond * Time.deltaTime);
+    }
+    #endregion
+
+    #region Methods
     private void UpdateLightIntensity(float value)
     {
         light.intensity = value;
@@ -45,34 +56,25 @@ public class Aura : MonoBehaviour
     {
         material.color = value;
     }
+    #endregion
 
-    private void Destroy()
-    {
-        Destroy(gameObject);
-    }
-
-    private void Idle()
-    {
-        transform.Rotate(new Vector3(0, 1, 0) * rotateDegreesBySecond * Time.deltaTime);
-    }    
-	#endregion
-
-	#region MonoBehaviour
+    #region MonoBehaviour
     void OnDestroy()
     {
         iTween.Stop(gameObject);
     }
 
-	void Start()
+	void Awake()
 	{
-        rigidbody = GetComponent<Rigidbody>();
+        base.Awake();
+        
         light = GetComponentInChildren<Light>();
         material = GetComponent<MeshRenderer>().material;
 	}
 
 	void Update()
 	{
-        Idle();
+        base.Update();        
 	}
 	#endregion
 }

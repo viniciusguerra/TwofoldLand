@@ -57,3 +57,12 @@ public class UnlockableInterfaceContainerCreator : Editor
         ScriptableObjectUtility.CreateAsset<UnlockableInterfaceContainer>();
     }
 }
+
+public class VulnerableInterfaceContainerCreator : Editor
+{
+    [MenuItem("Assets/Create/Interface Containers/IVulnerable")]
+    public static void CreateAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<VulnerableInterfaceContainer>();
+    }
+}

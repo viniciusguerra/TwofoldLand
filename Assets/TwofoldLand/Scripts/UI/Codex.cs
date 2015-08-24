@@ -253,7 +253,8 @@ public class Codex : UIWindow
 
         List<Transform> childList = new List<Transform>(property.transform.GetComponentsInChildren<Transform>());
 
-        childList.Find(x => x.name == "Access").GetComponent<Text>().text = propertyInfo.GetGetMethod().IsPublic ? "public" : "private";
+        //Info comes from Interface, Interfaces have no access definition
+        //childList.Find(x => x.name == "Access").GetComponent<Text>().text = propertyInfo.GetGetMethod().IsPublic ? "public" : "private";
         childList.Find(x => x.name == "Return").GetComponent<Text>().text = propertyInfo.PropertyType.Name;
         childList.Find(x => x.name == "Name").GetComponent<Text>().text = propertyInfo.Name;
 
@@ -274,7 +275,8 @@ public class Codex : UIWindow
 
         List<Transform> childList = new List<Transform>(method.transform.GetComponentsInChildren<Transform>());
 
-        childList.Find(x => x.name == "Access").GetComponent<Text>().text = methodInfo.IsPublic ? "public" : "private";
+        //Info comes from Interface, Interfaces have no access definition
+        //childList.Find(x => x.name == "Access").GetComponent<Text>().text = methodInfo.IsPublic ? "public" : "private";
         childList.Find(x => x.name == "Return").GetComponent<Text>().text = methodInfo.ReturnType.Name;
         childList.Find(x => x.name == "Name").GetComponent<Text>().text = methodInfo.Name;
 
