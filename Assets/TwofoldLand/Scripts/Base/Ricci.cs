@@ -5,7 +5,7 @@ using System.Linq;
 using System;
 using System.Reflection;
 
-public class Ricci : Singleton<Ricci>, IDamageable
+public class Ricci : Singleton<Ricci>, IVulnerable
 {
     #region Properties
     public float actorSelectionRange = 4;
@@ -45,7 +45,7 @@ public class Ricci : Singleton<Ricci>, IDamageable
     [SerializeField]
     private float currentHealth;
 
-    public float Health
+    public float CurrentHealth
     {
         get
         {
@@ -71,7 +71,7 @@ public class Ricci : Singleton<Ricci>, IDamageable
 
             HUD.Instance.SetMaxHealth(maxHealth);
         }
-    }
+    }    
 
     [Header("Stamina")]
     [SerializeField]
@@ -84,7 +84,7 @@ public class Ricci : Singleton<Ricci>, IDamageable
     private float currentStaminaRegenWait;
     private bool regeneratingStamina = false;
 
-    public float Stamina
+    public float CurrentStamina
     {
         get
         {
@@ -118,10 +118,28 @@ public class Ricci : Singleton<Ricci>, IDamageable
         }
     }
 
+    private AttackHandler attackHandler;
+
+    public AttackHandler AttackHandler
+    {
+        private set
+        {
+            attackHandler = value;
+        }
+        get
+        {
+            return attackHandler;
+        }
+    }
+
+    [Header("Movement")]
+    public float lookSpeed = 45;
+
     private NavMeshAgent agent;
+    private Animator animator;
     #endregion
 
-    #region Methods
+    #region Skill Methods
     public void AddInterface(Skill interfaceContainer)
     {
         skillList.Add(interfaceContainer);
@@ -131,7 +149,7 @@ public class Ricci : Singleton<Ricci>, IDamageable
     {
         foreach (Skill s in skillList)
         {
-            if (s.interfaceContainer.InterfaceType == interfaceType)
+            if (s.GetInterfaceType() == interfaceType)
                 return true;
         }
 
@@ -143,8 +161,8 @@ public class Ricci : Singleton<Ricci>, IDamageable
     {
         foreach (Skill s in skillList)
         {
-            if (s.interfaceContainer.InterfaceType.Name.Equals(interfaceName))
-                return s.interfaceContainer.InterfaceType;
+            if (s.GetInterfaceType().Name.Equals(interfaceName))
+                return s.GetInterfaceType();
         }
 
         throw new MissingMemberException();
@@ -155,8 +173,8 @@ public class Ricci : Singleton<Ricci>, IDamageable
     {
         foreach (Skill s in skillList)
         {
-            if (s.interfaceContainer.InterfaceType.Name.StartsWith(text))
-                return s.interfaceContainer.InterfaceType;
+            if (s.GetInterfaceType().Name.StartsWith(text))
+                return s.GetInterfaceType();
         }
 
         throw new MissingMemberException();
@@ -170,9 +188,9 @@ public class Ricci : Singleton<Ricci>, IDamageable
 
             foreach (Skill s in skillList)
             {
-                if (s.interfaceContainer.InterfaceType == interfaceType)
+                if (s.GetInterfaceType() == interfaceType)
                 {
-                    foreach (MethodInfo m in s.interfaceContainer.InterfaceType.GetMethods())
+                    foreach (MethodInfo m in s.GetInterfaceType().GetMethods())
                     {
                         if (m.Name.StartsWith(text))
                             remainder = m.Name.Replace(text, String.Empty);
@@ -185,10 +203,15 @@ public class Ricci : Singleton<Ricci>, IDamageable
         else
             return string.Empty;
     }
+    #endregion
 
+    #region Methods
     public void LookAt(Vector3 target)
     {
-        transform.LookAt(target);
+        string tweenName = GetInstanceID() + "LookTo";
+
+        iTween.StopByName(tweenName);
+        iTween.LookTo(gameObject, iTween.Hash("name", tweenName, "looktarget", target, "speed", lookSpeed));
     }
 
     public void MoveToPosition(Vector3 targetPosition)
@@ -245,8 +268,8 @@ public class Ricci : Singleton<Ricci>, IDamageable
 
     public void Rest()
     {
-        Health = MaxHealth;
-        Stamina = MaxStamina;
+        CurrentHealth = MaxHealth;
+        CurrentStamina = MaxStamina;
     }
     #endregion
 
@@ -255,11 +278,11 @@ public class Ricci : Singleton<Ricci>, IDamageable
     {
         if (collision.gameObject.tag == GlobalDefinitions.AuraTag)
         {
-            AuraContainer auraContainer = collision.gameObject.GetComponent<AuraContainer>();
+            Aura auraContainer = collision.gameObject.GetComponent<Aura>();
 
-            CollectAura(auraContainer.Amount);
+            CollectAura(auraContainer.auraAmount);
 
-            auraContainer.Destroy();
+            auraContainer.Absorb();
         }
     }
 
@@ -281,6 +304,11 @@ public class Ricci : Singleton<Ricci>, IDamageable
         }
     }
 
+    void Awake()
+    {
+        animator = GetComponentInChildren<Animator>();
+    }
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -290,10 +318,12 @@ public class Ricci : Singleton<Ricci>, IDamageable
         HUD.Instance.SetMaxHealth(maxHealth);
         HUD.Instance.SetMaxStamina(maxStamina);        
 
-        HUD.Instance.UpdateHealthBarValue(Health);
-        HUD.Instance.UpdateStaminaBarValue(Stamina);
+        HUD.Instance.UpdateHealthBarValue(CurrentHealth);
+        HUD.Instance.UpdateStaminaBarValue(CurrentStamina);
 
-        compilerAvailable = false;        
+        compilerAvailable = false;
+
+        animator.GetBehaviour<AgentVelocityGetter>().navMeshAgent = agent;
     }    
     #endregion
 }

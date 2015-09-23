@@ -35,8 +35,6 @@ public class Codex : UIWindow
     public List<RectTransform> methodList;
     public List<RectTransform> spellList;
 
-    public Vector3 cameraOffsetWhenOpen;
-
     private Type currentInterfaceType;
 
     public Canvas canvas;
@@ -51,7 +49,7 @@ public class Codex : UIWindow
 
         if (isVisible)
         {
-            MainCamera.Instance.AddOffset(cameraOffsetWhenOpen);
+            MainCamera.Instance.SetOffset(MainCameraOffsetDirection.Right);
 
             DisplayInterfaceArea();
 
@@ -59,7 +57,7 @@ public class Codex : UIWindow
         }
         else
         {
-            MainCamera.Instance.Center();
+            MainCamera.Instance.SetOffset(MainCameraOffsetDirection.Reset);
         }
     }
 
@@ -67,7 +65,7 @@ public class Codex : UIWindow
     {
         base.Show();
 
-        MainCamera.Instance.AddOffset(cameraOffsetWhenOpen);
+        MainCamera.Instance.SetOffset(MainCameraOffsetDirection.Right);
 
         ClearShownInterface();
 
@@ -80,7 +78,7 @@ public class Codex : UIWindow
     {
         base.Hide();
 
-        MainCamera.Instance.Center();
+        MainCamera.Instance.SetOffset(MainCameraOffsetDirection.Reset);
 
         ClearShownInterface();
     }
@@ -146,7 +144,7 @@ public class Codex : UIWindow
 
         for (int i = 0; i < Ricci.Instance.skillList.Count; i++)
         {
-            interfaceNameArray[i] = Ricci.Instance.skillList[i].interfaceContainer.InterfaceType.Name;
+            interfaceNameArray[i] = Ricci.Instance.skillList[i].GetInterfaceType().Name;
         }
 
         interfaceList.DisplayInterfaces(interfaceNameArray);
@@ -162,7 +160,7 @@ public class Codex : UIWindow
 
         interfaceNameText.text = currentInterfaceType.Name;
 
-        interfaceLevelText.text = String.Format("Lvl.{0}", Ricci.Instance.skillList.Find(x => x.interfaceContainer.InterfaceType == currentInterfaceType).level);
+        interfaceLevelText.text = String.Format("Lvl.{0}", Ricci.Instance.skillList.Find(x => x.GetInterfaceType() == currentInterfaceType).Level);
 
         DisplayProperties();
 
@@ -184,7 +182,7 @@ public class Codex : UIWindow
 
         interfaceNameText.text = currentInterfaceType.Name;
 
-        interfaceLevelText.text = String.Format("Lvl.{0}", Ricci.Instance.skillList.Find(x => x.interfaceContainer.InterfaceType == currentInterfaceType).level);
+        interfaceLevelText.text = String.Format("Lvl.{0}", Ricci.Instance.skillList.Find(x => x.GetInterfaceType() == currentInterfaceType).Level);
 
         DisplayProperties();
 
@@ -255,7 +253,8 @@ public class Codex : UIWindow
 
         List<Transform> childList = new List<Transform>(property.transform.GetComponentsInChildren<Transform>());
 
-        childList.Find(x => x.name == "Access").GetComponent<Text>().text = propertyInfo.GetGetMethod().IsPublic ? "public" : "private";
+        //Info comes from Interface, Interfaces have no access definition
+        //childList.Find(x => x.name == "Access").GetComponent<Text>().text = propertyInfo.GetGetMethod().IsPublic ? "public" : "private";
         childList.Find(x => x.name == "Return").GetComponent<Text>().text = propertyInfo.PropertyType.Name;
         childList.Find(x => x.name == "Name").GetComponent<Text>().text = propertyInfo.Name;
 
@@ -276,7 +275,8 @@ public class Codex : UIWindow
 
         List<Transform> childList = new List<Transform>(method.transform.GetComponentsInChildren<Transform>());
 
-        childList.Find(x => x.name == "Access").GetComponent<Text>().text = methodInfo.IsPublic ? "public" : "private";
+        //Info comes from Interface, Interfaces have no access definition
+        //childList.Find(x => x.name == "Access").GetComponent<Text>().text = methodInfo.IsPublic ? "public" : "private";
         childList.Find(x => x.name == "Return").GetComponent<Text>().text = methodInfo.ReturnType.Name;
         childList.Find(x => x.name == "Name").GetComponent<Text>().text = methodInfo.Name;
 

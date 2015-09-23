@@ -8,7 +8,7 @@ using System;
 
 public class Actor : MonoBehaviour, IPointerClickHandler
 {    
-    private MeshRenderer meshRenderer;
+    private MeshRenderer selectionRenderer;
     private Material originalMaterial;
 
     private Type[] implementedInterfaces;
@@ -26,7 +26,7 @@ public class Actor : MonoBehaviour, IPointerClickHandler
             {
                 interfaceList.Add(implementedInterfaces[i].Name);
 
-                if (implementedInterfaces[i] == typeof(IDamageable))
+                if (implementedInterfaces[i] == typeof(IVulnerable))
                 {
                     showHealthBar = true;
                 }
@@ -34,7 +34,7 @@ public class Actor : MonoBehaviour, IPointerClickHandler
         }
 
         if (showHealthBar)
-            HUD.Instance.infoPanel.Show(name, interfaceList.ToArray(), (IDamageable)this);
+            HUD.Instance.infoPanel.Show(name, interfaceList.ToArray(), (IVulnerable)this);
         else
             HUD.Instance.infoPanel.Show(name, interfaceList.ToArray());
     }
@@ -44,10 +44,17 @@ public class Actor : MonoBehaviour, IPointerClickHandler
         HUD.Instance.infoPanel.Hide();
     }
 
-    public void SetSelected()
+    public void SetSelected(MeshRenderer selectedRenderer)
     {
-        originalMaterial = meshRenderer.material;
-        meshRenderer.material = Resources.Load<Material>(GlobalDefinitions.SelectedMaterialPath);
+        selectionRenderer = selectedRenderer;
+
+        originalMaterial = selectedRenderer.material;
+        selectionRenderer.material = Resources.Load<Material>(GlobalDefinitions.SelectedMaterialPath);
+
+        selectionRenderer.material.mainTexture = originalMaterial.mainTexture;
+        selectionRenderer.material.mainTextureOffset = originalMaterial.mainTextureOffset;
+        selectionRenderer.material.mainTextureScale = originalMaterial.mainTextureScale;
+        selectionRenderer.material.color = originalMaterial.color;
 
         HUD.Instance.terminal.SetSelectedActor(this);
         HUD.Instance.terminal.OnActorDeselection += Deselect;
@@ -57,7 +64,7 @@ public class Actor : MonoBehaviour, IPointerClickHandler
 
     private void Deselect()
     {
-        meshRenderer.material = originalMaterial;
+        selectionRenderer.material = originalMaterial;
         originalMaterial = null;
 
         HideInterfaces();
@@ -150,13 +157,13 @@ public class Actor : MonoBehaviour, IPointerClickHandler
     {
         if (data.pointerId == -1 && Ricci.Instance.IsInSelectionRange(transform.position))
         {            
-            SetSelected();
+            SetSelected(data.pointerPressRaycast.gameObject.GetComponent<MeshRenderer>());
         }
     }
 
     public virtual void Start()
     {
-        meshRenderer = GetComponent<MeshRenderer>();
+        selectionRenderer = GetComponent<MeshRenderer>();
 
         interfaceList = new List<string>();
 

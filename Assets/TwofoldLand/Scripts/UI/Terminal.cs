@@ -86,9 +86,9 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
 
             if (spellAtAddress != null)
             {
-                if (Ricci.Instance.Stamina >= spellAtAddress.StaminaCost)
+                if (Ricci.Instance.CurrentStamina >= spellAtAddress.StaminaCost)
                 {
-                    Ricci.Instance.Stamina -= spellAtAddress.StaminaCost;
+                    Ricci.Instance.CurrentStamina -= spellAtAddress.StaminaCost;
                     selectedActor.SubmitSpell(spellAtAddress);
                 }
                 else
@@ -112,9 +112,9 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
 
             try
             {
-                if (Ricci.Instance.Stamina >= command.staminaCost)
+                if (Ricci.Instance.CurrentStamina >= command.staminaCost)
                 {
-                    Ricci.Instance.Stamina -= command.staminaCost;
+                    Ricci.Instance.CurrentStamina -= command.staminaCost;
                     selectedActor.SubmitCommand(command);
                 }
                 else

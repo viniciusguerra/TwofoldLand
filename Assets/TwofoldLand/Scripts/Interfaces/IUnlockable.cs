@@ -5,15 +5,11 @@ public interface IUnlockable : IBase
 {
     [CodexDescription("The binary number which, converted to decimal, unlocks the object", 0)]
     string BinaryKey
-    {
-        get;
-    }
+    { get; }
 
     [CodexDescription("True if the object is unlocked, false otherwise", 0)]
     bool Unlocked
-    {
-        get;
-    }
+    { get; }
 
     [CodexDescription("Brings up the Binary Conversion UI", 10)]
     void Unlock();

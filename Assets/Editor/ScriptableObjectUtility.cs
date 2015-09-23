@@ -49,11 +49,29 @@ public static class ScriptableObjectUtility
 //    }
 //}
 
-public class UnlockableInterfaceContainerCreator : Editor
+//public class UnlockableInterfaceContainerCreator : Editor
+//{
+//    [MenuItem("Assets/Create/Interface Containers/IUnlockable")]
+//    public static void CreateAsset()
+//    {
+//        ScriptableObjectUtility.CreateAsset<UnlockableInterfaceContainer>();
+//    }
+//}
+
+//public class VulnerableInterfaceContainerCreator : Editor
+//{
+//    [MenuItem("Assets/Create/Interface Containers/IVulnerable")]
+//    public static void CreateAsset()
+//    {
+//        ScriptableObjectUtility.CreateAsset<VulnerableInterfaceContainer>();
+//    }
+//}
+
+public class SkillDataCreator : Editor
 {
-    [MenuItem("Assets/Create/Interface Containers/IUnlockable")]
+    [MenuItem("Assets/Create/Skill Data")]
     public static void CreateAsset()
     {
-        ScriptableObjectUtility.CreateAsset<UnlockableInterfaceContainer>();
+        ScriptableObjectUtility.CreateAsset<SkillData>();
     }
 }
