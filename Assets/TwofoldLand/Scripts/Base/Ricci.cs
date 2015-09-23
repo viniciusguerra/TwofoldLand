@@ -45,7 +45,7 @@ public class Ricci : Singleton<Ricci>, IVulnerable
     [SerializeField]
     private float currentHealth;
 
-    public float MaxHealth
+    public float CurrentHealth
     {
         get
         {
@@ -59,7 +59,7 @@ public class Ricci : Singleton<Ricci>, IVulnerable
         }
     }
 
-    public float CurrentHealth
+    public float MaxHealth
     {
         get
         {
@@ -71,7 +71,7 @@ public class Ricci : Singleton<Ricci>, IVulnerable
 
             HUD.Instance.SetMaxHealth(maxHealth);
         }
-    }
+    }    
 
     [Header("Stamina")]
     [SerializeField]
@@ -84,7 +84,7 @@ public class Ricci : Singleton<Ricci>, IVulnerable
     private float currentStaminaRegenWait;
     private bool regeneratingStamina = false;
 
-    public float Stamina
+    public float CurrentStamina
     {
         get
         {
@@ -149,7 +149,7 @@ public class Ricci : Singleton<Ricci>, IVulnerable
     {
         foreach (Skill s in skillList)
         {
-            if (s.interfaceContainer.InterfaceType == interfaceType)
+            if (s.GetInterfaceType() == interfaceType)
                 return true;
         }
 
@@ -161,8 +161,8 @@ public class Ricci : Singleton<Ricci>, IVulnerable
     {
         foreach (Skill s in skillList)
         {
-            if (s.interfaceContainer.InterfaceType.Name.Equals(interfaceName))
-                return s.interfaceContainer.InterfaceType;
+            if (s.GetInterfaceType().Name.Equals(interfaceName))
+                return s.GetInterfaceType();
         }
 
         throw new MissingMemberException();
@@ -173,8 +173,8 @@ public class Ricci : Singleton<Ricci>, IVulnerable
     {
         foreach (Skill s in skillList)
         {
-            if (s.interfaceContainer.InterfaceType.Name.StartsWith(text))
-                return s.interfaceContainer.InterfaceType;
+            if (s.GetInterfaceType().Name.StartsWith(text))
+                return s.GetInterfaceType();
         }
 
         throw new MissingMemberException();
@@ -188,9 +188,9 @@ public class Ricci : Singleton<Ricci>, IVulnerable
 
             foreach (Skill s in skillList)
             {
-                if (s.interfaceContainer.InterfaceType == interfaceType)
+                if (s.GetInterfaceType() == interfaceType)
                 {
-                    foreach (MethodInfo m in s.interfaceContainer.InterfaceType.GetMethods())
+                    foreach (MethodInfo m in s.GetInterfaceType().GetMethods())
                     {
                         if (m.Name.StartsWith(text))
                             remainder = m.Name.Replace(text, String.Empty);
@@ -268,8 +268,8 @@ public class Ricci : Singleton<Ricci>, IVulnerable
 
     public void Rest()
     {
-        MaxHealth = MaxHealth;
-        Stamina = MaxStamina;
+        CurrentHealth = MaxHealth;
+        CurrentStamina = MaxStamina;
     }
     #endregion
 
@@ -318,8 +318,8 @@ public class Ricci : Singleton<Ricci>, IVulnerable
         HUD.Instance.SetMaxHealth(maxHealth);
         HUD.Instance.SetMaxStamina(maxStamina);        
 
-        HUD.Instance.UpdateHealthBarValue(MaxHealth);
-        HUD.Instance.UpdateStaminaBarValue(Stamina);
+        HUD.Instance.UpdateHealthBarValue(CurrentHealth);
+        HUD.Instance.UpdateStaminaBarValue(CurrentStamina);
 
         compilerAvailable = false;
 

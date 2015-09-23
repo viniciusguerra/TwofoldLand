@@ -144,7 +144,7 @@ public class Codex : UIWindow
 
         for (int i = 0; i < Ricci.Instance.skillList.Count; i++)
         {
-            interfaceNameArray[i] = Ricci.Instance.skillList[i].interfaceContainer.InterfaceType.Name;
+            interfaceNameArray[i] = Ricci.Instance.skillList[i].GetInterfaceType().Name;
         }
 
         interfaceList.DisplayInterfaces(interfaceNameArray);
@@ -160,7 +160,7 @@ public class Codex : UIWindow
 
         interfaceNameText.text = currentInterfaceType.Name;
 
-        interfaceLevelText.text = String.Format("Lvl.{0}", Ricci.Instance.skillList.Find(x => x.interfaceContainer.InterfaceType == currentInterfaceType).level);
+        interfaceLevelText.text = String.Format("Lvl.{0}", Ricci.Instance.skillList.Find(x => x.GetInterfaceType() == currentInterfaceType).Level);
 
         DisplayProperties();
 
@@ -182,7 +182,7 @@ public class Codex : UIWindow
 
         interfaceNameText.text = currentInterfaceType.Name;
 
-        interfaceLevelText.text = String.Format("Lvl.{0}", Ricci.Instance.skillList.Find(x => x.interfaceContainer.InterfaceType == currentInterfaceType).level);
+        interfaceLevelText.text = String.Format("Lvl.{0}", Ricci.Instance.skillList.Find(x => x.GetInterfaceType() == currentInterfaceType).Level);
 
         DisplayProperties();
 

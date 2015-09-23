@@ -62,7 +62,7 @@ public class InfoPanel : UIWindow
 
         while(true)
         {
-            healthBar.value = vulnerable.CurrentHealth;
+            healthBar.value = vulnerable.MaxHealth;
             yield return null;
         }
     }

@@ -14,7 +14,7 @@ public class Unlockable : Actor, IUnlockable, IVulnerable
     [SerializeField]
     private float currentHealth;
 
-    public float MaxHealth
+    public float CurrentHealth
     {
         get
         {
@@ -22,7 +22,7 @@ public class Unlockable : Actor, IUnlockable, IVulnerable
         }
     }
 
-    public float CurrentHealth
+    public float MaxHealth
     {
         get
         {
@@ -66,7 +66,7 @@ public class Unlockable : Actor, IUnlockable, IVulnerable
 
     private bool alreadyOpened;
     private bool open;
-    private Animator lidAnimator;
+    public Animator animator;
 
     private void DamageLock(object sender, AttackArgs attackArgs)
     {
@@ -90,7 +90,7 @@ public class Unlockable : Actor, IUnlockable, IVulnerable
     private void DisplayLockedFeedback()
     {
         HUD.Instance.log.Push(name + " locked");
-        lidAnimator.SetTrigger("toggle");
+        animator.SetTrigger("toggle");
     }
 
     public void Unlock(object key)
@@ -104,8 +104,8 @@ public class Unlockable : Actor, IUnlockable, IVulnerable
             if (Convert.ToString(Int16.Parse((string)key), 2) == binaryKey)
             {
                 unlocked = true;
-                lidAnimator.SetBool("unlocked", unlocked);
-                lidAnimator.SetBool("open", true);
+                animator.SetBool("unlocked", unlocked);
+                animator.SetBool("open", true);
 
                 Toggle();
 
@@ -123,7 +123,7 @@ public class Unlockable : Actor, IUnlockable, IVulnerable
         if (unlocked)
         {
             open = !open;
-            lidAnimator.SetTrigger("toggle");
+            animator.SetTrigger("toggle");
 
             if(!alreadyOpened)
             {
@@ -138,10 +138,10 @@ public class Unlockable : Actor, IUnlockable, IVulnerable
 
     private IEnumerator ReleaseItemCoroutine()
     {
-        while (!lidAnimator.GetCurrentAnimatorStateInfo(0).IsName("ChestLidOpenAnimation"))
+        while (!animator.GetCurrentAnimatorStateInfo(0).IsName("ChestLidOpenAnimation"))
             yield return null;
 
-        while (lidAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
+        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
             yield return null;
 
         GameObject releasedItem = SceneManager.Instance.SpawnAura(auraToSpawn, transform.position + new Vector3(0, 0.6f, 0));
@@ -155,11 +155,9 @@ public class Unlockable : Actor, IUnlockable, IVulnerable
     public override void Start()
     {
         base.Start();
-
-        lidAnimator = GetComponentInChildren<Animator>();
         
-        lidAnimator.SetBool("unlocked", unlocked);
-        lidAnimator.SetBool("open", !open);
+        animator.SetBool("unlocked", unlocked);
+        animator.SetBool("open", !open);
 
         alreadyOpened = false;
 
