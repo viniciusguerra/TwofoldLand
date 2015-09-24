@@ -18,6 +18,21 @@ static public class ExtensionMethods
             result = child.gameObject.AddComponent<T>();
         }
         return result;
-    }    
-	#endregion
+    }
+
+    static public void SetLayerRecursively(this GameObject go, int newLayer)
+    {
+        go.layer = newLayer;
+
+        foreach (Transform child in go.transform)
+        {
+            child.gameObject.layer = newLayer;
+
+            if (child.childCount > 0)
+            {
+                SetLayerRecursively(child.gameObject, newLayer);
+            }
+        }
+    }
+    #endregion
 }

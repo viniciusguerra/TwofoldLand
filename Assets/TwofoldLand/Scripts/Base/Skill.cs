@@ -36,4 +36,10 @@ public class Skill
     {
         return skillData.InterfaceType;
     }    
+
+    public Skill(SkillData skillData)
+    {
+        this.skillData = skillData;
+        level = 1;
+    }
 }

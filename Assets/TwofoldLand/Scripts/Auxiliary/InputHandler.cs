@@ -7,10 +7,6 @@ using UnityEngine.EventSystems;
 
 public class InputHandler : MonoBehaviour
 {
-	#region Properties
-
-	#endregion
-
 	#region Methods
     private void HandleInputs()
     {

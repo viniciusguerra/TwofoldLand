@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/SimpleShapesModel" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/ActivityDesigner" xmlns:dm10="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="415d69a8-6b06-493e-9276-37b6e36d7201"
+  name="EventSystems"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="6c408bb6-0dfb-4001-960e-6f609cdd6568"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DUnityEngine.EventSystems"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="64ed34ed-413f-4e19-a64c-5c7e9b97cedc"
+        name="PointerEventData"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="d790ffb3-f1c7-43ec-811c-7ee8aba0d9a6"
+            handle="viewcode://./CodeSchema_Class?Assembly%3Dfile:%2F%2F%2FC:%2FDevelopment%2FTwofoldLand%2FLibrary%2FUnityAssemblies%2FUnityEngine.UI.dll Namespace%3DUnityEngine.EventSystems Type%3DPointerEventData"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="528e0aa9-01d4-4629-b193-e6d875a1616c"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="e5c58944-b8e8-4c16-8033-ff6162f10156">
+                <propertyInstance
+                  Id="e23e7ee8-4f74-4082-8bc0-0eeb7729e7af"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="c29e1c6e-01c6-41de-b89f-ff1ad19e38d7">
+                <propertyInstance
+                  Id="68486f2f-b7de-4b2e-ba83-5ab31e3a11b3"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="5ef0deea-8673-426a-bd60-900f82c39052">
+                <propertyInstance
+                  Id="1a03bb84-69e4-47fa-b29e-dac55c7842e1"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="5ddac174-84db-40aa-a566-801b0921f08a">
+                <propertyInstance
+                  Id="ec399d82-be70-4287-98d0-1a64732420ef"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="6027bf84-3824-4183-a5ff-f9a8cb5dbc0d">
+                <propertyInstance
+                  Id="56ee13dc-159c-41b1-ae2a-44853092580b"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <Interface
+        Id="cd23f4ad-c042-4b0f-b806-13ce7c0e755d"
+        name="IPointerClickHandler"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="0aaaec09-f19e-4b9a-8e0d-951ce69a15c0"
+            handle="viewcode://./CodeSchema_Interface?Assembly%3Dfile:%2F%2F%2FC:%2FDevelopment%2FTwofoldLand%2FLibrary%2FUnityAssemblies%2FUnityEngine.UI.dll Namespace%3DUnityEngine.EventSystems Type%3DIPointerClickHandler"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="414a8beb-b35c-4ef8-94b4-7db40a8846ec"
+            name="interface"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="a15093cf-1da6-4f92-96ad-5d80980b1153">
+                <propertyInstance
+                  Id="c1be6142-5411-4808-b451-cf990fcf790b"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="bd26a486-d2a3-458e-a23d-fef09c76a477">
+                <propertyInstance
+                  Id="c8fa23c3-a56b-441c-80fe-89fe1a2284a8"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="5210c251-2493-46f9-94ed-183f74a0b36b">
+                <propertyInstance
+                  Id="0b40a891-274d-4c49-a1ab-152c9eaef599"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="8c80fb11-7e35-4cbd-9319-00e0a2bc805d">
+                <propertyInstance
+                  Id="2b3d080e-994f-44dd-ad99-e1b1198eceae"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </Interface>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

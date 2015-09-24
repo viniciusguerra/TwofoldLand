@@ -8,64 +8,60 @@ using System;
 
 public class Actor : MonoBehaviour, IPointerClickHandler
 {    
-    private MeshRenderer selectionRenderer;
-    private Material originalMaterial;
+    private int originalLayer;
 
     private Type[] implementedInterfaces;
-    private List<string> interfaceList;
+    private List<string> interfaceNameList;
 
-    public void DisplayInterfaces()
+    private void UpdateInterfaceNameList()
     {
-        bool showHealthBar = false;
-
-        interfaceList.Clear();
+        interfaceNameList.Clear();
 
         for (int i = 0; i < implementedInterfaces.Length; i++)
         {
             if (Ricci.Instance.KnowsInterface(implementedInterfaces[i]))
             {
-                interfaceList.Add(implementedInterfaces[i].Name);
-
-                if (implementedInterfaces[i] == typeof(IVulnerable))
-                {
-                    showHealthBar = true;
-                }
+                interfaceNameList.Add(implementedInterfaces[i].Name);
             }
         }
+    }
+
+    public void DisplayInterfaces()
+    {
+        UpdateInterfaceNameList();
+
+        bool showHealthBar = interfaceNameList.Contains("IVulnerable");
 
         if (showHealthBar)
-            HUD.Instance.infoPanel.Show(name, interfaceList.ToArray(), (IVulnerable)this);
+            HUD.Instance.infoPanel.Show(name, interfaceNameList.ToArray(), (IVulnerable)this);
         else
-            HUD.Instance.infoPanel.Show(name, interfaceList.ToArray());
-    }
+            HUD.Instance.infoPanel.Show(name, interfaceNameList.ToArray());
+    }    
 
     public void HideInterfaces()
     {
         HUD.Instance.infoPanel.Hide();
     }
 
-    public void SetSelected(MeshRenderer selectedRenderer)
+    public void SetSelected()
     {
-        selectionRenderer = selectedRenderer;
+        MainCamera.Instance.EnableOutline();
 
-        originalMaterial = selectedRenderer.material;
-        selectionRenderer.material = Resources.Load<Material>(GlobalDefinitions.SelectedMaterialPath);
-
-        selectionRenderer.material.mainTexture = originalMaterial.mainTexture;
-        selectionRenderer.material.mainTextureOffset = originalMaterial.mainTextureOffset;
-        selectionRenderer.material.mainTextureScale = originalMaterial.mainTextureScale;
-        selectionRenderer.material.color = originalMaterial.color;
+        originalLayer = gameObject.layer;
+        gameObject.SetLayerRecursively(MainCamera.outlineLayer);
 
         HUD.Instance.terminal.SetSelectedActor(this);
         HUD.Instance.terminal.OnActorDeselection += Deselect;
 
-        DisplayInterfaces();        
+        DisplayInterfaces();
     }
 
-    private void Deselect()
+    public void Deselect()
     {
-        selectionRenderer.material = originalMaterial;
-        originalMaterial = null;
+        if(!HUD.Instance.terminal.HasSelectedActor())
+            MainCamera.Instance.DisableOutline();
+
+        gameObject.SetLayerRecursively(originalLayer);
 
         HideInterfaces();
 
@@ -156,16 +152,14 @@ public class Actor : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData data)
     {
         if (data.pointerId == -1 && Ricci.Instance.IsInSelectionRange(transform.position))
-        {            
-            SetSelected(data.pointerPressRaycast.gameObject.GetComponent<MeshRenderer>());
+        {
+            SetSelected();
         }
     }
 
     public virtual void Start()
     {
-        selectionRenderer = GetComponent<MeshRenderer>();
-
-        interfaceList = new List<string>();
+        interfaceNameList = new List<string>();
 
         implementedInterfaces = GetType().GetInterfaces();
     }

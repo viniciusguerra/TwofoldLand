@@ -61,6 +61,7 @@ public class Unlockable : Actor, IUnlockable, IVulnerable
     }
 
     public int auraToSpawn;
+    public SkillData[] skillsToSpawn;
 
     public int lockBreakThreshold;
 
@@ -144,10 +145,24 @@ public class Unlockable : Actor, IUnlockable, IVulnerable
         while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
             yield return null;
 
-        GameObject releasedItem = SceneManager.Instance.SpawnAura(auraToSpawn, transform.position + new Vector3(0, 0.6f, 0));
+        GameObject aura = SceneManager.Instance.SpawnAura(auraToSpawn, transform.position + new Vector3(0, 0.6f, 0));
 
-        Vector3 force = transform.TransformDirection(new Vector3(0, 300, 120));
-        releasedItem.GetComponent<Rigidbody>().AddForce(force);
+        Vector3 force = transform.TransformDirection(new Vector3(UnityEngine.Random.Range(-1, 1) * 100, 300, 120));
+
+        aura.GetComponent<Rigidbody>().AddForce(force);
+
+        yield return new WaitForSeconds(0.2f);
+
+        foreach (SkillData s in skillsToSpawn)
+        {
+            GameObject skill = SceneManager.Instance.SpawnSkill(s, transform.position + new Vector3(0, 0.6f, 0));
+
+            force = transform.TransformDirection(new Vector3(UnityEngine.Random.Range(-1, 1) * 10, 300, 120));
+
+            skill.GetComponent<Rigidbody>().AddForce(force);
+
+            yield return new WaitForSeconds(0.2f);
+        }        
 
         alreadyOpened = true;
     }
@@ -161,7 +176,7 @@ public class Unlockable : Actor, IUnlockable, IVulnerable
 
         alreadyOpened = false;
 
-        if (currentHealth == 0 || currentHealth == null)
+        if (currentHealth == 0)
             currentHealth = maxHealth;
 
         attackHandler = unlocked ? new AttackHandler(Break) : new AttackHandler(DamageLock);

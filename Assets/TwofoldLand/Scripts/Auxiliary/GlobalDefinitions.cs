@@ -10,7 +10,7 @@ public static class GlobalDefinitions
     public const string PlayerTag = "Player";
     public const string ActorTag = "Actor";
     public const string PathTag = "Path";
-    public const string AuraTag = "Aura";
+    public const string CollectableTag = "Collectable";
     public const string CompilerTag = "Compiler";
 
     //Misc Strings     

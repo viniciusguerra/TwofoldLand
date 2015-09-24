@@ -140,9 +140,9 @@ public class Ricci : Singleton<Ricci>, IVulnerable
     #endregion
 
     #region Skill Methods
-    public void AddInterface(Skill interfaceContainer)
+    public void AddSkill(SkillData skillData)
     {
-        skillList.Add(interfaceContainer);
+        skillList.Add(new Skill(skillData));
     }
 
     public bool KnowsInterface(Type interfaceType)
@@ -276,13 +276,9 @@ public class Ricci : Singleton<Ricci>, IVulnerable
     #region MonoBehaviour
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == GlobalDefinitions.AuraTag)
+        if (collision.gameObject.tag == GlobalDefinitions.CollectableTag)
         {
-            Aura auraContainer = collision.gameObject.GetComponent<Aura>();
-
-            CollectAura(auraContainer.auraAmount);
-
-            auraContainer.Absorb();
+            collision.gameObject.GetComponent<Collectable>().Absorb();
         }
     }
 

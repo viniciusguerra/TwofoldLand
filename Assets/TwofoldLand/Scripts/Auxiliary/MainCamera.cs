@@ -12,6 +12,8 @@ public enum MainCameraOffsetDirection
 
 public class MainCamera : Singleton<MainCamera>
 {
+    public const int outlineLayer = 8;
+
     public Transform target;
     public bool follow = true;
 
@@ -21,6 +23,8 @@ public class MainCamera : Singleton<MainCamera>
     public float horizontalOffset;
 
     private Vector3 offset;
+    [SerializeField]
+    private Camera outlineCamera;
 
     private void FollowTarget()
     {
@@ -59,6 +63,16 @@ public class MainCamera : Singleton<MainCamera>
         this.offset = offset;
     }
 
+    public void EnableOutline()
+    {
+        outlineCamera.gameObject.SetActive(true);
+    }
+
+    public void DisableOutline()
+    {
+        outlineCamera.gameObject.SetActive(false);
+    }
+
     void LateUpdate()
     {
         if (follow)
@@ -68,5 +82,7 @@ public class MainCamera : Singleton<MainCamera>
     void Start()
     {
         offset = Vector3.zero;
+
+        DisableOutline();
     }
 }

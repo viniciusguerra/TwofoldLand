@@ -3,5 +3,5 @@ using System.Collections;
 
 public interface IBase
 {
-    
+
 }

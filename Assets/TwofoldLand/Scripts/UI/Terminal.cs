@@ -45,37 +45,32 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
     #endregion
 
     #region Methods
-    //Actor Selection
-    private void SelectActor(Actor actor)
-    {
-        ClearActorSelection();
-
-        selectedActor = actor;
-
-        Ricci.Instance.LookAt(selectedActor.transform.position);
-        Ricci.Instance.StopMoving();
-        TargetMarker.Instance.HideInstantly();
-
-        inputField.Select();
-    }
-
     public void SetSelectedActor(Actor actor)
     {
         if (Ricci.Instance.IsInSelectionRange(actor.transform.position) && actor != null)
         {
-            SelectActor(actor);
-        }
-    }
+            selectedActor = actor;
 
-    public bool HasSelectedActor()
-    {
-        return selectedActor != null;
+            OnActorDeselection();
+
+            Ricci.Instance.LookAt(selectedActor.transform.position);
+            Ricci.Instance.StopMoving();
+            TargetMarker.Instance.HideInstantly();
+
+            inputField.Select();
+        }
     }
 
     public void ClearActorSelection()
     {
         selectedActor = null;
+
         OnActorDeselection();
+    }
+
+    public bool HasSelectedActor()
+    {
+        return selectedActor != null;
     }
 
     public void SubmitCommandToSelectedActor()
