@@ -145,6 +145,30 @@ public class Ricci : Singleton<Ricci>, IVulnerable
         skillList.Add(new Skill(skillData));
     }
 
+    public Skill GetSkill(Type interfaceType)
+    {
+        return skillList.Find(x => x.GetInterfaceType().Equals(interfaceType));
+    }
+
+    public Skill GetSkill(string interfaceName)
+    {
+        return skillList.Find(x => x.GetInterfaceType().Name.Equals(interfaceName));
+    }
+
+    public void LevelSkillUp(Type interfaceType)
+    {        
+        Skill skillToLevel = skillList.Find(x => x.GetInterfaceType().Equals(interfaceType));
+        int costToLevelUp = skillToLevel.GetCostToLevelUp();
+
+        if (Aura >= costToLevelUp)
+        {
+            SpendAura(costToLevelUp);
+            skillToLevel.LevelUp();
+        }
+        else
+            HUD.Instance.log.Push("Not enough Aura to level " + skillToLevel.GetInterfaceType().Name + " up");
+    }
+
     public bool KnowsInterface(Type interfaceType)
     {
         foreach (Skill s in skillList)
@@ -216,8 +240,10 @@ public class Ricci : Singleton<Ricci>, IVulnerable
 
     public void MoveToPosition(Vector3 targetPosition)
     {
+        iTween.Stop(gameObject);
+
         agent.SetDestination(targetPosition);
-        agent.Resume();
+        agent.Resume();        
     }
 
     public void StopMoving()
@@ -236,6 +262,9 @@ public class Ricci : Singleton<Ricci>, IVulnerable
 
         HUD.Instance.UpdateAuraUI(availableAura);
         HUD.Instance.log.Push("Acquired " + Mathf.Abs(amount) + " aura");
+
+        if (HUD.Instance.codex.IsVisible)
+            HUD.Instance.codex.UpdateInterfaceLevelArea();
     }
 
     public void SpendAura(int amount)
@@ -244,6 +273,9 @@ public class Ricci : Singleton<Ricci>, IVulnerable
 
         HUD.Instance.UpdateAuraUI(availableAura);
         HUD.Instance.log.Push("Spent " + Mathf.Abs(amount) + " aura");
+
+        if (HUD.Instance.codex.IsVisible)
+            HUD.Instance.codex.UpdateInterfaceLevelArea();
     }
 
     //TODO Stamina Regen

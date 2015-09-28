@@ -27,7 +27,7 @@ public class Skill
         ++level;
     }
 
-    public int GetAuraToNextLevel()
+    public int GetCostToLevelUp()
     {
         return skillData.auraToNextLevel[level - 1];
     }

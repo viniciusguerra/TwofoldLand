@@ -21,16 +21,30 @@ public class Codex : UIWindow
     public UIWindow interfaceArea;
     public InterfaceToggleList interfaceList;
 
+    [Space(20)]
     public Text interfaceNameText;
+
+    [Space(20)]
+    public UIWindow interfaceLevelPanel;
     public Text interfaceLevelText;
+    public Text levelUpCostText;
+
+    [Space(10)]
+    public Button levelUpButton;
+    public Color levelUpEnabledColor;
+    public Color levelUpDisabledColor;
+
+    [Space(20)]    
     public RectTransform propertyPanel;
     public RectTransform propertyListPanel;
     public RectTransform methodPanel;
     public RectTransform methodListPanel;    
 
+    [Space(20)]
     public GameObject propertyPrefab;
-    public GameObject methodPrefab;    
+    public GameObject methodPrefab;
 
+    [Space(20)]
     public List<RectTransform> propertyList;
     public List<RectTransform> methodList;
     public List<RectTransform> spellList;
@@ -51,9 +65,13 @@ public class Codex : UIWindow
         {
             MainCamera.Instance.SetOffset(MainCameraOffsetDirection.Right);
 
+            ClearShownInterface();
+
             DisplayInterfaceArea();
 
             PopulateInterfaceList();
+
+            UpdateInterfaceLevelArea();
         }
         else
         {
@@ -69,9 +87,11 @@ public class Codex : UIWindow
 
         ClearShownInterface();
 
-        DisplayInterfaceArea();
+        DisplayInterfaceArea();        
 
         PopulateInterfaceList();
+
+        UpdateInterfaceLevelArea();
     }
 
     public override void Hide()
@@ -85,13 +105,50 @@ public class Codex : UIWindow
 
     public void DisplayInterfaceArea()
     {
-        if (interfaceArea.IsVisible)
-            return;
-
         spellArea.Hide();
         spellAreaButton.SetNormal();
         interfaceArea.Show();
         interfaceAreaButton.SetBold();
+    }
+
+    public void UpdateInterfaceLevelArea()
+    {
+        if (currentInterfaceType != null)
+        {
+            Skill currentSkill = Ricci.Instance.GetSkill(currentInterfaceType);
+
+            interfaceLevelText.text = String.Format("Lvl.{0}", Ricci.Instance.skillList.Find(x => x.GetInterfaceType() == currentInterfaceType).Level);
+
+            if (currentSkill.CanLevelUp())
+            {
+                interfaceLevelPanel.Show();
+
+                int levelUpCost = currentSkill.GetCostToLevelUp();
+                levelUpCostText.text = levelUpCost.ToString();
+
+                if (Ricci.Instance.Aura >= levelUpCost)
+                {
+                    levelUpButton.GetComponentInChildren<Text>().color = levelUpEnabledColor;
+                    levelUpButton.enabled = true;
+                }
+                else
+                {
+                    levelUpButton.GetComponentInChildren<Text>().color = levelUpDisabledColor;
+                    levelUpButton.enabled = false;
+                }
+            }
+            else
+                interfaceLevelPanel.Hide();
+        }
+        else
+            interfaceLevelPanel.Hide();
+    }
+
+    public void LevelCurrentSkillUp()
+    {
+        Ricci.Instance.LevelSkillUp(currentInterfaceType);
+
+        UpdateInterfaceLevelArea();
     }
 
     public void DisplaySpellArea()
@@ -105,7 +162,6 @@ public class Codex : UIWindow
         spellAreaButton.SetBold();
     }
 
-    [ContextMenu("Update Spells")]
     public void UpdateSpells()
     {
         ClearRectTransformList(spellList);
@@ -158,13 +214,13 @@ public class Codex : UIWindow
 
         currentInterfaceType = Type.GetType(name);
 
-        interfaceNameText.text = currentInterfaceType.Name;
-
-        interfaceLevelText.text = String.Format("Lvl.{0}", Ricci.Instance.skillList.Find(x => x.GetInterfaceType() == currentInterfaceType).Level);
+        interfaceNameText.text = currentInterfaceType.Name;        
 
         DisplayProperties();
 
         DisplayMethods();
+
+        UpdateInterfaceLevelArea();
     }
 
     public void DisplayInterface(bool toggle, string name)
@@ -187,10 +243,14 @@ public class Codex : UIWindow
         DisplayProperties();
 
         DisplayMethods();
+
+        UpdateInterfaceLevelArea();
     }
 
     private void ClearShownInterface()
     {
+        currentInterfaceType = null;
+
         interfaceNameText.text = "Select an Interface";
 
         interfaceLevelText.text = string.Empty;
