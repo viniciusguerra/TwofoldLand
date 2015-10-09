@@ -16,12 +16,13 @@ public class HUD : Singleton<HUD>
     [Space(20)]
     public Terminal terminal;
     public IDE ide;
-    public InfoPanel infoPanel;
+    public InfoPanel infoPanel;    
 
     [Header("Windows")]
     public Notes notes;
     public Codex codex;
     public Storage storage;
+    public SkillAcquiredWindow skillAcquired;
 
     public Log log;
     public BinaryConversion binaryConversion;

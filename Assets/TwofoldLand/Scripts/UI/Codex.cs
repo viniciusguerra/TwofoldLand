@@ -69,7 +69,7 @@ public class Codex : UIWindow
 
             DisplayInterfaceArea();
 
-            PopulateInterfaceList();
+            interfaceList.DisplayInterfaces(Ricci.Instance.GetAllSkillInterfaces());
 
             UpdateInterfaceLevelArea();
         }
@@ -87,9 +87,9 @@ public class Codex : UIWindow
 
         ClearShownInterface();
 
-        DisplayInterfaceArea();        
+        DisplayInterfaceArea();
 
-        PopulateInterfaceList();
+        interfaceList.DisplayInterfaces(Ricci.Instance.GetAllSkillInterfaces());
 
         UpdateInterfaceLevelArea();
     }
@@ -192,18 +192,6 @@ public class Codex : UIWindow
         {
             spellList.Add(CreateSpellUI(s));
         }
-    }
-
-    private void PopulateInterfaceList()
-    {
-        string[] interfaceNameArray = new string[Ricci.Instance.skillList.Count];
-
-        for (int i = 0; i < Ricci.Instance.skillList.Count; i++)
-        {
-            interfaceNameArray[i] = Ricci.Instance.skillList[i].GetInterfaceType().Name;
-        }
-
-        interfaceList.DisplayInterfaces(interfaceNameArray);
     }
 
     public void DisplayInterface(string name)

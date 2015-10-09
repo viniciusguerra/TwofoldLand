@@ -30,29 +30,30 @@ public class InterfaceToggleList : InterfaceList
     #endregion
 
     #region Methods
-    public override void DisplayInterfaces(string[] interfaceArray)
+    public override void DisplayInterfaces(Type[] interfaceArray)
     {
         ClearInterfaces();
 
-        foreach (string interfaceName in interfaceArray)
+        foreach (Type interfaceType in interfaceArray)
         {
             GameObject interfaceButton = GameObject.Instantiate(interfaceButtonPrefab);
+            string currentName = interfaceType.Name;
 
             Toggle toggle = interfaceButton.GetComponent<Toggle>();
             toggle.group = toggleGroup;
 
-            interfaceButton.GetComponentInChildren<Text>().text = interfaceName;
+            interfaceButton.GetComponentInChildren<Text>().text = currentName;
             interfaceButton.transform.SetParent(listPanel.transform, false);
 
             //Adds click listener to Interface Toggle. Calls DisplayInterface sending its own name
-            string currentName = interfaceName;
+            
             toggle.onValueChanged.AddListener((bool value) => HUD.Instance.codex.DisplayInterface(value, currentName));
 
             interfaceToggleList.Add(toggle);
         }
     }
 
-    protected override void ClearInterfaces()
+    public override void ClearInterfaces()
     {
         foreach (Toggle t in interfaceToggleList)
         {

@@ -1,9 +1,18 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 using System.Collections;
 using System;
 
-public class SkillContainer : Collectable
+public class SkillContainer : Collectable, IPointerClickHandler
 {
+    public override bool CollectOnTouch
+    {
+        get
+        {
+            return false;
+        }
+    }
+
     public SkillData skillData;
 
     private HoveringItem hoveringItem;
@@ -30,6 +39,12 @@ public class SkillContainer : Collectable
         base.Awake();
 
         hoveringItem = GetComponent<HoveringItem>();
+    }
+
+    void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
+    {
+        if(Ricci.Instance.IsInSelectionRange(transform.position))
+            Absorb();
     }
 
     new void Update()

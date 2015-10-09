@@ -38,9 +38,6 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
     [HideInInspector]
     public string completedCode;
 
-    public delegate void ActorSelectionDelegate();
-    public event ActorSelectionDelegate OnActorDeselection;
-
     private bool codeCompleteIsAddressContent = false;
     #endregion
 
@@ -49,9 +46,14 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
     {
         if (Ricci.Instance.IsInSelectionRange(actor.transform.position) && actor != null)
         {
-            selectedActor = actor;
+            if (actor != selectedActor)
+            {
+                ClearActorSelection();
 
-            OnActorDeselection();
+                selectedActor = actor;
+
+                MainCamera.Instance.EnableOutline();
+            }
 
             Ricci.Instance.LookAt(selectedActor.transform.position);
             Ricci.Instance.StopMoving();
@@ -63,9 +65,14 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
 
     public void ClearActorSelection()
     {
-        selectedActor = null;
+        if (HasSelectedActor())
+        {
+            selectedActor.Deselect();
+        }
 
-        OnActorDeselection();
+        MainCamera.Instance.DisableOutline();
+
+        selectedActor = null;  
     }
 
     public bool HasSelectedActor()
@@ -329,8 +336,6 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
 
         inputField = GetComponent<InputField>();
         inputFieldPlaceholder = (Text)inputField.placeholder;
-
-        OnActorDeselection = delegate { };
 
         commandHistory = new Stack<string>();
         commandHistory.Push(string.Empty);

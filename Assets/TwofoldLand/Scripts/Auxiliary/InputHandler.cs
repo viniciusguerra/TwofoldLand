@@ -13,7 +13,7 @@ public class InputHandler : MonoBehaviour
         //Terminal
         if (HUD.Instance.terminal.HasSelectedActor())
         {
-            if (!Ricci.Instance.IsInSelectionRange(HUD.Instance.terminal.selectedActor.transform.position) || Input.GetMouseButtonUp(1))
+            if (Input.GetMouseButtonUp(1))
             {
                 HUD.Instance.terminal.ClearActorSelection();
                 HUD.Instance.binaryConversion.Hide();

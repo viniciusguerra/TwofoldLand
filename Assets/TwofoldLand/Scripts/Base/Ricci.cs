@@ -143,6 +143,8 @@ public class Ricci : Singleton<Ricci>, IVulnerable
     public void AddSkill(SkillData skillData)
     {
         skillList.Add(new Skill(skillData));
+
+        HUD.Instance.skillAcquired.Show(skillData.InterfaceType);
     }
 
     public Skill GetSkill(Type interfaceType)
@@ -153,6 +155,18 @@ public class Ricci : Singleton<Ricci>, IVulnerable
     public Skill GetSkill(string interfaceName)
     {
         return skillList.Find(x => x.GetInterfaceType().Name.Equals(interfaceName));
+    }
+
+    public Type[] GetAllSkillInterfaces()
+    {
+        Type[] interfaces = new Type[skillList.Count];
+
+        for (int i = 0; i < skillList.Count; i++)
+        {
+            interfaces[i] = skillList[i].GetInterfaceType();
+        }
+
+        return interfaces;
     }
 
     public void LevelSkillUp(Type interfaceType)
@@ -235,7 +249,7 @@ public class Ricci : Singleton<Ricci>, IVulnerable
         string tweenName = GetInstanceID() + "LookTo";
 
         iTween.StopByName(tweenName);
-        iTween.LookTo(gameObject, iTween.Hash("name", tweenName, "looktarget", target, "speed", lookSpeed));
+        iTween.LookTo(gameObject, iTween.Hash("name", tweenName, "axis", "y", "looktarget", target, "speed", lookSpeed));
     }
 
     public void MoveToPosition(Vector3 targetPosition)
@@ -310,7 +324,10 @@ public class Ricci : Singleton<Ricci>, IVulnerable
     {
         if (collision.gameObject.tag == GlobalDefinitions.CollectableTag)
         {
-            collision.gameObject.GetComponent<Collectable>().Absorb();
+            Collectable collectable = collision.gameObject.GetComponent<Collectable>();
+
+            if(collectable.CollectOnTouch)
+                collision.gameObject.GetComponent<Collectable>().Absorb();
         }
     }
 

@@ -9,22 +9,24 @@ public class InfoPanel : UIWindow
 	#region Properties
     public Text actorNameText;
     public Slider healthBar;
-    public InterfaceButtonList interfaceList;
+    public InterfaceInfoList interfaceList;
 	#endregion
 
 	#region Methods
-    public void Show(string actorName, string[] interfaces)
+    public void Show(string actorName, Type[] interfaces)
     {
         base.Show();
 
         actorNameText.text = actorName;
 
-        HideHealthBar();      
+        HideHealthBar();
+
+        interfaceList.ClearInterfaces();
 
         interfaceList.DisplayInterfaces(interfaces);
     }
 
-    public void Show(string actorName, string[] interfaces, IVulnerable vulnerable)
+    public void Show(string actorName, Type[] interfaces, IVulnerable vulnerable)
     {
         base.Show();
 
@@ -34,6 +36,8 @@ public class InfoPanel : UIWindow
 
         StartCoroutine(UpdateHealthBar(vulnerable));
 
+        interfaceList.ClearInterfaces();
+
         interfaceList.DisplayInterfaces(interfaces);
     }
 
@@ -42,6 +46,8 @@ public class InfoPanel : UIWindow
         base.Hide();
 
         StopCoroutine("UpdateHealthBar");
+
+        interfaceList.ClearInterfaces();
     }
 
     private void ShowHealthBar(IVulnerable vulnerable)

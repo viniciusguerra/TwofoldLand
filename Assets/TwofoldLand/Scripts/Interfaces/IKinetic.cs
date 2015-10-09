@@ -7,15 +7,14 @@ public interface IKinetic : IBase
     bool IsLoose
     { get; }
 
-    [CodexDescription("How much force needs to be applied to this object so that it will break loose", 0)]
-    int LooseThreshold
-    { get; }
-
     [CodexDescription("Enables dragging of an Actor if it is loose", 15)]
     void Drag();
 
     [CodexDescription("Pushes the Actor away from you", 5)]
     void Push();
+
+    [CodexDescription("Pushes the Actor in the given direction: left, right, forward or back", 5)]
+    void Push(object direction);
 
     [CodexDescription("Pulls the Actor towards you", 5)]
     void Pull();

@@ -21,9 +21,9 @@ public abstract class InterfaceList : MonoBehaviour
     #endregion
 
     #region Methods
-    public abstract void DisplayInterfaces(string[] interfaceArray);
+    public abstract void DisplayInterfaces(Type[] interfaceArray);
 
-    protected abstract void ClearInterfaces();
+    public abstract void ClearInterfaces();
     #endregion
 
     #region MonoBehaviour

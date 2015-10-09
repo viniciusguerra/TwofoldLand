@@ -4,16 +4,17 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class InterfaceButtonList : InterfaceList
+public class InterfaceInfoList : InterfaceList
 {
     #region Properties
-    private List<Button> interfaceButtonList;
+    public GameObject interfaceInfoPrefab;
+    private List<GameObject> interfaceInfoList;
 
     protected override GameObject[] InterfaceButtonArray
     {
         get
         {
-            Button[] buttonArray = interfaceButtonList.ToArray();
+            GameObject[] buttonArray = interfaceInfoList.ToArray();
 
             GameObject[] goArray = new GameObject[buttonArray.Length];
 
@@ -28,12 +29,12 @@ public class InterfaceButtonList : InterfaceList
     #endregion
 
     #region Methods
-    public override void DisplayInterfaces(string[] interfaceArray)
+    public override void DisplayInterfaces(Type[] interfaceArray)
     {
-        ClearInterfaces();
-
-        foreach (string interfaceName in interfaceArray)
+        foreach (Type interfaceType in interfaceArray)
         {
+            /*
+            Old implementation
             GameObject interfaceButton = GameObject.Instantiate(interfaceButtonPrefab);
 
             Button button = interfaceButton.GetComponent<Button>();
@@ -45,18 +46,25 @@ public class InterfaceButtonList : InterfaceList
             string currentName = interfaceName;
             button.onClick.AddListener(() => HUD.Instance.codex.DisplayInterface(currentName));
 
-            interfaceButtonList.Add(button);
+            interfaceInfoList.Add(button);
+            */
+
+            InterfaceInfo interfaceInfo = Instantiate(interfaceInfoPrefab).GetComponent<InterfaceInfo>();
+
+            interfaceInfo.Initialize(listPanel.transform, interfaceType);
+
+            interfaceInfoList.Add(interfaceInfo.gameObject);
         }
     }
 
-    protected override void ClearInterfaces()
+    public override void ClearInterfaces()
     {
-        foreach (Button b in interfaceButtonList)
+        foreach (GameObject go in interfaceInfoList)
         {
-            Destroy(b.gameObject);
+            Destroy(go);
         }
 
-        interfaceButtonList.Clear();
+        interfaceInfoList.Clear();
     }
     #endregion
 
@@ -65,7 +73,7 @@ public class InterfaceButtonList : InterfaceList
     {
         base.Awake();
 
-        interfaceButtonList = new List<Button>();        
+        interfaceInfoList = new List<GameObject>();        
     }
     #endregion
 }

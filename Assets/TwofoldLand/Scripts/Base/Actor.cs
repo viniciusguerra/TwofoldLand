@@ -11,31 +11,31 @@ public class Actor : MonoBehaviour, IPointerClickHandler
     private int originalLayer;
 
     private Type[] implementedInterfaces;
-    private List<string> interfaceNameList;
+    private List<Type> knownInterfaceList;
 
-    private void UpdateInterfaceNameList()
+    private void UpdateKnownInterfaceList()
     {
-        interfaceNameList.Clear();
+        knownInterfaceList.Clear();
 
         for (int i = 0; i < implementedInterfaces.Length; i++)
         {
             if (Ricci.Instance.KnowsInterface(implementedInterfaces[i]))
             {
-                interfaceNameList.Add(implementedInterfaces[i].Name);
+                knownInterfaceList.Add(implementedInterfaces[i]);
             }
         }
     }
 
     public void DisplayInterfaces()
     {
-        UpdateInterfaceNameList();
+        UpdateKnownInterfaceList();
 
-        bool showHealthBar = interfaceNameList.Contains("IVulnerable");
+        bool showHealthBar = knownInterfaceList.Contains(typeof(IVulnerable));
 
         if (showHealthBar)
-            HUD.Instance.infoPanel.Show(name, interfaceNameList.ToArray(), (IVulnerable)this);
+            HUD.Instance.infoPanel.Show(name, knownInterfaceList.ToArray(), (IVulnerable)this);
         else
-            HUD.Instance.infoPanel.Show(name, interfaceNameList.ToArray());
+            HUD.Instance.infoPanel.Show(name, knownInterfaceList.ToArray());
     }    
 
     public void HideInterfaces()
@@ -44,28 +44,19 @@ public class Actor : MonoBehaviour, IPointerClickHandler
     }
 
     public void SetSelected()
-    {
-        MainCamera.Instance.EnableOutline();
-
-        originalLayer = gameObject.layer;
-        gameObject.SetLayerRecursively(MainCamera.outlineLayer);
-
-        HUD.Instance.terminal.SetSelectedActor(this);
-        HUD.Instance.terminal.OnActorDeselection += Deselect;
+    {                
+        gameObject.SetLayerRecursively(MainCamera.outlineLayer);        
 
         DisplayInterfaces();
+
+        HUD.Instance.terminal.SetSelectedActor(this);
     }
 
     public void Deselect()
     {
-        if(!HUD.Instance.terminal.HasSelectedActor())
-            MainCamera.Instance.DisableOutline();
-
         gameObject.SetLayerRecursively(originalLayer);
 
         HideInterfaces();
-
-        HUD.Instance.terminal.OnActorDeselection -= Deselect;
     }
 
     ///<exception cref="MethodAccessException">Thrown when the method being called is not accessible</exception>
@@ -159,8 +150,13 @@ public class Actor : MonoBehaviour, IPointerClickHandler
 
     public virtual void Start()
     {
-        interfaceNameList = new List<string>();
+        knownInterfaceList = new List<Type>();
 
         implementedInterfaces = GetType().GetInterfaces();
+    }
+
+    public virtual void Awake()
+    {
+        originalLayer = gameObject.layer;
     }
 }

@@ -4,6 +4,11 @@ using System.Collections;
 public abstract class Collectable : MonoBehaviour
 {
     #region Properties
+    public virtual bool CollectOnTouch
+    {
+        get { return true; }
+    }
+
     protected Rigidbody rb;
     #endregion
 

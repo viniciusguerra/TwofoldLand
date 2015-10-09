@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 using System.Collections;
+using System;
 
 public class Path : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -44,17 +45,17 @@ public class Path : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         TargetMarker.Instance.HideTween();
     }
 
-    public void OnPointerDown(PointerEventData data)
+    void IPointerDownHandler.OnPointerDown(PointerEventData eventData)
     {
-        if (data.pointerId == -1)
+        if (eventData.pointerId == -1)
         {
-            ShowTargetMarker(data);
+            ShowTargetMarker(eventData);
         }
     }
 
-    public void OnPointerUp(PointerEventData data)
+    void IPointerUpHandler.OnPointerUp(PointerEventData eventData)
     {
-        if (data.pointerId == -1)
+        if (eventData.pointerId == -1)
         {
             setPosition = false;
         }
