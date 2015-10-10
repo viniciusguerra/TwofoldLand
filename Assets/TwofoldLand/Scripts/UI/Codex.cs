@@ -292,6 +292,12 @@ public class Codex : UIWindow
 
     private RectTransform CreatePropertyUI(PropertyInfo propertyInfo)
     {
+        CodexPropertyAttribute descriptionAttribute = (CodexPropertyAttribute)Attribute.GetCustomAttribute(propertyInfo, typeof(CodexPropertyAttribute));
+
+        //Don't create UI if there's no Attribute attached to the Property
+        if (descriptionAttribute == null)
+            return null;
+
         GameObject property = Instantiate<GameObject>(propertyPrefab);
         property.transform.SetParent(propertyListPanel, false);
 
@@ -305,8 +311,7 @@ public class Codex : UIWindow
         //childList.Find(x => x.name == "Access").GetComponent<Text>().text = propertyInfo.GetGetMethod().IsPublic ? "public" : "private";
         childList.Find(x => x.name == "Return").GetComponent<Text>().text = propertyInfo.PropertyType.Name;
         childList.Find(x => x.name == "Name").GetComponent<Text>().text = propertyInfo.Name;
-
-        CodexDescriptionAttribute descriptionAttribute = (CodexDescriptionAttribute)Attribute.GetCustomAttribute(propertyInfo, typeof(CodexDescriptionAttribute));
+                
         childList.Find(x => x.name == "Description").GetComponent<Text>().text = descriptionAttribute != null ? descriptionAttribute.Description : string.Empty;        
 
         return rt;
@@ -328,7 +333,7 @@ public class Codex : UIWindow
         childList.Find(x => x.name == "Return").GetComponent<Text>().text = methodInfo.ReturnType.Name;
         childList.Find(x => x.name == "Name").GetComponent<Text>().text = methodInfo.Name;
 
-        CodexDescriptionAttribute descriptionAttribute = (CodexDescriptionAttribute)Attribute.GetCustomAttribute(methodInfo, typeof(CodexDescriptionAttribute));
+        CodexMethodAttribute descriptionAttribute = (CodexMethodAttribute)Attribute.GetCustomAttribute(methodInfo, typeof(CodexMethodAttribute));
         childList.Find(x => x.name == "Description").GetComponent<Text>().text = descriptionAttribute != null ? descriptionAttribute.Description : string.Empty;
 
         string parametersString = "(";

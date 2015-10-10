@@ -14,7 +14,7 @@ public class InterfaceInfo : MonoBehaviour
     public Button goToDefinitionButton;
 
     private List<GameObject> propertyObjectList;
-    private PropertyInfo[] interfaceProperties;
+    private List<PropertyInfo> interfaceProperties;
     private GameObject auxiliaryProperty;
 
     public void Initialize(Transform parentList, Type interfaceType)
@@ -26,33 +26,44 @@ public class InterfaceInfo : MonoBehaviour
 
         goToDefinitionButton.onClick.AddListener(() => HUD.Instance.codex.DisplayInterface(currentName));
 
-        interfaceProperties = interfaceType.GetProperties();
+        interfaceProperties.AddRange(interfaceType.GetProperties());
 
         foreach (PropertyInfo interfaceProperty in interfaceProperties)
         {
-            auxiliaryProperty = Instantiate(propertyPrefab);
-            auxiliaryProperty.transform.SetParent(propertyArea, false);
-            auxiliaryProperty.transform.FindChild("Label").GetComponent<Text>().text = interfaceProperty.Name;
+            CodexPropertyAttribute descriptionAttribute = (CodexPropertyAttribute)Attribute.GetCustomAttribute(interfaceProperty, typeof(CodexPropertyAttribute));
 
-            propertyObjectList.Add(auxiliaryProperty);
+            if (descriptionAttribute != null && descriptionAttribute.Show)
+            {
+                auxiliaryProperty = Instantiate(propertyPrefab);
+                auxiliaryProperty.transform.SetParent(propertyArea, false);
+                auxiliaryProperty.transform.FindChild("Label").GetComponent<Text>().text = interfaceProperty.Name;
+
+                propertyObjectList.Add(auxiliaryProperty);
+            }
+            else
+                continue;
         }
     }
 
     public void Awake()
     {
         propertyObjectList = new List<GameObject>();
+        interfaceProperties = new List<PropertyInfo>();
     }
 
-    public void FixedUpdate()
+    public void Update()
     {
         if (interfaceProperties != null)
         {
-            foreach (PropertyInfo interfaceProperty in interfaceProperties)
+            foreach (GameObject propertyObject in propertyObjectList)
             {
                 try
                 {
-                    auxiliaryProperty = propertyObjectList.Find(x => x.transform.FindChild("Label").GetComponent<Text>().text == interfaceProperty.Name);
-                    auxiliaryProperty.transform.FindChild("Value").GetComponent<Text>().text = interfaceProperty.GetValue(HUD.Instance.terminal.selectedActor, null).ToString();
+                    Transform labelObject = propertyObject.transform.FindChild("Label");
+                    Transform valueObject = propertyObject.transform.FindChild("Value");
+
+                    string value = interfaceProperties.Find(x => x.Name == labelObject.GetComponent<Text>().text).GetValue(HUD.Instance.terminal.selectedActor, null).ToString();
+                    valueObject.GetComponent<Text>().text = value;
                 }
                 catch(Exception e)
                 {

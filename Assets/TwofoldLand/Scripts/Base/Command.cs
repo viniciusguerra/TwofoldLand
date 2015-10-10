@@ -63,7 +63,7 @@ public class Command
 
         //Todo add interface size
         //Stamina Cost is defined by parameter count + StaminaCost attribute
-        CodexDescriptionAttribute descriptionAttribute = (CodexDescriptionAttribute)Attribute.GetCustomAttribute(methodInfo, typeof(CodexDescriptionAttribute));
+        CodexMethodAttribute descriptionAttribute = (CodexMethodAttribute)Attribute.GetCustomAttribute(methodInfo, typeof(CodexMethodAttribute));
 
         staminaCost = (parameters == null ? 0 : parameters.Length);
         staminaCost += descriptionAttribute == null ? 0 : descriptionAttribute.StaminaCost;

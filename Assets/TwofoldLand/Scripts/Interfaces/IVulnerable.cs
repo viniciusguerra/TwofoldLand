@@ -11,12 +11,11 @@ public delegate void AttackHandler(object sender, AttackArgs attackArgs);
 
 public interface IVulnerable : IBase
 {
-    [CodexDescription("Total magnitude of an Actor's resistance", 0)]
+    [CodexProperty("Total magnitude of an Actor's resistance", true)]
     float CurrentHealth { get; }
-    [CodexDescription("Current magnitude of an Actor's resistance. When it reaches 0, the actor is eliminated", 0)]
+    [CodexProperty("Current magnitude of an Actor's resistance. When it reaches 0, the actor is eliminated", true)]
     float MaxHealth { get; }
 
-    [CodexDescription("Behaviour of the Actor when struck by an attack", 0)]
     AttackHandler AttackHandler
     {
         get;

@@ -47,9 +47,9 @@ public class Actor : MonoBehaviour, IPointerClickHandler
     {                
         gameObject.SetLayerRecursively(MainCamera.outlineLayer);        
 
-        DisplayInterfaces();
-
         HUD.Instance.terminal.SetSelectedActor(this);
+
+        DisplayInterfaces();
     }
 
     public void Deselect()

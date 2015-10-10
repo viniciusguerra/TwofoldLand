@@ -3,20 +3,20 @@ using System.Collections;
 
 public interface IUnlockable : IBase
 {
-    [CodexDescription("The binary number which, converted to decimal, unlocks the object", 0)]
+    [CodexProperty("The binary number which, converted to decimal, unlocks the object", false)]
     string BinaryKey
     { get; }
 
-    [CodexDescription("True if the object is unlocked, false otherwise", 0)]
+    [CodexProperty("True if the object is unlocked, false otherwise", true)]
     bool Unlocked
     { get; }
 
-    [CodexDescription("Brings up the Binary Conversion UI", 10)]
+    [CodexMethod("Brings up the Binary Conversion UI", 10)]
     void Unlock();
 
-    [CodexDescription("Unlocks when giving the adequate key", 0)]
+    [CodexMethod("Unlocks when giving the adequate key", 0)]
     void Unlock(object key);
 
-    [CodexDescription("Opens and closes if unlocked", 20)]
+    [CodexMethod("Opens and closes if unlocked", 20)]
     void Toggle();
 }
