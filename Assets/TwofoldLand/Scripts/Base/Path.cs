@@ -23,7 +23,7 @@ public class Path : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (data.pointerCurrentRaycast.gameObject != null && !data.pointerCurrentRaycast.gameObject.tag.Equals(GlobalDefinitions.PathTag))
             return;
 
-        Ricci.Instance.MoveToPosition(data.pointerCurrentRaycast.worldPosition);
+        Player.Instance.MovingEntity.MoveToPosition(data.pointerCurrentRaycast.worldPosition);
         TargetMarker.Instance.Set(data.pointerCurrentRaycast.worldPosition);
 
         setPosition = true;
@@ -36,7 +36,7 @@ public class Path : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (!data.pointerCurrentRaycast.gameObject.tag.Equals(GlobalDefinitions.PathTag))
             return;
 
-        Ricci.Instance.MoveToPosition(data.pointerCurrentRaycast.worldPosition);
+        Player.Instance.MovingEntity.MoveToPosition(data.pointerCurrentRaycast.worldPosition);
         TargetMarker.Instance.SetPosition(data.pointerCurrentRaycast.worldPosition);
     }
 

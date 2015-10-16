@@ -7,36 +7,31 @@ using UnityEngine.UI;
 using System;
 
 public class Actor : MonoBehaviour, IPointerClickHandler
-{    
+{
     private int originalLayer;
 
-    private Type[] implementedInterfaces;
-    private List<Type> knownInterfaceList;
-
-    private void UpdateKnownInterfaceList()
+    [SerializeField]
+    private Entity entity;
+    public Entity Entity
     {
-        knownInterfaceList.Clear();
-
-        for (int i = 0; i < implementedInterfaces.Length; i++)
+        get
         {
-            if (Ricci.Instance.KnowsInterface(implementedInterfaces[i]))
-            {
-                knownInterfaceList.Add(implementedInterfaces[i]);
-            }
+            if (entity == null)
+                GetComponent<Entity>();
+
+            return entity;
         }
     }
 
     public void DisplayInterfaces()
     {
-        UpdateKnownInterfaceList();
-
-        bool showHealthBar = knownInterfaceList.Contains(typeof(IVulnerable));
+        bool showHealthBar = Entity.KnownInterfaceList.Contains(typeof(IVulnerable));
 
         if (showHealthBar)
-            HUD.Instance.infoPanel.Show(name, knownInterfaceList.ToArray(), (IVulnerable)this);
+            HUD.Instance.infoPanel.Show(name, Entity.KnownInterfaceList.ToArray(), Entity as IVulnerable);
         else
-            HUD.Instance.infoPanel.Show(name, knownInterfaceList.ToArray());
-    }    
+            HUD.Instance.infoPanel.Show(name, Entity.KnownInterfaceList.ToArray());
+    }
 
     public void HideInterfaces()
     {
@@ -44,8 +39,8 @@ public class Actor : MonoBehaviour, IPointerClickHandler
     }
 
     public void SetSelected()
-    {                
-        gameObject.SetLayerRecursively(MainCamera.outlineLayer);        
+    {
+        gameObject.SetLayerRecursively(MainCamera.outlineLayer);
 
         HUD.Instance.terminal.SetSelectedActor(this);
 
@@ -59,104 +54,19 @@ public class Actor : MonoBehaviour, IPointerClickHandler
         HideInterfaces();
     }
 
-    ///<exception cref="MethodAccessException">Thrown when the method being called is not accessible</exception>
-    ///<exception cref="NotImplementedException">Thrown when there is no implemented interface with the given name</exception>    
-    ///<exception cref="MissingMethodException">Thrown when there is no method with the given name</exception>
-    ///<exception cref="TargetParameterCountException">Thrown when the target method has no overload with the given parameter count</exception>    
-    public void SubmitCommand(Command command)
-    {
-        //Checks if the current Type implements the given Type
-        //Will proceed to call the given Method if it is implemented from the given interface
-        if (command.abstractionInterfaceType.IsAssignableFrom(GetType()))
-        {
-            MethodInfo[] implementedMethods = command.abstractionInterfaceType.GetMethods();
-
-            foreach (MethodInfo m in implementedMethods)
-            {
-                //Checks if this Command's Method name is found within the interface
-                //If it is, checks parameters for correct override call
-                if (m.Equals(command.methodInfo))
-                {
-                    if (m.IsPublic)
-                    {
-                        try
-                        {                            
-                            m.Invoke(this, command.parameters);
-                        }
-                        catch (TargetParameterCountException t)
-                        {
-                            throw t;
-                        }                        
-
-                        return;
-                    }
-                    else
-                        throw new MethodAccessException();
-                }
-            }
-
-            throw new MissingMethodException();
-        }
-        else
-            throw new NotImplementedException();
-    }
-
-    public void SubmitSpell(Spell spell)
-    {
-        string errorMessage = string.Empty;
-        
-        foreach (Command c in spell.commands)
-        {
-            try
-            {
-                SubmitCommand(c);
-            }
-#pragma warning disable 0168
-            catch (MethodAccessException mae)
-            {
-                errorMessage = GlobalDefinitions.InvalidMethodErrorMessage;
-                HUD.Instance.log.Push(errorMessage + " - Spell interrupted");   
-                return;
-            }
-            catch (NotImplementedException nie)
-            {
-                errorMessage = GlobalDefinitions.InvalidMethodErrorMessage;
-                HUD.Instance.log.Push(errorMessage + " - Spell interrupted");   
-                return;
-            }
-            catch (MissingMethodException mme)
-            {
-                errorMessage = GlobalDefinitions.InvalidMethodErrorMessage;
-                HUD.Instance.log.Push(errorMessage + " - Spell interrupted");   
-                return; 
-            }
-            catch (TargetParameterCountException tpce)
-#pragma warning restore 0168
-            {
-                errorMessage = GlobalDefinitions.InvalidParametersErrorMessage;
-                HUD.Instance.log.Push(errorMessage + " - Spell interrupted");   
-                return;
-            }
-        }
-    }
-
     public void OnPointerClick(PointerEventData data)
     {
-        if (data.pointerId == -1 && Ricci.Instance.IsInSelectionRange(transform.position))
+        if (data.pointerId == -1 && Player.Instance.IsInSelectionRange(transform.position))
         {
             SetSelected();
         }
     }
 
-    public virtual void Start()
-    {
-        knownInterfaceList = new List<Type>();
-
-        implementedInterfaces = GetType().GetInterfaces();
-    }
-
     public virtual void Awake()
     {
+        if (entity == null)
+            GetComponent<Entity>();
+
         originalLayer = gameObject.layer;
     }
 }

@@ -18,7 +18,7 @@ public class AuraContainer : Collectable
     {
         hoveringItem.JumpAndFade();
 
-        Ricci.Instance.CollectAura(auraAmount);
+        Player.Instance.CollectAura(auraAmount);
     }    
 
     protected override void Destroy()

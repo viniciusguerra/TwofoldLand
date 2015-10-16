@@ -36,8 +36,10 @@ public class Codex : UIWindow
 
     [Space(20)]    
     public RectTransform propertyPanel;
+    public Scrollbar propertyPanelScrollbar;
     public RectTransform propertyListPanel;
     public RectTransform methodPanel;
+    public Scrollbar methodPanelScrollbar;
     public RectTransform methodListPanel;    
 
     [Space(20)]
@@ -50,10 +52,6 @@ public class Codex : UIWindow
     public List<RectTransform> spellList;
 
     private Type currentInterfaceType;
-
-    public Canvas canvas;
-    public float propertyHeight;
-    public float methodHeight;
     #endregion
 
     #region Methods
@@ -69,7 +67,7 @@ public class Codex : UIWindow
 
             DisplayInterfaceArea();
 
-            interfaceList.DisplayInterfaces(Ricci.Instance.GetAllSkillInterfaces());
+            interfaceList.DisplayInterfaces(Player.Instance.GetAllSkillInterfaces());
 
             UpdateInterfaceLevelArea();
         }
@@ -89,7 +87,7 @@ public class Codex : UIWindow
 
         DisplayInterfaceArea();
 
-        interfaceList.DisplayInterfaces(Ricci.Instance.GetAllSkillInterfaces());
+        interfaceList.DisplayInterfaces(Player.Instance.GetAllSkillInterfaces());
 
         UpdateInterfaceLevelArea();
     }
@@ -115,9 +113,9 @@ public class Codex : UIWindow
     {
         if (currentInterfaceType != null)
         {
-            Skill currentSkill = Ricci.Instance.GetSkill(currentInterfaceType);
+            Skill currentSkill = Player.Instance.GetSkill(currentInterfaceType);
 
-            interfaceLevelText.text = String.Format("Lvl.{0}", Ricci.Instance.skillList.Find(x => x.GetInterfaceType() == currentInterfaceType).Level);
+            interfaceLevelText.text = String.Format("Lvl.{0}", Player.Instance.skillList.Find(x => x.GetInterfaceType() == currentInterfaceType).Level);
 
             if (currentSkill.CanLevelUp())
             {
@@ -126,7 +124,7 @@ public class Codex : UIWindow
                 int levelUpCost = currentSkill.GetCostToLevelUp();
                 levelUpCostText.text = levelUpCost.ToString();
 
-                if (Ricci.Instance.Aura >= levelUpCost)
+                if (Player.Instance.Aura >= levelUpCost)
                 {
                     levelUpButton.GetComponentInChildren<Text>().color = levelUpEnabledColor;
                     levelUpButton.enabled = true;
@@ -146,7 +144,7 @@ public class Codex : UIWindow
 
     public void LevelCurrentSkillUp()
     {
-        Ricci.Instance.LevelSkillUp(currentInterfaceType);
+        Player.Instance.LevelSkillUp(currentInterfaceType);
 
         UpdateInterfaceLevelArea();
     }
@@ -208,7 +206,7 @@ public class Codex : UIWindow
 
         DisplayMethods();
 
-        UpdateInterfaceLevelArea();
+        UpdateInterfaceLevelArea();        
     }
 
     public void DisplayInterface(bool toggle, string name)
@@ -226,20 +224,20 @@ public class Codex : UIWindow
 
         interfaceNameText.text = currentInterfaceType.Name;
 
-        interfaceLevelText.text = String.Format("Lvl.{0}", Ricci.Instance.skillList.Find(x => x.GetInterfaceType() == currentInterfaceType).Level);
+        interfaceLevelText.text = String.Format("Lvl.{0}", Player.Instance.skillList.Find(x => x.GetInterfaceType() == currentInterfaceType).Level);
 
         DisplayProperties();
 
         DisplayMethods();
 
-        UpdateInterfaceLevelArea();
+        UpdateInterfaceLevelArea();        
     }
 
     private void ClearShownInterface()
     {
         currentInterfaceType = null;
 
-        interfaceNameText.text = "Select an Interface";
+        interfaceNameText.text = "Select a Skill from the list";
 
         interfaceLevelText.text = string.Empty;
 
@@ -256,6 +254,8 @@ public class Codex : UIWindow
         {
             propertyList.Add(CreatePropertyUI(propertyInfo));
         }
+
+        propertyPanelScrollbar.value = 1;
     }
 
     private void DisplayMethods()
@@ -268,6 +268,8 @@ public class Codex : UIWindow
             if(!methodInfo.Name.StartsWith("get_") && !methodInfo.Name.StartsWith("set_"))
                 methodList.Add(CreateMethodUI(methodInfo));
         }
+
+        methodPanelScrollbar.value = 1;
     }
 
     private RectTransform CreateSpellUI(Spell spell)
@@ -359,7 +361,10 @@ public class Codex : UIWindow
     private void ClearRectTransformList(List<RectTransform> list)
     {
         foreach (RectTransform rt in list)
-            Destroy(rt.gameObject);
+        {
+            if(rt != null && rt.gameObject != null)
+                Destroy(rt.gameObject);
+        }
 
         list.Clear();
     }
@@ -368,9 +373,6 @@ public class Codex : UIWindow
     #region MonoBehaviour
     void Awake()
     {
-        propertyHeight = propertyPrefab.GetComponent<RectTransform>().rect.height;
-        methodHeight = methodPrefab.GetComponent<RectTransform>().rect.height;
-
         methodList = new List<RectTransform>();
         propertyList = new List<RectTransform>();
         spellList = new List<RectTransform>();

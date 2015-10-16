@@ -21,7 +21,7 @@ public class SkillContainer : Collectable, IPointerClickHandler
     {
         hoveringItem.JumpAndFade();
 
-        Ricci.Instance.AddSkill(skillData);
+        Player.Instance.AddSkill(skillData);
     }
 
     protected override void Destroy()
@@ -43,7 +43,7 @@ public class SkillContainer : Collectable, IPointerClickHandler
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
-        if(Ricci.Instance.IsInSelectionRange(transform.position))
+        if(Player.Instance.IsInSelectionRange(transform.position))
             Absorb();
     }
 

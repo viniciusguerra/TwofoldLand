@@ -5,7 +5,8 @@ using System.Linq;
 using System;
 using System.Reflection;
 
-public class Ricci : Singleton<Ricci>, IVulnerable
+[RequireComponent(typeof(MovingEntity))]
+public class Player : Singleton<Player>, IVulnerable
 {
     #region Properties
     public float actorSelectionRange = 4;
@@ -132,11 +133,9 @@ public class Ricci : Singleton<Ricci>, IVulnerable
         }
     }
 
-    [Header("Movement")]
-    public float lookSpeed = 45;
+    private MovingEntity movingEntity;
 
-    private NavMeshAgent agent;
-    private Animator animator;
+    public MovingEntity MovingEntity { get { return movingEntity; } }    
     #endregion
 
     #region Skill Methods
@@ -244,30 +243,9 @@ public class Ricci : Singleton<Ricci>, IVulnerable
     #endregion
 
     #region Methods
-    public void LookAt(Vector3 target)
-    {
-        string tweenName = GetInstanceID() + "LookTo";
-
-        iTween.StopByName(tweenName);
-        iTween.LookTo(gameObject, iTween.Hash("name", tweenName, "axis", "y", "looktarget", target, "speed", lookSpeed));
-    }
-
-    public void MoveToPosition(Vector3 targetPosition)
-    {
-        iTween.Stop(gameObject);
-
-        agent.SetDestination(targetPosition);
-        agent.Resume();        
-    }
-
-    public void StopMoving()
-    {
-        agent.Stop();
-    }
-
     public bool IsInSelectionRange(Vector3 target)
     {
-        return Vector3.Distance(Ricci.Instance.gameObject.transform.position, target) < actorSelectionRange;
+        return Vector3.Distance(Player.Instance.gameObject.transform.position, target) < actorSelectionRange;
     }
 
     public void CollectAura(int amount)
@@ -350,14 +328,12 @@ public class Ricci : Singleton<Ricci>, IVulnerable
     }
 
     void Awake()
-    {
-        animator = GetComponentInChildren<Animator>();
+    {       
+        movingEntity = GetComponent<MovingEntity>();
     }
 
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-
         HUD.Instance.UpdateAuraUI(availableAura);
 
         HUD.Instance.SetMaxHealth(maxHealth);
@@ -366,9 +342,7 @@ public class Ricci : Singleton<Ricci>, IVulnerable
         HUD.Instance.UpdateHealthBarValue(CurrentHealth);
         HUD.Instance.UpdateStaminaBarValue(CurrentStamina);
 
-        compilerAvailable = false;
-
-        animator.GetBehaviour<AgentVelocityGetter>().navMeshAgent = agent;
+        compilerAvailable = false;        
     }    
     #endregion
 }

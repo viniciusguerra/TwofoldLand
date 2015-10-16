@@ -24,7 +24,7 @@ public class InputHandler : MonoBehaviour
             //Ricci
             if (Input.GetMouseButtonUp(1))
             {
-                Ricci.Instance.StopMoving();
+                Player.Instance.MovingEntity.StopMoving();
                 TargetMarker.Instance.HideInstantly();                
             }
         }
@@ -62,6 +62,12 @@ public class InputHandler : MonoBehaviour
 
             if (Input.GetKeyUp(KeyCode.Return) || Input.GetKeyUp(KeyCode.KeypadEnter))
                 HUD.Instance.terminal.inputField.Select();
+        }
+
+        if(TutorialPanelManager.Instance.IsShowingTutorial)
+        {
+            if (Input.GetKey(KeyCode.Escape))
+                TutorialPanelManager.Instance.Hide();
         }
     }
 	#endregion

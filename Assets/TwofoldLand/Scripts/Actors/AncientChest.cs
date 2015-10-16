@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public class Unlockable : Actor, IUnlockable, IVulnerable
+public class AncientChest : Entity, IUnlockable, IVulnerable
 {
     [SerializeField]
     private string binaryKey;
@@ -167,10 +167,8 @@ public class Unlockable : Actor, IUnlockable, IVulnerable
         alreadyOpened = true;
     }
 
-    public override void Start()
+    public void Awake()
     {
-        base.Start();
-        
         animator.SetBool("unlocked", unlocked);
         animator.SetBool("open", !open);
 

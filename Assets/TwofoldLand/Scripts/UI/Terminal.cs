@@ -44,7 +44,7 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
     #region Methods
     public void SetSelectedActor(Actor actor)
     {
-        if (Ricci.Instance.IsInSelectionRange(actor.transform.position) && actor != null)
+        if (Player.Instance.IsInSelectionRange(actor.transform.position) && actor != null)
         {
             if (actor != selectedActor)
             {
@@ -55,8 +55,8 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
                 MainCamera.Instance.EnableOutline();
             }
 
-            Ricci.Instance.LookAt(selectedActor.transform.position);
-            Ricci.Instance.StopMoving();
+            Player.Instance.MovingEntity.LookAt(selectedActor.transform.position);
+            Player.Instance.MovingEntity.StopMoving();
             TargetMarker.Instance.HideInstantly();
 
             inputField.Select();
@@ -88,10 +88,10 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
 
             if (spellAtAddress != null)
             {
-                if (Ricci.Instance.CurrentStamina >= spellAtAddress.StaminaCost)
+                if (Player.Instance.CurrentStamina >= spellAtAddress.StaminaCost)
                 {
-                    Ricci.Instance.CurrentStamina -= spellAtAddress.StaminaCost;
-                    selectedActor.SubmitSpell(spellAtAddress);
+                    Player.Instance.CurrentStamina -= spellAtAddress.StaminaCost;
+                    selectedActor.Entity.SubmitSpell(spellAtAddress);
                 }
                 else
                 {
@@ -114,10 +114,10 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
 
             try
             {
-                if (Ricci.Instance.CurrentStamina >= command.staminaCost)
+                if (Player.Instance.CurrentStamina >= command.staminaCost)
                 {
-                    Ricci.Instance.CurrentStamina -= command.staminaCost;
-                    selectedActor.SubmitCommand(command);
+                    Player.Instance.CurrentStamina -= command.staminaCost;
+                    selectedActor.Entity.SubmitCommand(command);
                 }
                 else
                 {
@@ -218,7 +218,7 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
 
             try
             {
-                completedCode = Ricci.Instance.FindInterfaceStartingWith(inputField.text).Name;
+                completedCode = Player.Instance.FindInterfaceStartingWith(inputField.text).Name;
             }
 #pragma warning disable 0168
             catch (MissingMemberException mme)
@@ -244,9 +244,9 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
 
             try
             {
-                string remainder = Ricci.Instance.FindRemainderOfMethodStartingWith(Ricci.Instance.FindInterface(commandSplit[0]), commandSplit[1]);
+                string remainder = Player.Instance.FindRemainderOfMethodStartingWith(Player.Instance.FindInterface(commandSplit[0]), commandSplit[1]);
 
-                if (!string.IsNullOrEmpty(remainder))
+                if (!string.IsNullOrEmpty(commandSplit[1]))
                     remainder += "()";
 
                 completedCode += remainder;
@@ -255,10 +255,12 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
             catch (MissingMemberException mme)
 #pragma warning restore 0168
             {
-
+                completedCode = inputField.text;
             }
-
-            SetPlaceholderText(completedCode);
+            finally
+            {
+                SetPlaceholderText(completedCode);
+            }
 
             return;
         }

@@ -88,7 +88,7 @@ public class IDE : UIWindow
     public void CompileSpell()
     {
         HUD.Instance.codex.AddSpell(currentSpell);
-        Ricci.Instance.SpendAura(currentSpell.AuraCost);
+        Player.Instance.SpendAura(currentSpell.AuraCost);
 
         spellList.Remove(currentSpell);
 
@@ -103,7 +103,7 @@ public class IDE : UIWindow
     //UI Methods
     public void SetCompileButton()
     {
-        if (Ricci.Instance.IsCompilerAvailable && currentSpell != null && currentSpell.commands != null && currentSpell.commands.Length > 0 && Ricci.Instance.Aura >= currentSpell.AuraCost)
+        if (Player.Instance.IsCompilerAvailable && currentSpell != null && currentSpell.commands != null && currentSpell.commands.Length > 0 && Player.Instance.Aura >= currentSpell.AuraCost)
         {
             compileButton.interactable = true;           
         }

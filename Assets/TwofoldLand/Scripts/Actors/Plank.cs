@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public class Plank : Actor, IKinetic
+public class Plank : Entity, IKinetic
 {
     [SerializeField]
     private bool isLoose;
@@ -39,15 +39,11 @@ public class Plank : Actor, IKinetic
     {
         if (isLoose)
         {
-            if(Vector3.Distance(transform.position, Ricci.Instance.transform.position) > maxDragDistance)
+            if(Vector3.Distance(transform.position, Player.Instance.transform.position) > maxDragDistance)
                 HUD.Instance.log.Push("Object too far to be dragged");
             else
             {
-                RaycastHit hitInfo;
-
-                Physics.Raycast(new Ray(transform.position, Vector3.down), out hitInfo);
-
-                float dragHeight = hitInfo.transform.position.y + distanceToFloor;        
+                float dragHeight = Player.Instance.transform.position.y + distanceToFloor;
 
                 iTween.MoveTo(gameObject, iTween.Hash("position", new Vector3(transform.position.x, dragHeight, transform.position.z), "time", 0.5f, "oncomplete", "StartDrag"));
             }
@@ -63,7 +59,7 @@ public class Plank : Actor, IKinetic
         Loosen();
 
         if(isLoose)
-            rb.AddForce((Ricci.Instance.transform.position - transform.position).normalized * force * GetKinematicLevel());
+            rb.AddForce((Player.Instance.transform.position - transform.position).normalized * force * GetKinematicLevel());
         else
             HUD.Instance.log.Push("Force not enough for loosing object");
     }
@@ -73,7 +69,7 @@ public class Plank : Actor, IKinetic
         Loosen();
 
         if (isLoose)
-            rb.AddForce((transform.position - Ricci.Instance.transform.position).normalized * force * GetKinematicLevel());
+            rb.AddForce((transform.position - Player.Instance.transform.position).normalized * force * GetKinematicLevel());
         else
             HUD.Instance.log.Push("Force not enough for loosing object");
     }
@@ -123,7 +119,7 @@ public class Plank : Actor, IKinetic
 
     private int GetKinematicLevel()
     {
-        return Ricci.Instance.skillList.Find(x => x.GetInterfaceType().Name.Equals("IKinetic")).Level;
+        return Player.Instance.skillList.Find(x => x.GetInterfaceType().Name.Equals("IKinetic")).Level;
     }
 
     private void StartDrag()
@@ -137,11 +133,11 @@ public class Plank : Actor, IKinetic
 
         //Cursor.visible = false;
 
-        transform.SetParent(Ricci.Instance.transform, true);
+        transform.SetParent(Player.Instance.transform, true);
 
         obstacle.enabled = false;
 
-        while (HUD.Instance.terminal.selectedActor == this)
+        while (HUD.Instance.terminal.selectedActor != null && HUD.Instance.terminal.selectedActor.Entity == this)
         {
             //rb.MovePosition(transform.position + (new Vector3(Input.GetAxis("Mouse X"), 0, Input.GetAxis("Mouse Y"))).normalized * dragMagnitude);
 
@@ -160,10 +156,8 @@ public class Plank : Actor, IKinetic
         //Cursor.visible = true;
     }
 
-    public override void Start()
+    public void Awake()
     {
-        base.Start();
-
         rb = GetComponent<Rigidbody>();
         obstacle = GetComponent<NavMeshObstacle>();
         originalParent = transform.parent;

@@ -62,7 +62,7 @@ public class InterfaceInfo : MonoBehaviour
                     Transform labelObject = propertyObject.transform.FindChild("Label");
                     Transform valueObject = propertyObject.transform.FindChild("Value");
 
-                    string value = interfaceProperties.Find(x => x.Name == labelObject.GetComponent<Text>().text).GetValue(HUD.Instance.terminal.selectedActor, null).ToString();
+                    string value = interfaceProperties.Find(x => x.Name == labelObject.GetComponent<Text>().text).GetValue(HUD.Instance.terminal.selectedActor.Entity, null).ToString();
                     valueObject.GetComponent<Text>().text = value;
                 }
                 catch(Exception e)

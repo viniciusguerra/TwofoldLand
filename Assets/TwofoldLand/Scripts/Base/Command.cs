@@ -21,7 +21,7 @@ public class WrongCommandSyntaxException : Exception
 [Serializable]
 public class Command
 {
-    public Type abstractionInterfaceType;
+    public Type interfaceType;
     public MethodInfo methodInfo;
     public object[] parameters;
     public int staminaCost;
@@ -31,7 +31,7 @@ public class Command
     {
         StringBuilder sb = new StringBuilder();
 
-        sb.AppendFormat("{0}.{1}(", abstractionInterfaceType.Name, methodInfo.Name);
+        sb.AppendFormat("{0}.{1}(", interfaceType.Name, methodInfo.Name);
 
         ParameterInfo[] p = methodInfo.GetParameters();
 
@@ -57,7 +57,7 @@ public class Command
 
     public Command(Type abstractionInterfaceType, MethodInfo methodInfo, object[] parameters)
     {        
-        this.abstractionInterfaceType = abstractionInterfaceType;
+        this.interfaceType = abstractionInterfaceType;
         this.methodInfo = methodInfo;
         this.parameters = parameters;
 
@@ -137,7 +137,7 @@ public class Command
 
             Type[] assemblyTypes = typeof(IBase).Assembly.GetTypes();
 
-            //goes through every interface implementing IAbstraction and finds the matching type
+            //goes through every interface implementing IBase and finds the matching type
             foreach(Type t in assemblyTypes)
             {
                 if (typeof(IBase).IsAssignableFrom(t))
