@@ -9,15 +9,15 @@ public class Log : MonoBehaviour
     #region Properties
     public int messageLimit = 5;
     public float messageTime = 2.6f;
-    public float messageHeight = 20;
     public float clearTime = 1;
 
-    private Text textStyle;
+    public GameObject logMessagePrefab;
+
     private List<Text> messageList;
     #endregion
 
     #region Methods
-    public void Push(string message)
+    public void ShowMessage(string message)
     {
         if (messageList.Count >= messageLimit)
         {
@@ -27,55 +27,28 @@ public class Log : MonoBehaviour
         }
 
         messageList.Add(CreateMessage(message));
-
-        UpdateMessagePositions();
     }
 
-    private Text CreateMessage(string text)
+    private Text CreateMessage(string messageText)
     {
-        GameObject feedbackMessage = new GameObject("FeedbackMessage");
-        feedbackMessage.transform.parent = transform;
-        feedbackMessage.AddComponent<Text>();
-        feedbackMessage.AddComponent<TextAlphaClearer>();
+        GameObject messageGameObject = Instantiate(logMessagePrefab);
+        messageGameObject.transform.SetParent(transform, false);
 
-        Text messageText = feedbackMessage.GetComponent<Text>();
+        Text messageTextComponent = messageGameObject.GetComponent<Text>();
+        messageTextComponent.text = messageText;
 
-        messageText.rectTransform.sizeDelta = new Vector2(0, messageHeight);
-        messageText.alignment = textStyle.alignment;
-        messageText.font = textStyle.font;
-        messageText.fontSize = textStyle.fontSize;
-        messageText.fontStyle = textStyle.fontStyle;
-        messageText.color = textStyle.color;
-        messageText.horizontalOverflow = textStyle.horizontalOverflow;
-        messageText.verticalOverflow = textStyle.verticalOverflow;
+        iTween.ValueTo(messageGameObject, iTween.Hash( "name",messageGameObject.GetInstanceID().ToString(),
+                                                       "onupdatetarget", messageGameObject,
+                                                       "onupdate", "ClearAlpha",
+                                                       "from", messageTextComponent.color.a,
+                                                       "to", 0,
+                                                       "delay", messageTime,
+                                                       "time", clearTime,
+                                                       "oncompletetarget", gameObject,
+                                                       "oncomplete", "ClearMessage",
+                                                       "oncompleteparams", messageTextComponent));
 
-        messageText.rectTransform.pivot = new Vector2(0, 0.5f);
-        messageText.rectTransform.anchorMax = new Vector2(0, 0.5f);
-        messageText.rectTransform.anchorMin = new Vector2(0, 0.5f);
-
-        messageText.text = text;
-
-        iTween.ValueTo(gameObject, iTween.Hash("name",feedbackMessage.GetInstanceID().ToString(),
-                                               "onupdatetarget", feedbackMessage,
-                                               "onupdate", "ClearAlpha",
-                                               "from", textStyle.color.a,
-                                               "to", 0,
-                                               "delay", messageTime,
-                                               "time", clearTime,
-                                               "oncomplete", "ClearMessage",
-                                               "oncompleteparams", messageText));
-
-        return messageText;
-    }
-
-    private void UpdateMessagePositions()
-    {
-        Text[] messageArray = messageList.ToArray();
-
-        for (int i = 0; i < messageList.Count; i++)
-        {
-            messageArray[i].rectTransform.anchoredPosition = new Vector2(0, -messageHeight * i);
-        }
+        return messageTextComponent;
     }
 
     private void ClearMessage(Text message)
@@ -83,8 +56,6 @@ public class Log : MonoBehaviour
         messageList.Remove(message);
 
         Destroy(message.gameObject);
-
-        UpdateMessagePositions();
     }
     #endregion
 
@@ -92,9 +63,6 @@ public class Log : MonoBehaviour
     void Start()
     {
         messageList = new List<Text>(messageLimit);
-        textStyle = GetComponent<Text>();
-
-        GetComponent<RectTransform>().sizeDelta = new Vector2(0, messageHeight * messageLimit);
     }
 
     void Update()

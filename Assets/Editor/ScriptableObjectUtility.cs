@@ -75,3 +75,12 @@ public class SkillDataCreator : Editor
         ScriptableObjectUtility.CreateAsset<SkillData>();
     }
 }
+
+public class ItemDataCreator : Editor
+{
+    [MenuItem("Assets/Create/Item Data")]
+    public static void CreateAsset()
+    {
+        ScriptableObjectUtility.CreateAsset<ItemData>();
+    }
+}

@@ -98,26 +98,26 @@ public class Entity : MonoBehaviour
             catch (MethodAccessException mae)
             {
                 errorMessage = GlobalDefinitions.InvalidMethodErrorMessage;
-                HUD.Instance.log.Push(errorMessage + " - Spell interrupted");
+                HUD.Instance.log.ShowMessage(errorMessage + " - Spell interrupted");
                 return;
             }
             catch (NotImplementedException nie)
             {
                 errorMessage = GlobalDefinitions.InvalidMethodErrorMessage;
-                HUD.Instance.log.Push(errorMessage + " - Spell interrupted");
+                HUD.Instance.log.ShowMessage(errorMessage + " - Spell interrupted");
                 return;
             }
             catch (MissingMethodException mme)
             {
                 errorMessage = GlobalDefinitions.InvalidMethodErrorMessage;
-                HUD.Instance.log.Push(errorMessage + " - Spell interrupted");
+                HUD.Instance.log.ShowMessage(errorMessage + " - Spell interrupted");
                 return;
             }
             catch (TargetParameterCountException tpce)
 #pragma warning restore 0168
             {
                 errorMessage = GlobalDefinitions.InvalidParametersErrorMessage;
-                HUD.Instance.log.Push(errorMessage + " - Spell interrupted");
+                HUD.Instance.log.ShowMessage(errorMessage + " - Spell interrupted");
                 return;
             }
         }

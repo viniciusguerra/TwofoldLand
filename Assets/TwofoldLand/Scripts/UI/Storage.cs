@@ -3,15 +3,24 @@ using UnityEngine.UI;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 public class Storage : UIWindow
 {
 	#region Properties
+    [Header("Spell Area")]
     public SpellSlot currentSelectedSpellSlot;
     public List<SpellSlot> spellSlotList;
-    public float offsetTime = 0.1f;
-
     public ToggleGroup loadedSpellsToggleGroup;
+
+    [Header("Item Area")]
+    public GameObject itemPrefab;    
+    public RectTransform itemArea;
+    public List<Item> itemList;
+
+    [Space(20)]
+    public float offsetTime = 0.1f;
+    
     private RectTransform rt;
 	#endregion
 
@@ -55,13 +64,51 @@ public class Storage : UIWindow
         return spellSlotList[slot].Spell;
     }
 
-    //UI Methods
     public Spell GetSpellFromAddress(string address)
     {
         foreach(SpellSlot s in spellSlotList)
         {
             if (s.address.text.Equals(address))
                 return s.Spell;
+        }
+
+        return null;
+    }
+
+    public void AcquireItem(ItemData itemData)
+    {
+        GameObject itemGameObject = Instantiate(itemPrefab);
+        itemGameObject.transform.SetParent(itemArea.transform, false);
+
+        Item newItem = itemGameObject.GetComponent<Item>();        
+        itemList.Add(newItem);
+
+        long addressDecimal = (177 + itemList.FindIndex(x => x == newItem));
+
+        string cStyleHexAddress = "0x" + Convert.ToString(addressDecimal, 16).ToUpper();
+
+        newItem.Initialize(itemData, cStyleHexAddress);
+
+        HUD.Instance.collectableAcquiredWindow.Show(newItem);
+    }
+
+    public Item GetItemFromAddress(string address)
+    {
+        foreach(Item i in itemList)
+        {
+            if (i.ItemAddress.Equals(address))
+                return i;
+        }
+
+        return null;
+    }
+
+    public string GetItemNameStartingWith(string name)
+    {
+        foreach (Item i in itemList)
+        {
+            if (i.ItemName.StartsWith(name))
+                return i.ItemName;
         }
 
         return null;

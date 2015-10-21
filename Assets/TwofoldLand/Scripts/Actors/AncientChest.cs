@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System;
 
@@ -61,13 +62,15 @@ public class AncientChest : Entity, IUnlockable, IVulnerable
     }
 
     public int auraToSpawn;
-    public SkillData[] skillsToSpawn;
+    public CollectableData[] collectablesToSpawn;
 
+    public ItemData keyItemData;
     public int lockBreakThreshold;
 
     private bool alreadyOpened;
     private bool open;
     public Animator animator;
+    //public Text codeText;
 
     private void DamageLock(object sender, AttackArgs attackArgs)
     {
@@ -90,7 +93,7 @@ public class AncientChest : Entity, IUnlockable, IVulnerable
 
     private void DisplayLockedFeedback()
     {
-        HUD.Instance.log.Push(name + " locked");
+        HUD.Instance.log.ShowMessage(name + " locked");
         animator.SetTrigger("toggle");
     }
 
@@ -98,25 +101,38 @@ public class AncientChest : Entity, IUnlockable, IVulnerable
     {
         if (unlocked)
         {
-            HUD.Instance.log.Push(name + " already unlocked");
+            HUD.Instance.log.ShowMessage(name + " already unlocked");
         }
         else
         {
-            if (Convert.ToString(Int16.Parse((string)key), 2) == binaryKey)
+            int itemAmount;
+            Item itemAtAddress = Item.GetItemFromCommandParameter(key.ToString(), out itemAmount);
+
+            if (itemAtAddress != null && itemAtAddress.ItemData == keyItemData && itemAtAddress.Use(itemAmount))
             {
-                unlocked = true;
-                animator.SetBool("unlocked", unlocked);
-                animator.SetBool("open", true);
-
-                Toggle();
-
-                HUD.Instance.log.Push(name + " unlocked");
+                SetUnlocked();
             }
             else
             {
-                DisplayLockedFeedback();
+                if (key.ToString().Equals(BinaryKey))
+                    SetUnlocked();
+                else
+                    DisplayLockedFeedback();
             }
         }
+    }
+
+    public void SetUnlocked()
+    {
+        //codeText.text = BinaryKey;
+
+        unlocked = true;
+        animator.SetBool("unlocked", unlocked);
+        animator.SetBool("open", true);
+
+        Toggle();
+
+        HUD.Instance.log.ShowMessage(name + " unlocked");
     }
 
     public void Toggle()
@@ -153,13 +169,13 @@ public class AncientChest : Entity, IUnlockable, IVulnerable
 
         yield return new WaitForSeconds(0.2f);
 
-        foreach (SkillData s in skillsToSpawn)
+        foreach (CollectableData collectable in collectablesToSpawn)
         {
-            GameObject skill = SceneManager.Instance.SpawnSkill(s, transform.position + new Vector3(0, 0.6f, 0));
+            GameObject collectableGameObject = SceneManager.Instance.SpawnCollectable(collectable, transform.position + new Vector3(0, 0.6f, 0));
 
             force = transform.TransformDirection(new Vector3(UnityEngine.Random.Range(-1, 1) * 10, 300, 120));
 
-            skill.GetComponent<Rigidbody>().AddForce(force);
+            collectableGameObject.GetComponent<Rigidbody>().AddForce(force);
 
             yield return new WaitForSeconds(0.2f);
         }        
@@ -178,5 +194,7 @@ public class AncientChest : Entity, IUnlockable, IVulnerable
             currentHealth = maxHealth;
 
         attackHandler = unlocked ? new AttackHandler(Break) : new AttackHandler(DamageLock);
+
+        //codeText.text = Convert.ToInt32(BinaryKey, 2).ToString();
     }
 }

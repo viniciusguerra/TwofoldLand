@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class SkillData : ScriptableObject, ISerializationCallbackReceiver
+public class SkillData : CollectableData, ISerializationCallbackReceiver
 {
     #region Properties
     public string interfaceName;

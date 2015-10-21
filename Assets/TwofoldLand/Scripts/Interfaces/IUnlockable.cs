@@ -14,7 +14,7 @@ public interface IUnlockable : IBase
     [CodexMethod("Brings up the Binary Conversion UI", 10)]
     void Unlock();
 
-    [CodexMethod("Unlocks when giving the adequate key", 0)]
+    [CodexMethod("Unlocks when giving the correct BinaryKey value or a valid Key from the Storage", 0)]
     void Unlock(object key);
 
     [CodexMethod("Opens and closes if unlocked", 20)]

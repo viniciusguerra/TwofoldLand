@@ -22,7 +22,7 @@ public class HUD : Singleton<HUD>
     public Notes notes;
     public Codex codex;
     public Storage storage;
-    public SkillAcquiredWindow skillAcquired;
+    public CollectableAcquiredWindow collectableAcquiredWindow;
 
     public Log log;
     public BinaryConversion binaryConversion;

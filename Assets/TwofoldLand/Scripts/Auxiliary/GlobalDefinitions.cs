@@ -19,7 +19,7 @@ public static class GlobalDefinitions
     public const string SpellSuffix = ".spl";
     public const string FeedbackUIFontPath = "Fonts/consola";
     
-    //Error Messages
+    //Log Messages
     public const string WrongSyntaxErrorMessage = "Wrong Syntax";
     public const string UnknownInterfaceErrorMessage = "Invalid Interface";
     public const string InvalidInterfaceErrorMessage = "Invalid Interface";
@@ -37,7 +37,9 @@ public static class GlobalDefinitions
 
     //Regex Patterns
     //Tested at http://www.regexr.com/
-    public const string TerminalCommandRegexPattern = @"^(?:\w+)(?:\.)(?:\w+)(?:\()(?:\w|\,\w){0,}(?:\))$";
+    //Pattern without parameters
+    //public const string TerminalCommandRegexPattern = @"^(?:\w+)(?:\.)(?:\w+)(?:\()(?:\w|\,\w){0,}(?:\))$";
+    public const string TerminalCommandRegexPattern = @"^(?:\w+)(?:\.)(?:\w+)(?:\()((?:\w(?:\[\d+\]){0,})|(?:\,\w(?:\[\d+\]){0,})){0,}(?:\))$";
     public const string TerminalInterfaceRegexPattern = @"^(?:\w+)$";
     public const string TerminalInterfaceAndMethodRegexPattern = @"^(?:\w+)\.(?:|\w+)$";
     public const string StorageAddressPattern = @"^0x[A-F0-9]+$";

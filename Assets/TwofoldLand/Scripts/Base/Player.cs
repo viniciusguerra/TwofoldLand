@@ -141,9 +141,14 @@ public class Player : Singleton<Player>, IVulnerable
     #region Skill Methods
     public void AddSkill(SkillData skillData)
     {
-        skillList.Add(new Skill(skillData));
+        if (skillList.Exists(x => x.GetInterfaceType() == skillData.InterfaceType))
+            return;
 
-        HUD.Instance.skillAcquired.Show(skillData.InterfaceType);
+        Skill skill = new Skill(skillData);
+
+        skillList.Add(skill);
+
+        HUD.Instance.collectableAcquiredWindow.Show(skill);
     }
 
     public Skill GetSkill(Type interfaceType)
@@ -179,7 +184,7 @@ public class Player : Singleton<Player>, IVulnerable
             skillToLevel.LevelUp();
         }
         else
-            HUD.Instance.log.Push("Not enough Aura to level " + skillToLevel.GetInterfaceType().Name + " up");
+            HUD.Instance.log.ShowMessage("Not enough Aura to level " + skillToLevel.GetInterfaceType().Name + " up");
     }
 
     public bool KnowsInterface(Type interfaceType)
@@ -217,11 +222,11 @@ public class Player : Singleton<Player>, IVulnerable
         throw new MissingMemberException();
     }
 
-    public string FindRemainderOfMethodStartingWith(Type interfaceType, string text)
+    public string GetMethodNameStartingWith(Type interfaceType, string text)
     {
         if (!string.IsNullOrEmpty(text))
         {
-            string remainder = string.Empty;
+            string methodName = string.Empty;
 
             foreach (Skill s in skillList)
             {
@@ -230,12 +235,12 @@ public class Player : Singleton<Player>, IVulnerable
                     foreach (MethodInfo m in s.GetInterfaceType().GetMethods())
                     {
                         if (m.Name.StartsWith(text))
-                            remainder = m.Name.Replace(text, String.Empty);
+                            methodName = m.Name;
                     }
                 }
             }
 
-            return remainder;
+            return methodName;
         }
         else
             return string.Empty;
@@ -253,7 +258,7 @@ public class Player : Singleton<Player>, IVulnerable
         availableAura += Mathf.Abs(amount);
 
         HUD.Instance.UpdateAuraUI(availableAura);
-        HUD.Instance.log.Push("Acquired " + Mathf.Abs(amount) + " aura");
+        HUD.Instance.log.ShowMessage("Acquired " + Mathf.Abs(amount) + " aura");
 
         if (HUD.Instance.codex.IsVisible)
             HUD.Instance.codex.UpdateInterfaceLevelArea();
@@ -264,7 +269,7 @@ public class Player : Singleton<Player>, IVulnerable
         availableAura -= Mathf.Abs(amount);
 
         HUD.Instance.UpdateAuraUI(availableAura);
-        HUD.Instance.log.Push("Spent " + Mathf.Abs(amount) + " aura");
+        HUD.Instance.log.ShowMessage("Spent " + Mathf.Abs(amount) + " aura");
 
         if (HUD.Instance.codex.IsVisible)
             HUD.Instance.codex.UpdateInterfaceLevelArea();

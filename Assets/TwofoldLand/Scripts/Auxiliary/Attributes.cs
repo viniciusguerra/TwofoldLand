@@ -21,9 +21,9 @@ public class CodexPropertyAttribute : System.Attribute
 
     public readonly bool Show;
 
-    public CodexPropertyAttribute(string description, bool show)
+    public CodexPropertyAttribute(string description, bool showOnInfoPanel)
     {
         this.Description = description;
-        this.Show = show;
+        this.Show = showOnInfoPanel;
     }
 }

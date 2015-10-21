@@ -40,7 +40,7 @@ public class Plank : Entity, IKinetic
         if (isLoose)
         {
             if(Vector3.Distance(transform.position, Player.Instance.transform.position) > maxDragDistance)
-                HUD.Instance.log.Push("Object too far to be dragged");
+                HUD.Instance.log.ShowMessage("Object too far to be dragged");
             else
             {
                 float dragHeight = Player.Instance.transform.position.y + distanceToFloor;
@@ -49,7 +49,7 @@ public class Plank : Entity, IKinetic
             }
         }
         else
-            HUD.Instance.log.Push("Object cannot be dragged because it's not loose");
+            HUD.Instance.log.ShowMessage("Object cannot be dragged because it's not loose");
     }
 
     
@@ -61,7 +61,7 @@ public class Plank : Entity, IKinetic
         if(isLoose)
             rb.AddForce((Player.Instance.transform.position - transform.position).normalized * force * GetKinematicLevel());
         else
-            HUD.Instance.log.Push("Force not enough for loosing object");
+            HUD.Instance.log.ShowMessage("Force not enough for loosing object");
     }
 
     void IKinetic.Push()
@@ -71,7 +71,7 @@ public class Plank : Entity, IKinetic
         if (isLoose)
             rb.AddForce((transform.position - Player.Instance.transform.position).normalized * force * GetKinematicLevel());
         else
-            HUD.Instance.log.Push("Force not enough for loosing object");
+            HUD.Instance.log.ShowMessage("Force not enough for loosing object");
     }
 
     void IKinetic.Push(object direction)
@@ -94,7 +94,7 @@ public class Plank : Entity, IKinetic
 
         if (directionVector == Vector3.zero)
         {
-            HUD.Instance.log.Push("Invalid direction");
+            HUD.Instance.log.ShowMessage("Invalid direction");
             return;
         }
 
@@ -105,7 +105,7 @@ public class Plank : Entity, IKinetic
             rb.AddForce((directionVector).normalized * force * GetKinematicLevel());
         }
         else
-            HUD.Instance.log.Push("Force not enough for loosing object");
+            HUD.Instance.log.ShowMessage("Force not enough for loosing object");
     }
 
     private void Loosen()

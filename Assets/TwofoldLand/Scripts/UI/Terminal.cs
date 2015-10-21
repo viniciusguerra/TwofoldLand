@@ -95,7 +95,7 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
                 }
                 else
                 {
-                    HUD.Instance.log.Push(GlobalDefinitions.NotEnoughStaminaErrorMessage);
+                    HUD.Instance.log.ShowMessage(GlobalDefinitions.NotEnoughStaminaErrorMessage);
                 }
             }
             else
@@ -121,7 +121,7 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
                 }
                 else
                 {
-                    HUD.Instance.log.Push(GlobalDefinitions.NotEnoughStaminaErrorMessage);
+                    HUD.Instance.log.ShowMessage(GlobalDefinitions.NotEnoughStaminaErrorMessage);
                 }
             }
 #pragma warning disable 0168
@@ -244,12 +244,15 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
 
             try
             {
-                string remainder = Player.Instance.FindRemainderOfMethodStartingWith(Player.Instance.FindInterface(commandSplit[0]), commandSplit[1]);
+                string methodName = Player.Instance.GetMethodNameStartingWith(Player.Instance.FindInterface(commandSplit[0]), commandSplit[1]);
 
                 if (!string.IsNullOrEmpty(commandSplit[1]))
-                    remainder += "()";
+                {
+                    methodName = methodName.Replace(commandSplit[1], String.Empty);
+                    methodName += "()";
+                }
 
-                completedCode += remainder;
+                completedCode += methodName;
             }
 #pragma warning disable 0168
             catch (MissingMemberException mme)

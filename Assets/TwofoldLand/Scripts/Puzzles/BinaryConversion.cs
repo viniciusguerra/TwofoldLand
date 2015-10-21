@@ -112,7 +112,7 @@ public class BinaryConversion : UIWindow
     {
         yield return new WaitForSeconds(closeDelay);
 
-        currentTarget.Unlock(Convert.ToInt32(currentBinaryKey, 2).ToString());
+        currentTarget.Unlock(currentBinaryKey);
 
         Close();
     }
