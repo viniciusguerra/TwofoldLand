@@ -38,7 +38,7 @@ public class Actor : MonoBehaviour, IPointerClickHandler
         HUD.Instance.infoPanel.Hide();
     }
 
-    public void SetSelected()
+    public virtual void SetSelected()
     {
         gameObject.SetLayerRecursively(MainCamera.outlineLayer);
 
@@ -47,14 +47,14 @@ public class Actor : MonoBehaviour, IPointerClickHandler
         DisplayInterfaces();
     }
 
-    public void Deselect()
+    public virtual void Deselect()
     {
         gameObject.SetLayerRecursively(originalLayer);
 
         HideInterfaces();
     }
 
-    public void OnPointerClick(PointerEventData data)
+    public virtual void OnPointerClick(PointerEventData data)
     {
         if (data.pointerId == -1 && Player.Instance.IsInSelectionRange(transform.position))
         {

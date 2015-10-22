@@ -32,7 +32,7 @@ public class InterfaceInfo : MonoBehaviour
         {
             CodexPropertyAttribute descriptionAttribute = (CodexPropertyAttribute)Attribute.GetCustomAttribute(interfaceProperty, typeof(CodexPropertyAttribute));
 
-            if (descriptionAttribute != null && descriptionAttribute.Show)
+            if (descriptionAttribute != null && descriptionAttribute.ShowOnInfoPanel)
             {
                 auxiliaryProperty = Instantiate(propertyPrefab);
                 auxiliaryProperty.transform.SetParent(propertyArea, false);

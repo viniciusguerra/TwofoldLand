@@ -17,6 +17,7 @@ public class InputHandler : MonoBehaviour
             {
                 HUD.Instance.terminal.ClearActorSelection();
                 HUD.Instance.binaryConversion.Hide();
+                HUD.Instance.messageBox.Hide();
             }
         }
         else

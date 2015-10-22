@@ -297,7 +297,7 @@ public class Codex : UIWindow
         CodexPropertyAttribute descriptionAttribute = (CodexPropertyAttribute)Attribute.GetCustomAttribute(propertyInfo, typeof(CodexPropertyAttribute));
 
         //Don't create UI if there's no Attribute attached to the Property
-        if (descriptionAttribute == null)
+        if (descriptionAttribute == null || descriptionAttribute.ShowOnCodex == false)
             return null;
 
         GameObject property = Instantiate<GameObject>(propertyPrefab);
@@ -312,8 +312,7 @@ public class Codex : UIWindow
         //Info comes from Interface, Interfaces have no access definition
         //childList.Find(x => x.name == "Access").GetComponent<Text>().text = propertyInfo.GetGetMethod().IsPublic ? "public" : "private";
         childList.Find(x => x.name == "Return").GetComponent<Text>().text = propertyInfo.PropertyType.Name;
-        childList.Find(x => x.name == "Name").GetComponent<Text>().text = propertyInfo.Name;
-                
+        childList.Find(x => x.name == "Name").GetComponent<Text>().text = propertyInfo.Name;                
         childList.Find(x => x.name == "Description").GetComponent<Text>().text = descriptionAttribute != null ? descriptionAttribute.Description : string.Empty;        
 
         return rt;
@@ -321,6 +320,12 @@ public class Codex : UIWindow
 
     private RectTransform CreateMethodUI(MethodInfo methodInfo)
     {
+        CodexMethodAttribute descriptionAttribute = (CodexMethodAttribute)Attribute.GetCustomAttribute(methodInfo, typeof(CodexMethodAttribute));
+
+        //Don't create UI if there's no Attribute attached to the Method
+        if (descriptionAttribute == null || descriptionAttribute.ShowOnCodex == false)
+            return null;
+
         GameObject method = Instantiate<GameObject>(methodPrefab);
         method.transform.SetParent(methodListPanel, false);
 
@@ -334,8 +339,6 @@ public class Codex : UIWindow
         //childList.Find(x => x.name == "Access").GetComponent<Text>().text = methodInfo.IsPublic ? "public" : "private";
         childList.Find(x => x.name == "Return").GetComponent<Text>().text = methodInfo.ReturnType.Name;
         childList.Find(x => x.name == "Name").GetComponent<Text>().text = methodInfo.Name;
-
-        CodexMethodAttribute descriptionAttribute = (CodexMethodAttribute)Attribute.GetCustomAttribute(methodInfo, typeof(CodexMethodAttribute));
         childList.Find(x => x.name == "Description").GetComponent<Text>().text = descriptionAttribute != null ? descriptionAttribute.Description : string.Empty;
 
         string parametersString = "(";

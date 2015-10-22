@@ -4,13 +4,14 @@
 public class CodexMethodAttribute : System.Attribute
 {
     public readonly string Description;
-
     public readonly int StaminaCost;
+    public readonly bool ShowOnCodex;
 
-    public CodexMethodAttribute(string description, int staminaCost)
+    public CodexMethodAttribute(string description, int staminaCost, bool showOnCodex)
     {
         this.Description = description;
         this.StaminaCost = staminaCost;
+        this.ShowOnCodex = showOnCodex;
     }
 }
 
@@ -18,12 +19,13 @@ public class CodexMethodAttribute : System.Attribute
 public class CodexPropertyAttribute : System.Attribute
 {
     public readonly string Description;
+    public readonly bool ShowOnInfoPanel;
+    public readonly bool ShowOnCodex;
 
-    public readonly bool Show;
-
-    public CodexPropertyAttribute(string description, bool showOnInfoPanel)
+    public CodexPropertyAttribute(string description, bool showOnInfoPanel, bool showOnCodex)
     {
-        this.Description = description;
-        this.Show = showOnInfoPanel;
+        Description = description;
+        ShowOnInfoPanel = showOnInfoPanel;
+        ShowOnCodex = showOnCodex;
     }
 }

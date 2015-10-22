@@ -23,6 +23,7 @@ public class HUD : Singleton<HUD>
     public Codex codex;
     public Storage storage;
     public CollectableAcquiredWindow collectableAcquiredWindow;
+    public MessageBox messageBox;
 
     public Log log;
     public BinaryConversion binaryConversion;
