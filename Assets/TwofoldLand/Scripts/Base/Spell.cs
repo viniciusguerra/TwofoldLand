@@ -89,6 +89,8 @@ public class Spell
         return auraCost;
     }
 
+    private const int commandStaminaCostModifier = 3;
+
     private int CalculateStaminaCost()
     {
         if (commands == null)
@@ -98,12 +100,13 @@ public class Spell
 
         foreach (Command c in commands)
         {
-            staminaCost += c.staminaCost;
+            staminaCost += c.staminaCost / commandStaminaCostModifier;
         }
 
         return staminaCost;
     }
 
+    public ActiveEntity sender;
     public Command[] commands;
 
     public void UpdateCommands()
@@ -116,7 +119,7 @@ public class Spell
         {
             try
             {
-                Command c = Command.BuildCommand(line);
+                Command c = Command.BuildCommand(sender, line);
                 commandList.Add(c);
             }
             catch(WrongCommandSyntaxException ex0)
@@ -136,13 +139,14 @@ public class Spell
         commands = commandList.ToArray();
     }
 
-    public Spell(Command[] commands)
+    public Spell(ActiveEntity sender, Command[] commands)
     {
+        this.sender = sender;
         this.commands = commands;
     }
 
-    public Spell()
+    public Spell(ActiveEntity sender)
     {
-
+        this.sender = sender;
     }
 }

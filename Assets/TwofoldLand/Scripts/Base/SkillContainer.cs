@@ -43,7 +43,7 @@ public class SkillContainer : Collectable, IPointerClickHandler
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
-        if(Player.Instance.IsInSelectionRange(transform.position))
+        if(Player.Instance.CanReach(gameObject))
             Absorb();
     }
 

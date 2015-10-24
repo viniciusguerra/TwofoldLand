@@ -6,6 +6,9 @@ using System.Collections.Generic;
 
 public class Entity : MonoBehaviour
 {
+    protected Command currentCommand;
+    protected Spell currentSpell;
+
     private Type[] implementedInterfaces;
     private List<Type> knownInterfaceList;
 
@@ -38,88 +41,69 @@ public class Entity : MonoBehaviour
         }
     }
 
-    ///<exception cref="MethodAccessException">Thrown when the method being called is not accessible</exception>
-    ///<exception cref="NotImplementedException">Thrown when there is no implemented interface with the given name</exception>    
-    ///<exception cref="MissingMethodException">Thrown when there is no method with the given name</exception>
-    ///<exception cref="TargetParameterCountException">Thrown when the target method has no overload with the given parameter count</exception>    
-    public void SubmitCommand(Command command)
+    public bool ExecuteCommand(Command command)
     {
-        //Short invoking
-        command.methodInfo.Invoke(this, command.parameters);
+        if (currentCommand == null)
+        {
+            currentCommand = command;
+            currentCommand.Execute(this);
 
-        //Long invoking
-        ////Checks if the current Type implements the given Type
-        ////Will proceed to call the given Method if it is implemented from the given interface
-        //if (command.interfaceType.IsAssignableFrom(GetType()))
-        //{
-        //    MethodInfo[] implementedMethods = command.interfaceType.GetMethods();
+            return true;
+        }
+        else
+        {
+            Debug.Log("Entity: Another Command already being executed (sender: " + currentCommand.Sender.name + ", method name: " + currentCommand.methodInfo.Name + ")");
 
-        //    foreach (MethodInfo m in implementedMethods)
-        //    {
-        //        //Checks if this Command's Method name is found within the interface
-        //        //If it is, checks parameters for correct override call
-        //        if (m.Equals(command.methodInfo))
-        //        {
-        //            if (m.IsPublic)
-        //            {
-        //                try
-        //                {
-        //                    m.Invoke(this, command.parameters);
-        //                }
-        //                catch (TargetParameterCountException t)
-        //                {
-        //                    throw t;
-        //                }
-
-        //                return;
-        //            }
-        //            else
-        //                throw new MethodAccessException();
-        //        }
-        //    }
-
-        //    throw new MissingMethodException();
-        //}
-        //else
-        //    throw new NotImplementedException();
+            return false;
+        }
     }
 
-    public void SubmitSpell(Spell spell)
+    public virtual void OnCommandFailure(string message)
     {
-        string errorMessage = string.Empty;
+        HUD.Instance.log.ShowMessage(message);
 
+        if (currentSpell != null)
+            OnSpellEnd();
+
+        OnCommandEnd();
+    }
+
+    public virtual void OnCommandSuccess()
+    {
+        currentCommand.Sender.CurrentStamina -= currentCommand.staminaCost;
+
+        OnCommandEnd();
+    }
+
+    public virtual void OnCommandEnd()
+    {
+        currentCommand = null;
+    }
+
+    public virtual void ExecuteSpell(Spell spell)
+    {
+        currentSpell = spell;
+
+        StartCoroutine(SpellExecutionCoroutine(spell));
+    }
+
+    public virtual void OnSpellEnd()
+    {
+        currentSpell.sender.CurrentStamina -= currentSpell.StaminaCost;
+
+        currentSpell = null;
+    }
+
+    private IEnumerator SpellExecutionCoroutine(Spell spell)
+    {
         foreach (Command c in spell.commands)
         {
-            try
-            {
-                SubmitCommand(c);
-            }
-#pragma warning disable 0168
-            catch (MethodAccessException mae)
-            {
-                errorMessage = GlobalDefinitions.InvalidMethodErrorMessage;
-                HUD.Instance.log.ShowMessage(errorMessage + " - Spell interrupted");
-                return;
-            }
-            catch (NotImplementedException nie)
-            {
-                errorMessage = GlobalDefinitions.InvalidMethodErrorMessage;
-                HUD.Instance.log.ShowMessage(errorMessage + " - Spell interrupted");
-                return;
-            }
-            catch (MissingMethodException mme)
-            {
-                errorMessage = GlobalDefinitions.InvalidMethodErrorMessage;
-                HUD.Instance.log.ShowMessage(errorMessage + " - Spell interrupted");
-                return;
-            }
-            catch (TargetParameterCountException tpce)
-#pragma warning restore 0168
-            {
-                errorMessage = GlobalDefinitions.InvalidParametersErrorMessage;
-                HUD.Instance.log.ShowMessage(errorMessage + " - Spell interrupted");
-                return;
-            }
+            while (currentCommand != null)
+                yield return null;
+
+            ExecuteCommand(c);
         }
+
+        OnSpellEnd();
     }
 }

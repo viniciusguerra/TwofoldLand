@@ -4,7 +4,7 @@ using System.Collections;
 public static class GlobalDefinitions
 {
     //Values
-    public const int AuraCostConstant = 13;
+    public const int AuraCostConstant = 3;
 
     //Tags
     public const string PlayerTag = "Player";

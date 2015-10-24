@@ -21,11 +21,16 @@ public class WrongCommandSyntaxException : Exception
 [Serializable]
 public class Command
 {
+    private ActiveEntity sender;
+    private Entity target;
     public Type interfaceType;
     public MethodInfo methodInfo;
     public object[] parameters;
-    public int staminaCost;
+    public int staminaCost;    
     public int auraCostToCompile;
+
+    public ActiveEntity Sender { get { return sender; } }
+    public Entity Target { get { return target; } }
 
     public override string ToString()
     {
@@ -50,13 +55,47 @@ public class Command
         return sb.ToString();
     }
 
-    public Command()
+    public void Execute(Entity target)
     {
+        this.target = target;
+        string errorMessage = string.Empty;
 
+        try
+        {
+            methodInfo.Invoke(target, parameters);
+        }
+#pragma warning disable 0168
+        catch (MethodAccessException mae)
+        {
+            errorMessage = GlobalDefinitions.InvalidMethodErrorMessage + " - Spell interrupted";
+            HUD.Instance.log.ShowMessage(errorMessage);
+        }
+        catch (NotImplementedException nie)
+        {
+            errorMessage = GlobalDefinitions.InvalidMethodErrorMessage + " - Spell interrupted";
+            HUD.Instance.log.ShowMessage(errorMessage);
+        }
+        catch (MissingMethodException mme)
+        {
+            errorMessage = GlobalDefinitions.InvalidMethodErrorMessage + " - Spell interrupted";
+            HUD.Instance.log.ShowMessage(errorMessage);
+        }
+        catch (TargetParameterCountException tpce)
+#pragma warning restore 0168
+        {
+            errorMessage = GlobalDefinitions.InvalidParametersErrorMessage + " - Spell interrupted";
+            HUD.Instance.log.ShowMessage(errorMessage);
+        }        
+    }    
+
+    public Command(ActiveEntity sender)
+    {
+        this.sender = sender;
     }
 
-    public Command(Type abstractionInterfaceType, MethodInfo methodInfo, object[] parameters)
-    {        
+    public Command(ActiveEntity sender, Type abstractionInterfaceType, MethodInfo methodInfo, object[] parameters)
+    {
+        this.sender = sender;
         this.interfaceType = abstractionInterfaceType;
         this.methodInfo = methodInfo;
         this.parameters = parameters;
@@ -129,7 +168,7 @@ public class Command
     ///<exception cref="WrongCommandSyntaxException">Thrown when the given string doesn't meet the correct syntax</exception>
     ///<exception cref="MissingMemberException">Thrown when there is no existent interface with the given name</exception>
     ///<exception cref="MissingMethodException">Thrown when there is no method with the given name</exception>
-    public static Command BuildCommand(string commandString)
+    public static Command BuildCommand(ActiveEntity sender, string commandString)
     {
         if (Regex.IsMatch(commandString, GlobalDefinitions.TerminalCommandRegexPattern))
         {            
@@ -156,13 +195,13 @@ public class Command
                                 {
                                     try
                                     {
-                                        return new Command(t, m, commandSplit.GetRange(2, commandSplit.Count - 2).ToArray());
+                                        return new Command(sender, t, m, commandSplit.GetRange(2, commandSplit.Count - 2).ToArray());
                                     }
                                     #pragma warning disable 0168
                                     catch(Exception e)
                                     #pragma warning restore 0168
                                     {
-                                        return new Command(t, m, null);
+                                        return new Command(sender, t, m, null);
                                     }
                                 }
                             }

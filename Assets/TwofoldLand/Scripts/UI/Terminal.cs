@@ -44,7 +44,7 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
     #region Methods
     public void SetSelectedActor(Actor actor)
     {
-        if (Player.Instance.IsInSelectionRange(actor.transform.position) && actor != null)
+        if (Player.Instance.CanReach(actor.gameObject) && actor != null)
         {
             if (actor != selectedActor)
             {
@@ -55,8 +55,8 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
                 MainCamera.Instance.EnableOutline();
             }
 
-            Player.Instance.MovingEntity.LookAt(selectedActor.transform.position);
-            Player.Instance.MovingEntity.StopMoving();
+            Player.Instance.MovementController.LookAt(selectedActor.transform.position);
+            Player.Instance.MovementController.StopMoving();
             TargetMarker.Instance.HideInstantly();
 
             inputField.Select();
@@ -88,10 +88,9 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
 
             if (spellAtAddress != null)
             {
-                if (Player.Instance.CurrentStamina >= spellAtAddress.StaminaCost)
+                if (Player.Instance.Entity.CurrentStamina >= spellAtAddress.StaminaCost)
                 {
-                    Player.Instance.CurrentStamina -= spellAtAddress.StaminaCost;
-                    selectedActor.Entity.SubmitSpell(spellAtAddress);
+                    selectedActor.Entity.ExecuteSpell(spellAtAddress);
                 }
                 else
                 {
@@ -110,14 +109,13 @@ public class Terminal : UIWindow, ISubmitHandler, ISelectHandler
 
         try
         {
-            Command command = Command.BuildCommand(inputField.text);
+            Command command = Command.BuildCommand(Player.Instance.Entity, inputField.text);
 
             try
             {
-                if (Player.Instance.CurrentStamina >= command.staminaCost)
+                if (Player.Instance.Entity.CurrentStamina >= command.staminaCost)
                 {
-                    Player.Instance.CurrentStamina -= command.staminaCost;
-                    selectedActor.Entity.SubmitCommand(command);
+                    selectedActor.Entity.ExecuteCommand(command);
                 }
                 else
                 {

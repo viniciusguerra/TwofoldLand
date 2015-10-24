@@ -65,7 +65,7 @@ public class MessageBox : UIWindow
             yield return new WaitForSeconds(messageWritingRate);
         }
 
-        if (currentMessageIndex == currentVerbal.Messages.Length - 1)
+        if (currentVerbal != null && currentMessageIndex == currentVerbal.Messages.Length - 1)
             currentVerbal.OnMessageEnd();
     }
 

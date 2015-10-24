@@ -6,6 +6,7 @@ using System;
 public class Path : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private bool setPosition;
+    private Vector3 lastPosition = Vector3.zero;
 
     private IEnumerator SetTargetMarkerPosition()
     {
@@ -23,7 +24,7 @@ public class Path : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (data.pointerCurrentRaycast.gameObject != null && !data.pointerCurrentRaycast.gameObject.tag.Equals(GlobalDefinitions.PathTag))
             return;
 
-        Player.Instance.MovingEntity.MoveToPosition(data.pointerCurrentRaycast.worldPosition);
+        Player.Instance.MovementController.MoveToPosition(data.pointerCurrentRaycast.worldPosition);
         TargetMarker.Instance.Set(data.pointerCurrentRaycast.worldPosition);
 
         setPosition = true;
@@ -33,11 +34,12 @@ public class Path : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void SetTargetMarkerPosition(PointerEventData data)
     {
-        if (!data.pointerCurrentRaycast.gameObject.tag.Equals(GlobalDefinitions.PathTag))
-            return;
+        Vector3 targetPosition = data.pointerCurrentRaycast.gameObject != null ? data.pointerCurrentRaycast.worldPosition : lastPosition;
 
-        Player.Instance.MovingEntity.MoveToPosition(data.pointerCurrentRaycast.worldPosition);
-        TargetMarker.Instance.SetPosition(data.pointerCurrentRaycast.worldPosition);
+        Player.Instance.MovementController.MoveToPosition(targetPosition);
+        TargetMarker.Instance.SetPosition(targetPosition);
+
+        lastPosition = targetPosition;
     }
 
     private void HideTargetMarker()

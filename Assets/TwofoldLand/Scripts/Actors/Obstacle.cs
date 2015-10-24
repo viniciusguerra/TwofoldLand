@@ -2,7 +2,7 @@
 using System.Collections;
 using System;
 
-public class Plank : Entity, IKinetic
+public class Obstacle : Entity, IKinetic
 {
     [SerializeField]
     private bool isLoose;
@@ -13,13 +13,9 @@ public class Plank : Entity, IKinetic
     }
 
     [SerializeField]
-    private int looseThreshold;
-
-    public int LooseThreshold
-    {
-        get { return looseThreshold; }
-    }
-
+    private bool eliminateObstacleOnLoosen;
+    [SerializeField]
+    private int levelToLoosen;
     [SerializeField]
     private int force;
     [SerializeField]
@@ -27,7 +23,7 @@ public class Plank : Entity, IKinetic
     [SerializeField]
     private float distanceToFloor;
     [SerializeField]
-    private float zOffsetToRicci;    
+    private float distanceToPlayer;    
     private Transform originalParent;
 
     private static float dragMagnitude = 0.5f;
@@ -39,8 +35,10 @@ public class Plank : Entity, IKinetic
     {
         if (isLoose)
         {
-            if(Vector3.Distance(transform.position, Player.Instance.transform.position) > maxDragDistance)
-                HUD.Instance.log.ShowMessage("Object too far to be dragged");
+            if (Vector3.Distance(transform.position, Player.Instance.transform.position) > maxDragDistance)
+            {
+                OnCommandFailure("Object too far to be dragged");
+            }
             else
             {
                 float dragHeight = Player.Instance.transform.position.y + distanceToFloor;
@@ -49,7 +47,9 @@ public class Plank : Entity, IKinetic
             }
         }
         else
-            HUD.Instance.log.ShowMessage("Object cannot be dragged because it's not loose");
+        {
+            OnCommandFailure("Object is not loose, can't be dragged");
+        }
     }
 
     
@@ -58,10 +58,15 @@ public class Plank : Entity, IKinetic
     {
         Loosen();
 
-        if(isLoose)
+        if (isLoose)
+        {
             rb.AddForce((Player.Instance.transform.position - transform.position).normalized * force * GetKinematicLevel());
+            OnCommandSuccess();
+        }
         else
-            HUD.Instance.log.ShowMessage("Force not enough for loosing object");
+        {
+            OnCommandFailure("Not strong enough to pull object");
+        }
     }
 
     void IKinetic.Push()
@@ -69,9 +74,14 @@ public class Plank : Entity, IKinetic
         Loosen();
 
         if (isLoose)
+        {
             rb.AddForce((transform.position - Player.Instance.transform.position).normalized * force * GetKinematicLevel());
+            OnCommandSuccess();
+        }
         else
-            HUD.Instance.log.ShowMessage("Force not enough for loosing object");
+        {
+            OnCommandFailure("Not strong enough to push object");
+        }
     }
 
     void IKinetic.Push(object direction)
@@ -103,17 +113,21 @@ public class Plank : Entity, IKinetic
         if (isLoose)
         {
             rb.AddForce((directionVector).normalized * force * GetKinematicLevel());
+            OnCommandSuccess();
         }
         else
-            HUD.Instance.log.ShowMessage("Force not enough for loosing object");
+        {
+            OnCommandFailure("Not strong enough to push object");
+        }
     }
 
     private void Loosen()
     {
-        if (GetKinematicLevel() * force > looseThreshold)
+        if (GetKinematicLevel() >= levelToLoosen)
         {
             isLoose = true;
             rb.isKinematic = false;
+            obstacle.enabled = eliminateObstacleOnLoosen ? false : true;
         }
     }
 
@@ -135,7 +149,9 @@ public class Plank : Entity, IKinetic
 
         transform.SetParent(Player.Instance.transform, true);
 
-        obstacle.enabled = false;
+        //obstacle.enabled = false;
+
+        OnCommandSuccess();
 
         while (HUD.Instance.terminal.selectedActor != null && HUD.Instance.terminal.selectedActor.Entity == this)
         {
@@ -149,9 +165,9 @@ public class Plank : Entity, IKinetic
 
         transform.SetParent(originalParent, true);
 
-        obstacle.enabled = true;
+        //obstacle.enabled = true;
 
-        rb.isKinematic = false;
+        rb.isKinematic = false;        
 
         //Cursor.visible = true;
     }

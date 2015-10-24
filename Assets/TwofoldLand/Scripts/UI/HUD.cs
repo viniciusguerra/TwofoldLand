@@ -134,6 +134,17 @@ public class HUD : Singleton<HUD>
         iTween.ValueTo(gameObject, iTween.Hash("name", valueTweenName, "from", staminaBar.value, "to", value, "onupdate", "UpdateStaminaBarValue", "time", barUpdateTime, "easetype", barUpdateEaseType));
     }
 
+    public void SetStaminaBarValueOverride(float value)
+    {
+        string colorTweenName = staminaBar.name + "ColorChange";
+        iTween.StopByName(colorTweenName);
+
+        UpdateStaminaBarColor(value < staminaBar.value ? staminaLossColor : staminaRegenColor);
+        iTween.ValueTo(gameObject, iTween.Hash("name", colorTweenName, "from", staminaBarFill.color, "to", staminaNormalColor, "onupdate", "UpdateStaminaBarColor", "time", barUpdateTime * 5, "easetype", barUpdateEaseType));
+
+        staminaBar.value = value;
+    }
+
     public void UpdateHealthBarValue(float value)
     {
         healthBar.value = value;

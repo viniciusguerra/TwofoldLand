@@ -25,7 +25,7 @@ public class InputHandler : MonoBehaviour
             //Ricci
             if (Input.GetMouseButtonUp(1))
             {
-                Player.Instance.MovingEntity.StopMoving();
+                Player.Instance.MovementController.StopMoving();
                 TargetMarker.Instance.HideInstantly();                
             }
         }

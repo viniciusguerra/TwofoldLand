@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class MovingEntity : Entity
+public class MovementController : MonoBehaviour
 {
     [Header("Movement")]
     public float lookSpeed = 45;

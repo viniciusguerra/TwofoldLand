@@ -17,8 +17,9 @@ public class CollectableAcquiredWindow : UIWindow
 
     private string skillAcquiredMessage = "New Skill Acquired!";
     private string itemAcquiredMessage = "New Item Acquired!";
+    private string skillLeveledUpMessage = "Skill Leveled Up!";
 
-    public void Show(Skill skill)
+    public void ShowSkillAcquired(Skill skill)
     {
         base.Show();
 
@@ -36,7 +37,26 @@ public class CollectableAcquiredWindow : UIWindow
         goToDefinitionButton.onClick.AddListener(() => this.Hide());
     }
 
-    public void Show(Item item)
+    public void ShowSkillLeveledUp(Skill skill)
+    {
+        base.Show();
+
+        fillImage.fillAmount = 0;
+
+        iTween.ValueTo(gameObject, iTween.Hash("from", 0, "to", 1, "delay", fillDelay, "time", fillTime, "onupdate", "UpdateFill"));
+
+        collectableNameText.text = skill.GetInterfaceType().Name;
+        messageLabelText.text = skillLeveledUpMessage;
+
+        goToDefinitionButton.gameObject.SetActive(true);
+        goToDefinitionButton.onClick.RemoveAllListeners();
+
+        goToDefinitionButton.gameObject.SetActive(false);
+
+        Invoke("Hide", 2);
+    }
+
+    public void ShowItemAcquired(Item item)
     {
         base.Show();
 

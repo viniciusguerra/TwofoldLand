@@ -11,12 +11,12 @@ public interface IUnlockable : IBase
     bool Unlocked
     { get; }
 
-    [CodexMethod("Brings up the Binary Conversion UI", 10, true)]
+    [CodexMethod("Brings up the Binary Conversion UI", 40, true)]
     void Unlock();
 
     [CodexMethod("Unlocks when giving the correct BinaryKey value or a valid Key from the Storage", 0, true)]
     void Unlock(object key);
 
-    [CodexMethod("Opens and closes if unlocked", 20, true)]
+    [CodexMethod("Opens and closes if unlocked", 15, true)]
     void Toggle();
 }

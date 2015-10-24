@@ -13,7 +13,7 @@ public class BinaryConversion : UIWindow
     public List<Button> digits;
     public List<Button> currentDigits;
     public string currentBinaryKey;
-    public IUnlockable currentTarget;
+    public Entity currentTarget;
 
     public Text currentDecimalText;
     public Text targetDecimalText;
@@ -24,21 +24,59 @@ public class BinaryConversion : UIWindow
 	#endregion
 
 	#region Methods
-    public void Create(IUnlockable unlockable)
+    public void Show(Entity unlockableEntity)
     {
-        Show();
+        base.Show();
 
         successFill.fillAmount = 0;
 
-        currentTarget = unlockable;
+        currentTarget = unlockableEntity;
 
-        int digitCount = unlockable.BinaryKey.Length;
+        int digitCount = (currentTarget as IUnlockable).BinaryKey.Length;
 
         currentDigits = digits.GetRange(0, digitCount);
 
         InitializeCurrentDigits();
 
-        targetDecimalText.text = Convert.ToInt32(currentTarget.BinaryKey, 2).ToString();
+        targetDecimalText.text = Convert.ToInt32((currentTarget as IUnlockable).BinaryKey, 2).ToString();
+    }
+
+    public override void Hide()
+    {
+        base.Hide();
+
+        if (currentTarget != null)
+        {
+            currentTarget.OnCommandFailure("Binary conversion cancelled");
+            currentTarget = null;
+        }
+
+        foreach (Button digit in currentDigits)
+        {
+            digit.gameObject.SetActive(false);
+        }
+    }
+
+    public void Validate()
+    {
+        currentBinaryKey = string.Empty;
+
+        foreach (Button digit in currentDigits)
+        {
+            currentBinaryKey += digit.GetComponentInChildren<Text>().text;
+        }
+
+        SetCurrentDecimalText();
+
+        if (currentBinaryKey == (currentTarget as IUnlockable).BinaryKey)
+        {
+            foreach (Button digit in currentDigits)
+            {
+                digit.interactable = false;
+            }
+
+            iTween.ValueTo(gameObject, iTween.Hash("from", 0, "to", 1, "time", fillTime, "onupdate", "UpdateSuccessFill", "oncomplete", "CloseSuccess"));
+        }
     }
 
     private void SetDigitValue(Button digit, int value)
@@ -77,29 +115,7 @@ public class BinaryConversion : UIWindow
     public void ToggleDigit(Text digitText)
     {
         digitText.text = digitText.text == "0" ? "1" : "0";
-    }
-
-    public void Validate()
-    {
-        currentBinaryKey = string.Empty;
-
-        foreach(Button digit in currentDigits)
-        {
-            currentBinaryKey += digit.GetComponentInChildren<Text>().text;
-        }
-
-        SetCurrentDecimalText();
-
-        if (currentBinaryKey == currentTarget.BinaryKey)
-        {
-            foreach (Button digit in currentDigits)
-            {
-                digit.interactable = false;
-            }
-
-            iTween.ValueTo(gameObject, iTween.Hash("from", 0, "to", 1, "time", fillTime, "onupdate", "UpdateSuccessFill", "oncomplete", "CloseSuccess"));
-        }
-    }
+    }    
 
     private void CloseSuccess()
     {
@@ -112,22 +128,12 @@ public class BinaryConversion : UIWindow
     {
         yield return new WaitForSeconds(closeDelay);
 
-        currentTarget.Unlock(currentBinaryKey);
+        (currentTarget as IUnlockable).Unlock(currentBinaryKey);
 
-        Close();
-    }
-
-    public void Close()
-    {
         currentTarget = null;
 
-        foreach (Button digit in currentDigits)
-        {
-            digit.gameObject.SetActive(false);
-        }
-
         Hide();
-    }
+    }    
 
     public void UpdateSuccessFill(float value)
     {
@@ -145,7 +151,11 @@ public class BinaryConversion : UIWindow
 
 	void Update()
 	{
-
+        if(IsVisible)
+        {
+            if (!HUD.Instance.terminal.HasSelectedActor())
+                Hide();
+        }
 	}
 	#endregion
 }

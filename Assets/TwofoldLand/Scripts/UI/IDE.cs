@@ -76,7 +76,7 @@ public class IDE : UIWindow
 
     public void NewSpell()
     {
-        Spell s = new Spell();
+        Spell s = new Spell(Player.Instance.Entity);
         spellList.Add(s);
         s.SpellTitle = "NewSpell";
 

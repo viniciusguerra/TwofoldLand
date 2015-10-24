@@ -89,7 +89,7 @@ public class Storage : UIWindow
 
         newItem.Initialize(itemData, cStyleHexAddress);
 
-        HUD.Instance.collectableAcquiredWindow.Show(newItem);
+        HUD.Instance.collectableAcquiredWindow.ShowItemAcquired(newItem);
     }
 
     public Item GetItemFromAddress(string address)

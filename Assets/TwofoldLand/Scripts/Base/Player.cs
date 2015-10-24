@@ -5,7 +5,7 @@ using System.Linq;
 using System;
 using System.Reflection;
 
-[RequireComponent(typeof(MovingEntity))]
+[RequireComponent(typeof(PlayerEntity), typeof(MovementController))]
 public class Player : Singleton<Player>, IVulnerable
 {
     #region Properties
@@ -72,51 +72,6 @@ public class Player : Singleton<Player>, IVulnerable
 
             HUD.Instance.SetMaxHealth(maxHealth);
         }
-    }    
-
-    [Header("Stamina")]
-    [SerializeField]
-    private float maxStamina;
-    [SerializeField]
-    private float currentStamina;
-
-    public float staminaRegenRate = 0.2f;
-    public float staminaRegenWait = 1;
-    private float currentStaminaRegenWait;
-    private bool regeneratingStamina = false;
-
-    public float CurrentStamina
-    {
-        get
-        {
-            return currentStamina;
-        }
-        set
-        {
-            currentStamina = Mathf.Max(0, value);           
-
-            HUD.Instance.SetStaminaBarValue(currentStamina);
-
-            //if (currentStamina < MaxStamina && !regeneratingStamina)
-            //{
-            //    currentStaminaRegenWait = 0;
-            //    StartCoroutine(StaminaRegen());
-            //}
-        }
-    }
-
-    public float MaxStamina
-    {
-        get
-        {
-            return maxStamina;
-        }
-        set
-        {
-            maxStamina = Mathf.Max(0, value);
-
-            HUD.Instance.SetMaxStamina(maxStamina);
-        }
     }
 
     private AttackHandler attackHandler;
@@ -133,9 +88,13 @@ public class Player : Singleton<Player>, IVulnerable
         }
     }
 
-    private MovingEntity movingEntity;
+    private PlayerEntity entity;
 
-    public MovingEntity MovingEntity { get { return movingEntity; } }    
+    public PlayerEntity Entity { get { return entity; } }
+
+    private MovementController movementController;
+
+    public MovementController MovementController { get { return movementController; } }
     #endregion
 
     #region Skill Methods
@@ -148,7 +107,7 @@ public class Player : Singleton<Player>, IVulnerable
 
         skillList.Add(skill);
 
-        HUD.Instance.collectableAcquiredWindow.Show(skill);
+        HUD.Instance.collectableAcquiredWindow.ShowSkillAcquired(skill);
     }
 
     public Skill GetSkill(Type interfaceType)
@@ -174,7 +133,7 @@ public class Player : Singleton<Player>, IVulnerable
     }
 
     public void LevelSkillUp(Type interfaceType)
-    {        
+    {
         Skill skillToLevel = skillList.Find(x => x.GetInterfaceType().Equals(interfaceType));
         int costToLevelUp = skillToLevel.GetCostToLevelUp();
 
@@ -182,6 +141,8 @@ public class Player : Singleton<Player>, IVulnerable
         {
             SpendAura(costToLevelUp);
             skillToLevel.LevelUp();
+
+            HUD.Instance.collectableAcquiredWindow.ShowSkillLeveledUp(skillToLevel);
         }
         else
             HUD.Instance.log.ShowMessage("Not enough Aura to level " + skillToLevel.GetInterfaceType().Name + " up");
@@ -248,9 +209,17 @@ public class Player : Singleton<Player>, IVulnerable
     #endregion
 
     #region Methods
-    public bool IsInSelectionRange(Vector3 target)
+    public bool CanReach(GameObject target)
     {
-        return Vector3.Distance(Player.Instance.gameObject.transform.position, target) < actorSelectionRange;
+        RaycastHit hitInfo;
+        Ray reachRay = new Ray(transform.position, target.transform.position - transform.position);
+
+        Physics.Raycast(reachRay, out hitInfo, actorSelectionRange);
+
+        if (hitInfo.collider != null && (hitInfo.collider.gameObject == target || hitInfo.transform.IsChildOf(target.transform)))
+            return true;
+        else
+            return false;
     }
 
     public void CollectAura(int amount)
@@ -275,30 +244,10 @@ public class Player : Singleton<Player>, IVulnerable
             HUD.Instance.codex.UpdateInterfaceLevelArea();
     }
 
-    //TODO Stamina Regen
-    //private IEnumerator StaminaRegen()
-    //{
-    //    regeneratingStamina = true;
-
-    //    while (currentStaminaRegenWait < staminaRegenWait)
-    //    {
-    //        currentStaminaRegenWait += Time.deltaTime;
-    //        yield return null;
-    //    }
-
-    //    while (Stamina <= MaxStamina)
-    //    {
-    //        Stamina += MaxStamina * staminaRegenRate * Time.deltaTime;
-    //        yield return null;
-    //    }
-
-    //    regeneratingStamina = false;
-    //}
-
     public void Rest()
     {
         CurrentHealth = MaxHealth;
-        CurrentStamina = MaxStamina;
+        Entity.CurrentStamina = Entity.MaxStamina;
     }
     #endregion
 
@@ -309,7 +258,7 @@ public class Player : Singleton<Player>, IVulnerable
         {
             Collectable collectable = collision.gameObject.GetComponent<Collectable>();
 
-            if(collectable.CollectOnTouch)
+            if (collectable.CollectOnTouch)
                 collision.gameObject.GetComponent<Collectable>().Absorb();
         }
     }
@@ -333,8 +282,9 @@ public class Player : Singleton<Player>, IVulnerable
     }
 
     void Awake()
-    {       
-        movingEntity = GetComponent<MovingEntity>();
+    {
+        entity = GetComponent<PlayerEntity>();
+        movementController = GetComponent<MovementController>();
     }
 
     void Start()
@@ -342,12 +292,18 @@ public class Player : Singleton<Player>, IVulnerable
         HUD.Instance.UpdateAuraUI(availableAura);
 
         HUD.Instance.SetMaxHealth(maxHealth);
-        HUD.Instance.SetMaxStamina(maxStamina);        
+        HUD.Instance.SetMaxStamina(Entity.MaxStamina);
 
         HUD.Instance.UpdateHealthBarValue(CurrentHealth);
-        HUD.Instance.UpdateStaminaBarValue(CurrentStamina);
+        HUD.Instance.UpdateStaminaBarValue(Entity.CurrentStamina);
 
-        compilerAvailable = false;        
-    }    
+        compilerAvailable = false;
+    }
+
+    void FixedUpdate()
+    {
+        if (HUD.Instance.terminal.HasSelectedActor() && !CanReach(HUD.Instance.terminal.selectedActor.gameObject))
+            HUD.Instance.terminal.ClearActorSelection();
+    }
     #endregion
 }

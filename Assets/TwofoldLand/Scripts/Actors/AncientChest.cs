@@ -88,13 +88,7 @@ public class AncientChest : Entity, IUnlockable, IVulnerable
 
     public void Unlock()
     {
-        HUD.Instance.binaryConversion.Create((IUnlockable)this);        
-    }
-
-    private void DisplayLockedFeedback()
-    {
-        HUD.Instance.log.ShowMessage(name + " locked");
-        animator.SetTrigger("toggle");
+        HUD.Instance.binaryConversion.Show(this);        
     }
 
     public void Unlock(object key)
@@ -117,7 +111,10 @@ public class AncientChest : Entity, IUnlockable, IVulnerable
                 if (key.ToString().Equals(BinaryKey))
                     SetUnlocked();
                 else
-                    DisplayLockedFeedback();
+                {
+                    OnCommandFailure(name + " locked");
+                    animator.SetTrigger("toggle");
+                }
             }
         }
     }
@@ -143,13 +140,16 @@ public class AncientChest : Entity, IUnlockable, IVulnerable
             animator.SetTrigger("toggle");
 
             if(!alreadyOpened)
-            {
+            {                
                 StartCoroutine(ReleaseItemCoroutine());
             }
+
+            OnCommandSuccess();
         }
         else
         {
-            DisplayLockedFeedback();
+            OnCommandFailure(name + " locked");
+            animator.SetTrigger("toggle");
         }
     }
 

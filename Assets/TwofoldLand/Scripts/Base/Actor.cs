@@ -56,7 +56,7 @@ public class Actor : MonoBehaviour, IPointerClickHandler
 
     public virtual void OnPointerClick(PointerEventData data)
     {
-        if (data.pointerId == -1 && Player.Instance.IsInSelectionRange(transform.position))
+        if (data.pointerId == -1 && Player.Instance.CanReach(gameObject))
         {
             SetSelected();
         }
