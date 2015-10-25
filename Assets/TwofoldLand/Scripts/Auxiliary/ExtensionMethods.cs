@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using SmartLocalization;
 
 static public class ExtensionMethods
 {
@@ -33,6 +34,18 @@ static public class ExtensionMethods
                 SetLayerRecursively(child.gameObject, newLayer);
             }
         }
+    }
+
+    static public string[] GetTextValuesForKeys(this LanguageManager lm, string[] keys)
+    {
+        string[] values = new string[keys.Length];
+
+        for (int i = 0; i < keys.Length; i++)
+        {
+            values[i] = LanguageManager.Instance.GetTextValue(keys[i]);
+        }
+
+        return values;
     }
     #endregion
 }

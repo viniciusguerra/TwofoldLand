@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using SmartLocalization;
 
 public class Codex : UIWindow
 {
@@ -51,7 +52,7 @@ public class Codex : UIWindow
     public List<RectTransform> methodList;
     public List<RectTransform> spellList;
 
-    private Type currentInterfaceType;
+    private Type currentInterfaceType;    
     #endregion
 
     #region Methods
@@ -237,7 +238,7 @@ public class Codex : UIWindow
     {
         currentInterfaceType = null;
 
-        interfaceNameText.text = "Select a Skill from the list";
+        interfaceNameText.text = LanguageManager.Instance.GetTextValue("UI.Codex.SelectSkillMessage");
 
         interfaceLevelText.text = string.Empty;
 
@@ -312,8 +313,8 @@ public class Codex : UIWindow
         //Info comes from Interface, Interfaces have no access definition
         //childList.Find(x => x.name == "Access").GetComponent<Text>().text = propertyInfo.GetGetMethod().IsPublic ? "public" : "private";
         childList.Find(x => x.name == "Return").GetComponent<Text>().text = propertyInfo.PropertyType.Name;
-        childList.Find(x => x.name == "Name").GetComponent<Text>().text = propertyInfo.Name;                
-        childList.Find(x => x.name == "Description").GetComponent<Text>().text = descriptionAttribute != null ? descriptionAttribute.Description : string.Empty;        
+        childList.Find(x => x.name == "Name").GetComponent<Text>().text = propertyInfo.Name;
+        childList.Find(x => x.name == "Description").GetComponent<Text>().text = descriptionAttribute != null ? LanguageManager.Instance.GetTextValue(propertyInfo.DeclaringType.FullName + "." + propertyInfo.Name) : string.Empty;        
 
         return rt;
     }
@@ -337,9 +338,9 @@ public class Codex : UIWindow
 
         //Info comes from Interface, Interfaces have no access definition
         //childList.Find(x => x.name == "Access").GetComponent<Text>().text = methodInfo.IsPublic ? "public" : "private";
-        childList.Find(x => x.name == "Return").GetComponent<Text>().text = methodInfo.ReturnType.Name;
+        //childList.Find(x => x.name == "Return").GetComponent<Text>().text = methodInfo.ReturnType.Name;
         childList.Find(x => x.name == "Name").GetComponent<Text>().text = methodInfo.Name;
-        childList.Find(x => x.name == "Description").GetComponent<Text>().text = descriptionAttribute != null ? descriptionAttribute.Description : string.Empty;
+        childList.Find(x => x.name == "Description").GetComponent<Text>().text = descriptionAttribute != null ? LanguageManager.Instance.GetTextValue(methodInfo.DeclaringType.FullName + "." + methodInfo.Name + (methodInfo.GetParameters().Length == 0 ? "" : methodInfo.GetParameters().Length.ToString())) : string.Empty;
 
         string parametersString = "(";
         ParameterInfo[] parameters = methodInfo.GetParameters();

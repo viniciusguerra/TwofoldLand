@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using SmartLocalization;
 
 public class Item : MonoBehaviour
 {
@@ -31,7 +32,7 @@ public class Item : MonoBehaviour
     {
         get
         {
-            return itemData.itemName;
+            return LanguageManager.Instance.GetTextValue(itemData.itemNameKey);
         }
     }
 
@@ -39,7 +40,7 @@ public class Item : MonoBehaviour
     {
         get
         {
-            return itemData.itemDescription;
+            return LanguageManager.Instance.GetTextValue(itemData.itemDescriptionKey);
         }
     }
 
@@ -78,8 +79,8 @@ public class Item : MonoBehaviour
 
         ItemAddress = address;
 
-        itemNameText.text = itemData.itemName;
-        itemDescriptionText.text = itemData.itemDescription;
+        itemNameText.text = itemData.itemNameKey;
+        itemDescriptionText.text = itemData.itemDescriptionKey;
         itemCostText.text = itemData.itemCostToClone;
 
         itemCostArea.SetActive(Consumable ? false : true);

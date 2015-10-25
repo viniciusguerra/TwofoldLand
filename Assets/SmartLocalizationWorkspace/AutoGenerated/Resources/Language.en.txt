@@ -116,7 +116,103 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-	<data name="MyFirst.Key" xml:space="preserve">
-		<value />
+	<data name="IKinetic.Drag" xml:space="preserve">
+		<value>Enables dragging of an Entity if it is loose. Deselect it to let go</value>
+	</data>
+	<data name="IKinetic.IsLoose" xml:space="preserve">
+		<value>If true, the object can be dragged, else, it cannot</value>
+	</data>
+	<data name="IKinetic.Pull" xml:space="preserve">
+		<value>Pulls the Entity towards you</value>
+	</data>
+	<data name="IKinetic.Push" xml:space="preserve">
+		<value>Pushes the Entity away from you</value>
+	</data>
+	<data name="IKinetic.Push1" xml:space="preserve">
+		<value>Pushes the Entity in the given direction: left, right, forward or back</value>
+	</data>
+	<data name="Item.AncientChestKey.Description" xml:space="preserve">
+		<value>Ancient Chests are told to be gifts of nature. It's said that he who unlocks it will inherit pieces of power in its purest form.</value>
+	</data>
+	<data name="Item.AncientChestKey.Name" xml:space="preserve">
+		<value>Ancient Chest Key</value>
+	</data>
+	<data name="IUnlockable.BinaryKey" xml:space="preserve">
+		<value>The binary number which is the key to this Entity</value>
+	</data>
+	<data name="IUnlockable.Toggle" xml:space="preserve">
+		<value>Opens or closes if Unlocked</value>
+	</data>
+	<data name="IUnlockable.Unlock" xml:space="preserve">
+		<value>Brings up the Binary Conversion UI</value>
+	</data>
+	<data name="IUnlockable.Unlock1" xml:space="preserve">
+		<value>Unlocks when giving the BinaryKey value or a valid Key from the Storage</value>
+	</data>
+	<data name="IUnlockable.Unlocked" xml:space="preserve">
+		<value>True if the Entity is unlocked, false otherwise</value>
+	</data>
+	<data name="IVerbal.Messages" xml:space="preserve">
+		<value>Messages which are expressed by this Entity</value>
+	</data>
+	<data name="IVulnerable.CurrentHealth" xml:space="preserve">
+		<value>Current amount of this Entity's resistance. When it reaches 0, the Entity dies</value>
+	</data>
+	<data name="IVulnerable.MaxHealth" xml:space="preserve">
+		<value>Total amount of this Entity's resistance</value>
+	</data>
+	<data name="TestScene.Strings.ChestSign1" xml:space="preserve">
+		<value>No mortal can violate an Ancient Chest for it answers to a forgotten language</value>
+	</data>
+	<data name="TestScene.Strings.ChestSign2" xml:space="preserve">
+		<value>The legend states that they store power in its purest form</value>
+	</data>
+	<data name="TestScene.Strings.CompilerSign1" xml:space="preserve">
+		<value>The Compiler is said to bring thoughts into reality</value>
+	</data>
+	<data name="TestScene.Strings.CompilerSign2" xml:space="preserve">
+		<value>Ancient Ones could create Spells when near it</value>
+	</data>
+	<data name="TestScene.Strings.CompilerSign3" xml:space="preserve">
+		<value>They also had it as a safe place, where their energies would be renewed</value>
+	</data>
+	<data name="UI.Codex.LevelUpButton" xml:space="preserve">
+		<value>Level Up</value>
+	</data>
+	<data name="UI.Codex.MethodsTitle" xml:space="preserve">
+		<value>Methods</value>
+	</data>
+	<data name="UI.Codex.PropertiesTitle" xml:space="preserve">
+		<value>Properties</value>
+	</data>
+	<data name="UI.Codex.SelectSkillMessage" xml:space="preserve">
+		<value>Select a Skill</value>
+	</data>
+	<data name="UI.Codex.SkillsButton" xml:space="preserve">
+		<value>Skills</value>
+	</data>
+	<data name="UI.Codex.SpellsButton" xml:space="preserve">
+		<value>Spells</value>
+	</data>
+	<data name="UI.CollectableAcquired.DefinitionButton" xml:space="preserve">
+		<value>Go To Definition</value>
+	</data>
+	<data name="UI.CollectableAcquired.ItemAcquired" xml:space="preserve">
+		<value>New Item Acquired!</value>
+	</data>
+	<data name="UI.CollectableAcquired.SkillAcquired" xml:space="preserve">
+		<value>Skill Acquired!</value>
+	</data>
+	<data name="UI.CollectableAcquired.SkillLeveledUp" xml:space="preserve">
+		<value>Skill Leveled Up!</value>
+	</data>
+	<data name="UI.Storage.ItemsTitle" xml:space="preserve">
+		<value>Items</value>
+	</data>
+	<data name="UI.Storage.SpellsTitle" xml:space="preserve">
+		<value>Loaded Spells</value>
+	</data>
+	<data name="UI.Terminal.Placeholder" xml:space="preserve">
+		<value>Type Command...</value>
 	</data>
 </root>

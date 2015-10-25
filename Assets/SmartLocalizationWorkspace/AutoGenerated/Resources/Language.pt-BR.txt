@@ -116,7 +116,103 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-	<data name="MyFirst.Key" xml:space="preserve">
-		<value />
+	<data name="IKinetic.Drag" xml:space="preserve">
+		<value>Permite arrastar uma Entidade se IsLoose for True. Desselecione-a para soltar</value>
+	</data>
+	<data name="IKinetic.IsLoose" xml:space="preserve">
+		<value>Se True, o objeto pode ser arrastado. Se False, não</value>
+	</data>
+	<data name="IKinetic.Pull" xml:space="preserve">
+		<value>Puxa a Entidade em sua direção</value>
+	</data>
+	<data name="IKinetic.Push" xml:space="preserve">
+		<value>Empurra a Entidade na direção oposta à sua</value>
+	</data>
+	<data name="IKinetic.Push1" xml:space="preserve">
+		<value>Empurra a Entidade na direção dada: left, right, back ou forward</value>
+	</data>
+	<data name="Item.AncientChestKey.Description" xml:space="preserve">
+		<value>Dizem que Baús Anciãos são presentes da natureza. Aquele que o destrancar receberá poder em sua forma mais pura</value>
+	</data>
+	<data name="Item.AncientChestKey.Name" xml:space="preserve">
+		<value>Chave de Baú Ancião</value>
+	</data>
+	<data name="IUnlockable.BinaryKey" xml:space="preserve">
+		<value>O número binário que é chave para essa destrancar Entidade</value>
+	</data>
+	<data name="IUnlockable.Toggle" xml:space="preserve">
+		<value>Abre ou fecha caso a Entidade esteja destrancada</value>
+	</data>
+	<data name="IUnlockable.Unlock" xml:space="preserve">
+		<value>Abre a interface de Conversão Binária</value>
+	</data>
+	<data name="IUnlockable.Unlock1" xml:space="preserve">
+		<value>Destranca se passado o valor de BinaryKey ou uma chave válida do Storage</value>
+	</data>
+	<data name="IUnlockable.Unlocked" xml:space="preserve">
+		<value>True se a Entidade estiver destrancada, se não, False</value>
+	</data>
+	<data name="IVerbal.Messages" xml:space="preserve">
+		<value>Mensagens expressadas por essa Entidade</value>
+	</data>
+	<data name="IVulnerable.CurrentHealth" xml:space="preserve">
+		<value>Quantidade de resistência atual dessa Entidade. Se chegar a 0, ela morre</value>
+	</data>
+	<data name="IVulnerable.MaxHealth" xml:space="preserve">
+		<value>Resistência total dessa Entidade</value>
+	</data>
+	<data name="TestScene.Strings.ChestSign1" xml:space="preserve">
+		<value>Nenhum mortal pode violar um Baú Ancião por responder a uma linguagem esquecida</value>
+	</data>
+	<data name="TestScene.Strings.ChestSign2" xml:space="preserve">
+		<value>A lenda diz que eles guardam poder em sua forma mais pura</value>
+	</data>
+	<data name="TestScene.Strings.CompilerSign1" xml:space="preserve">
+		<value>É dito que O Compilador transforma pensamentos em realidade</value>
+	</data>
+	<data name="TestScene.Strings.CompilerSign2" xml:space="preserve">
+		<value>Os Antigos conseguiam criar Magias quando próximos dele</value>
+	</data>
+	<data name="TestScene.Strings.CompilerSign3" xml:space="preserve">
+		<value>Eles também o tinham como local seguro, onde suas energias eram renovadas</value>
+	</data>
+	<data name="UI.Codex.LevelUpButton" xml:space="preserve">
+		<value>Evoluir</value>
+	</data>
+	<data name="UI.Codex.MethodsTitle" xml:space="preserve">
+		<value>Métodos</value>
+	</data>
+	<data name="UI.Codex.PropertiesTitle" xml:space="preserve">
+		<value>Propriedades</value>
+	</data>
+	<data name="UI.Codex.SelectSkillMessage" xml:space="preserve">
+		<value>Selecione uma Habilidade</value>
+	</data>
+	<data name="UI.Codex.SkillsButton" xml:space="preserve">
+		<value>Habilidades</value>
+	</data>
+	<data name="UI.Codex.SpellsButton" xml:space="preserve">
+		<value>Magias</value>
+	</data>
+	<data name="UI.CollectableAcquired.DefinitionButton" xml:space="preserve">
+		<value>Ir Para Definição</value>
+	</data>
+	<data name="UI.CollectableAcquired.ItemAcquired" xml:space="preserve">
+		<value>Novo Item Adquirido!</value>
+	</data>
+	<data name="UI.CollectableAcquired.SkillAcquired" xml:space="preserve">
+		<value>Habilidade Adquirida!</value>
+	</data>
+	<data name="UI.CollectableAcquired.SkillLeveledUp" xml:space="preserve">
+		<value>Habilidade Evoluída!</value>
+	</data>
+	<data name="UI.Storage.ItemsTitle" xml:space="preserve">
+		<value>Itens</value>
+	</data>
+	<data name="UI.Storage.SpellsTitle" xml:space="preserve">
+		<value>Magias Carregadas</value>
+	</data>
+	<data name="UI.Terminal.Placeholder" xml:space="preserve">
+		<value>Insira um Comando...</value>
 	</data>
 </root>

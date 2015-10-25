@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using System.Collections;
 using System;
+using SmartLocalization;
 
 public class CollectableAcquiredWindow : UIWindow
 {
@@ -15,9 +16,9 @@ public class CollectableAcquiredWindow : UIWindow
     public float fillTime = 0.333f;
     public float fillDelay = 0.2f;
 
-    private string skillAcquiredMessage = "New Skill Acquired!";
-    private string itemAcquiredMessage = "New Item Acquired!";
-    private string skillLeveledUpMessage = "Skill Leveled Up!";
+    private string skillAcquiredMessageKey = "UI.CollectableAcquired.SkillAcquired";
+    private string itemAcquiredMessageKey = "UI.CollectableAcquired.ItemAcquired";
+    private string skillLeveledUpMessageKey = "UI.CollectableAcquired.SkillLeveledUp";
 
     public void ShowSkillAcquired(Skill skill)
     {
@@ -28,7 +29,7 @@ public class CollectableAcquiredWindow : UIWindow
         iTween.ValueTo(gameObject, iTween.Hash("from", 0, "to", 1, "delay", fillDelay, "time", fillTime, "onupdate", "UpdateFill"));
 
         collectableNameText.text = skill.GetInterfaceType().Name;
-        messageLabelText.text = skillAcquiredMessage;
+        messageLabelText.text = LanguageManager.Instance.GetTextValue(skillAcquiredMessageKey);
 
         goToDefinitionButton.gameObject.SetActive(true);
         goToDefinitionButton.onClick.RemoveAllListeners();
@@ -46,7 +47,7 @@ public class CollectableAcquiredWindow : UIWindow
         iTween.ValueTo(gameObject, iTween.Hash("from", 0, "to", 1, "delay", fillDelay, "time", fillTime, "onupdate", "UpdateFill"));
 
         collectableNameText.text = skill.GetInterfaceType().Name;
-        messageLabelText.text = skillLeveledUpMessage;
+        messageLabelText.text = LanguageManager.Instance.GetTextValue(skillLeveledUpMessageKey);
 
         goToDefinitionButton.gameObject.SetActive(true);
         goToDefinitionButton.onClick.RemoveAllListeners();
@@ -65,7 +66,7 @@ public class CollectableAcquiredWindow : UIWindow
         iTween.ValueTo(gameObject, iTween.Hash("from", 0, "to", 1, "delay", fillDelay, "time", fillTime, "onupdate", "UpdateFill"));
 
         collectableNameText.text = item.ItemName;
-        messageLabelText.text = itemAcquiredMessage;
+        messageLabelText.text = LanguageManager.Instance.GetTextValue(itemAcquiredMessageKey);
 
         goToDefinitionButton.gameObject.SetActive(false);
 

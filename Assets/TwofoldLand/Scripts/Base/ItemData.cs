@@ -3,8 +3,8 @@ using System.Collections;
 
 public class ItemData : CollectableData
 {
-    public string itemName;
-    public string itemDescription;
+    public string itemNameKey;
+    public string itemDescriptionKey;
 
     public bool consumable = true;
     public string itemCostToClone;    
