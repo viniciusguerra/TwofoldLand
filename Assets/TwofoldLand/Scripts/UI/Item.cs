@@ -79,8 +79,8 @@ public class Item : MonoBehaviour
 
         ItemAddress = address;
 
-        itemNameText.text = itemData.itemNameKey;
-        itemDescriptionText.text = itemData.itemDescriptionKey;
+        itemNameText.text = LanguageManager.Instance.GetTextValue(itemData.itemNameKey);
+        itemDescriptionText.text = LanguageManager.Instance.GetTextValue(itemData.itemDescriptionKey);
         itemCostText.text = itemData.itemCostToClone;
 
         itemCostArea.SetActive(Consumable ? false : true);

@@ -58,6 +58,11 @@ public class Codex : UIWindow
     #region Methods
     public override void Toggle()
     {
+        if(!isVisible)
+        {
+            HUD.Instance.storage.Hide();
+        }
+
         base.Toggle();
 
         if (isVisible)
@@ -231,7 +236,7 @@ public class Codex : UIWindow
 
         DisplayMethods();
 
-        UpdateInterfaceLevelArea();        
+        UpdateInterfaceLevelArea();
     }
 
     private void ClearShownInterface()

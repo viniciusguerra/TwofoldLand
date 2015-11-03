@@ -13,12 +13,15 @@ public class HUD : Singleton<HUD>
     public float selectionPanelHeight = 60;
     public float selectionAreaWidth = 25;
     public float selectionPanelWidth = 90;
-    [Space(20)]
-    public Terminal terminal;
-    public IDE ide;
-    public InfoPanel infoPanel;    
+
+    [Header("Bottom Right Area")]
+    public UIWindow bottomRightArea;
+    private Text auraText;
 
     [Header("Windows")]
+    public Terminal terminal;
+    public IDE ide;
+    public InfoPanel infoPanel;
     public Notes notes;
     public Codex codex;
     public Storage storage;
@@ -46,8 +49,7 @@ public class HUD : Singleton<HUD>
     private Slider staminaBar;
     private Graphic healthBarFill;
     private Graphic staminaBarFill;
-
-    private Text auraText;
+    
     private RectTransform bottomLeftRT;
     private RectTransform terminalRT;
     private RectTransform ideRT;

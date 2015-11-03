@@ -27,6 +27,11 @@ public class Storage : UIWindow
 	#region Methods
     public override void Toggle()
     {
+        if (!isVisible)
+        {
+            HUD.Instance.codex.Hide();
+        }
+
         base.Toggle();
 
         if (isVisible)

@@ -92,6 +92,8 @@ public class Entity : MonoBehaviour
         currentSpell.sender.CurrentStamina -= currentSpell.StaminaCost;
 
         currentSpell = null;
+
+        StopCoroutine("SpellExecutionCoroutine");
     }
 
     private IEnumerator SpellExecutionCoroutine(Spell spell)
@@ -104,6 +106,7 @@ public class Entity : MonoBehaviour
             ExecuteCommand(c);
         }
 
-        OnSpellEnd();
+        if(currentSpell != null)
+            OnSpellEnd();
     }
 }

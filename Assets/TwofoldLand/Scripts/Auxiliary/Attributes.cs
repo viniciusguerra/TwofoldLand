@@ -1,6 +1,6 @@
 ﻿using System;
 
-[AttributeUsage(AttributeTargets.All)]
+[AttributeUsage(AttributeTargets.Method)]
 public class CodexMethodAttribute : System.Attribute
 {
     public readonly int StaminaCost;
@@ -13,7 +13,7 @@ public class CodexMethodAttribute : System.Attribute
     }
 }
 
-[AttributeUsage(AttributeTargets.All)]
+[AttributeUsage(AttributeTargets.Property)]
 public class CodexPropertyAttribute : System.Attribute
 {
     public readonly bool ShowOnInfoPanel;
