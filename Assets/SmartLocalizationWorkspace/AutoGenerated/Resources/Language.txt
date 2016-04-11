@@ -129,7 +129,7 @@
 		<value>Pushes the Entity away from you</value>
 	</data>
 	<data name="IKinetic.Push1" xml:space="preserve">
-		<value>Pushes the Entity in the given direction: left, right, forward or back</value>
+		<value>Pushes the Entity in the given direction: left, right, up, down, forward or back</value>
 	</data>
 	<data name="Item.AncientChestKey.Description" xml:space="preserve">
 		<value>Ancient Chests are told to be gifts of nature. It's said that he who unlocks it will inherit pieces of power in its purest form.</value>
@@ -176,6 +176,18 @@
 	<data name="TestScene.Strings.CompilerSign3" xml:space="preserve">
 		<value>They also had it as a safe place, where their energies would be renewed</value>
 	</data>
+	<data name="TestScene.Strings.IVerbalSign1" xml:space="preserve">
+		<value>Ancient Ones could understand the world and interact with it because of the Skills they acquired</value>
+	</data>
+	<data name="TestScene.Strings.IVerbalSign2" xml:space="preserve">
+		<value>For them to interact, they selected objects and called their methods according to Skills in their Codex</value>
+	</data>
+	<data name="TestScene.Strings.IVerbalSign3" xml:space="preserve">
+		<value>The syntax should be perfect: SkillName.Method() being Method() one of those found in that Skill's page on their Codex</value>
+	</data>
+	<data name="UI.Codex.LevelUpButton" xml:space="preserve">
+		<value>Level Up</value>
+	</data>
 	<data name="UI.Codex.MethodsTitle" xml:space="preserve">
 		<value>Methods</value>
 	</data>
@@ -211,8 +223,5 @@
 	</data>
 	<data name="UI.Terminal.Placeholder" xml:space="preserve">
 		<value>Type Command...</value>
-	</data>
-	<data name="UI.Codex.LevelUpButton" xml:space="preserve">
-		<value>Level Up</value>
 	</data>
 </root>

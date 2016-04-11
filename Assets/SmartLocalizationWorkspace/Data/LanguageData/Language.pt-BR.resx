@@ -129,7 +129,7 @@
 		<value>Empurra a Entidade na direção oposta à sua</value>
 	</data>
 	<data name="IKinetic.Push1" xml:space="preserve">
-		<value>Empurra a Entidade na direção dada: left, right, back ou forward</value>
+		<value>Empurra a Entidade na direção dada: left, right, up, down, back ou forward</value>
 	</data>
 	<data name="Item.AncientChestKey.Description" xml:space="preserve">
 		<value>Dizem que Baús Anciãos são presentes da natureza. Aquele que o destrancar receberá poder em sua forma mais pura</value>
@@ -175,6 +175,15 @@
 	</data>
 	<data name="TestScene.Strings.CompilerSign3" xml:space="preserve">
 		<value>Eles também o tinham como local seguro, onde suas energias eram renovadas</value>
+	</data>
+	<data name="TestScene.Strings.IVerbalSign1" xml:space="preserve">
+		<value>Os Antigos conseguiam entender o mundo e interagir com ele por causa das Habilidades que adquiriam</value>
+	</data>
+	<data name="TestScene.Strings.IVerbalSign2" xml:space="preserve">
+		<value>Para interagir, eles selecionavam objetos e chamavam métodos de acordo com as Habilidades em seu Codex</value>
+	</data>
+	<data name="TestScene.Strings.IVerbalSign3" xml:space="preserve">
+		<value>A sintaxe devia ser perfeita: NomeDaHabilidade.Método(), sendo Método() um dos exibidos na página daquela Habilidade no Codex</value>
 	</data>
 	<data name="UI.Codex.LevelUpButton" xml:space="preserve">
 		<value>Evoluir</value>

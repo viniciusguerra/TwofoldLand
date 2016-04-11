@@ -74,6 +74,9 @@ public class MessageBox : UIWindow
         StopAllCoroutines();
 
         messageText.text = currentVerbal.Messages[currentMessageIndex];
+
+        if (currentVerbal != null && currentMessageIndex == currentVerbal.Messages.Length - 1)
+            currentVerbal.OnMessageEnd();
     }
 
     public void Previous()

@@ -56,7 +56,8 @@ public class Obstacle : Entity, IKinetic
 
     void IKinetic.Pull()
     {
-        Loosen();
+        if (GetKinematicLevel() >= levelToLoosen)
+            Loosen();
 
         if (isLoose)
         {
@@ -71,7 +72,8 @@ public class Obstacle : Entity, IKinetic
 
     void IKinetic.Push()
     {
-        Loosen();
+        if (GetKinematicLevel() >= levelToLoosen)
+            Loosen();
 
         if (isLoose)
         {
@@ -91,16 +93,22 @@ public class Obstacle : Entity, IKinetic
         string directionString = direction.ToString();
 
         if (directionString == "left")
-            directionVector = Vector3.left;
+            directionVector = transform.TransformDirection(Vector3.left);
 
         if (directionString == "right")
-            directionVector = Vector3.right;
+            directionVector = transform.TransformDirection(Vector3.right);
 
         if (directionString == "forward")
-            directionVector = Vector3.forward;
+            directionVector = transform.TransformDirection(Vector3.forward);
 
         if (directionString == "back")
-            directionVector = Vector3.back;
+            directionVector = transform.TransformDirection(Vector3.back);
+
+        if (directionString == "up")
+            directionVector = transform.TransformDirection(Vector3.up);
+
+        if (directionString == "down")
+            directionVector = transform.TransformDirection(Vector3.down);
 
         if (directionVector == Vector3.zero)
         {
@@ -108,7 +116,8 @@ public class Obstacle : Entity, IKinetic
             return;
         }
 
-        Loosen();
+        if (GetKinematicLevel() >= levelToLoosen)        
+            Loosen();
 
         if (isLoose)
         {
@@ -121,14 +130,11 @@ public class Obstacle : Entity, IKinetic
         }
     }
 
-    private void Loosen()
-    {
-        if (GetKinematicLevel() >= levelToLoosen)
-        {
-            isLoose = true;
-            rb.isKinematic = false;
-            obstacle.enabled = eliminateObstacleOnLoosen ? false : true;
-        }
+    public void Loosen()
+    {        
+        isLoose = true;
+        rb.isKinematic = false;
+        obstacle.enabled = eliminateObstacleOnLoosen ? false : true;        
     }
 
     private int GetKinematicLevel()
